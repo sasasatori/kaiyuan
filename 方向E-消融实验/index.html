@@ -1,0 +1,1128 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="OpenWAM 仓库深度调研：方向分配说明与任务书（基于 OpenWAM-Official/OpenWAM @ 90e94ae）">
+      
+      
+      
+        <link rel="canonical" href="https://sasasatori.github.io/kaiyuan/%E6%96%B9%E5%90%91E-%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C/">
+      
+      
+        <link rel="prev" href="../%E6%96%B9%E5%90%91D-%E8%AF%84%E6%B5%8B%E7%AE%A1%E7%BA%BF/">
+      
+      
+        <link rel="next" href="../%E6%96%B9%E5%90%91F-%E6%A8%A1%E5%9E%8B%E8%A7%A3%E5%89%96/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>方向 E · 消融实验 - OpenWAM 调研任务书</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#e" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="OpenWAM 调研任务书" class="md-header__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenWAM 调研任务书
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              方向 E · 消融实验
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  总览
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../%E6%96%B9%E5%90%91A-%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF/" class="md-tabs__link">
+          
+  
+  
+  方向任务书
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenWAM 调研任务书" class="md-nav__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OpenWAM 调研任务书
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向任务书
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    方向任务书
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91A-%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 A · 数据管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91B-%E6%A8%A1%E5%9E%8B%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 B · 模型管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91C-%E9%83%A8%E7%BD%B2%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 C · 部署管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91D-%E8%AF%84%E6%B5%8B%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 D · 评测管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 E · 消融实验
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 E · 消融实验
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        你需要准备什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        先搞懂这几件事
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务清单
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="任务清单">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#e-134" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-1：整理"官方实验对照表"——34 个实验模型各改了哪个旋钮
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-2：验证"同一个实验跑两遍，结果一模一样"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-3-libero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-3：亲手做一组对比——两个官方实验模型在 LIBERO 考场上比一比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-4：写一份"安全网使用手册"——仓库自带的测试怎么用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-5：做一份组内实验记录模板
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容易踩的坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91F-%E6%A8%A1%E5%9E%8B%E8%A7%A3%E5%89%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 F · 模型解剖
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        你需要准备什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        先搞懂这几件事
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务清单
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="任务清单">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#e-134" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-1：整理"官方实验对照表"——34 个实验模型各改了哪个旋钮
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-2：验证"同一个实验跑两遍，结果一模一样"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-3-libero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-3：亲手做一组对比——两个官方实验模型在 LIBERO 考场上比一比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-4：写一份"安全网使用手册"——仓库自带的测试怎么用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-5：做一份组内实验记录模板
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容易踩的坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="e">方向 E：消融实验——怎么做一次可信的对比<a class="headerlink" href="#e" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>消融实验就是"做实验的规矩"：想知道某个设计有没有用，就每次只改它一个，其他全部保持不变，看结果差多少。就像试菜谱——想知道盐放多少好，就一次只改盐，火候和食材都不动。
+官方按这套规矩做了 34 个实验模型，按"改了哪个旋钮"分成 5 组。本方向搞懂三件事：规矩在代码里是怎么保证的、官方都做了哪些对比、我们怎么照做。
+前两周只需要读代码写文档，不需要显卡、不需要装环境。</p>
+</blockquote>
+<h2 id="_1">你需要准备什么<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>什么东西</th>
+<th>什么时候才需要</th>
+<th>怎么获取</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一份仓库 clone</td>
+<td>第一天就要</td>
+<td>git clone</td>
+</tr>
+<tr>
+<td>CPU 版 Python 环境</td>
+<td>做 E-2、E-4 时</td>
+<td><code>pip install -e '.[dev]'</code>，CPU 版 torch 就行，不下载任何权重</td>
+</tr>
+<tr>
+<td>1 张 24GB 以上显卡 + 2 个官方实验模型（各约 24.8GB）+ 方向 C 的部署服务 + 方向 D 的评测环境</td>
+<td>只做 E-3 时需要</td>
+<td>显卡组内申请；模型用下载脚本（命令见 E-3），避开 tri 和 wan21_i2v_14b 这两个大号存档</td>
+</tr>
+</tbody>
+</table>
+<p>不需要训练数据，也不需要全组统一搭环境。想做"小规模重训对比"是可选加分项，要 4 张 80GB 显卡，需要时单独申请。</p>
+<h2 id="_2">先搞懂这几件事<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><strong>1. 配置文件就是实验矩阵。</strong> OpenWAM 用一个叫 Hydra 的配置工具，说人话就是：训练配置 = 一份默认清单 + 命令行上临时改几个键。官方的 34 个实验，就是在这份清单上轮流改不同键改出来的。可改的旋钮有：选模型结构（<code>model=single_system|dual_system|tri_system</code>）、双系统里选交流方式（<code>model.architecture.variant=joint_self_attn|joint_cross_attn|idm</code>）、选注意力掩码（<code>model.architecture.attention_mask_mode</code>，掩码就是规定"计算时谁能看见谁"）、选视频骨干网络（<code>model/video_backbone=...</code>）、选视觉编码器（<code>model.video_backbone.encoder.*</code>）、选数据集（<code>dataloader=robotwin|libero|...</code>）。命令行上一次改键，就是实验矩阵里的一个格子。</p>
+<p><strong>2. 配置怎么变成模型：一个总登记处。</strong> 清单里写了"结构 + 交流方式"两个词，代码里有一个登记函数把它翻译成 6 个注册模型名之一；没写交流方式时会自动补默认。机制细节归方向 B，这里只需记住：所有"架构旋钮"都经过这一个登记处收口，对账时看它就够了。</p>
+<p><strong>3. 随机种子：洗牌前记住牌序。</strong> 训练里到处有随机：打乱数据、初始化、丢弃。想让两次训练一模一样，就得把每处随机都钉死——就像洗牌前先记住牌序，种子（seed）固定了，每次"洗"出来的顺序都一样。这套体系分四层：先把 Python、NumPy、torch 三件套的随机数钉住；再把显卡加速库锁成确定模式；然后把数据打乱的顺序钉在同一个种子上；最后每个训练步用"种子 + 卡的编号 × 100 万 + 步数"重新播种——给每张卡留 100 万宽的种子窗口，保证多卡训练时相邻两张卡的种子永远不撞。种子从配置里的 <code>project.seed: 42</code> 出发，在数据集构造之前就播好。<strong>设了 seed = 这次训练可以原样复现；seed=null = 每次都不一样的正式跑。</strong></p>
+<p><strong>4. debug 模式：20 步快速冒烟。</strong> 配置里写 <code>training.debug=true</code>，训练就变成迷你版：只跑 20 步、第 10 步存一次档、学习率保持不变。这是所有消融实验统一的"先跑通再说"入口。</p>
+<p><strong>5. 训练存档自带说明书。</strong> 每个训练存档（checkpoint，模型权重文件）目录里都有一份 <code>config.yaml</code>，是训练时把完整配置原样写进去的，只写一次。部署和复现时以它为准，不靠人记。这是实验记录纪律的核心：目录自己会说话。</p>
+<h2 id="_3">任务清单<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="e-134">任务 E-1：整理"官方实验对照表"——34 个实验模型各改了哪个旋钮<a class="headerlink" href="#e-134" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>这件事是干嘛的</strong>：官方把 34 个实验存档分 5 组，每组改一个维度，存档名字里藏着它改了哪些旋钮。你要把每个名字翻译回配置键，做成一张对照表。这张表是全组公共资产，E-3 选对比对象就靠它。</li>
+<li><strong>你要准备什么</strong>：什么都不用，纯阅读。</li>
+<li><strong>具体怎么做</strong>：</li>
+<li>通读训练总配置和三份模型结构配置，列出每个维度对应的键：<code>architecture.framework</code>、<code>architecture.variant</code>、<code>attention_mask_mode</code>、<code>video_attention_mask_mode</code>、<code>video_backbone</code>、<code>encoder</code>、<code>detach_bridge</code>、<code>dataloader</code>。</li>
+<li>打开下载脚本里的官方实验清单，逐组破译命名规则：<ul>
+<li><strong>Architecture 组</strong>（7 个）：名字是 <code>{数据}_{结构}_{交流方式}</code>；尾巴带 <code>_detach</code> 就是 <code>detach_bridge=true</code>。</li>
+<li><strong>Pretrain 组</strong>（12 个）：开头 <code>pretrain_*</code> 或 <code>sft_*</code> 表示训练阶段；尾巴 <code>_mutual</code> 或 <code>_action_sees_video</code> 是掩码旋钮；<code>robot_only</code>、<code>two_stage</code>、<code>from_scratch</code> 是训练配方。</li>
+<li><strong>Visual_Encoder 组</strong>（6 个）：尾巴 <code>_dinov3|_vjepa21|_flux2|_wan22_vae</code> 对应编码器旋钮；<code>_svae</code> 表示叠加了一个压缩器。</li>
+<li><strong>Video_Backbone 组</strong>（5 个）：尾巴 <code>_cosmos25|_cosmos3|_wan21_i2v_14b|_wan21_vace_1_3b</code>；没尾巴的基座就是 <code>wan22_ti2v_5b</code>。</li>
+<li><strong>Attention_Mask 组</strong>（4 个）：尾巴 <code>_isolated|_mutual|_video_sees_action</code>；没尾巴的基座是 <code>action_sees_video</code>。</li>
+</ul>
+</li>
+<li>注意一个陷阱：<code>robotwin_dual_system_joint_self_attention</code> 这个名字出现在 3 个组里。它是同一个基座模型，在三组里都当"对照原点"（baseline）。对照表里要标出每组的 baseline 是谁。</li>
+<li>给每个格子写出"复现这一格的命令行改键"。例：attention_mask 组的 mutual 格是 <code>model=dual_system model.architecture.variant=joint_self_attn model.architecture.attention_mask_mode=mutual dataloader=robotwin</code>。</li>
+<li><strong>做完交出什么</strong>：对照表覆盖全部 34 个存档。每行包含：组、存档名、改了哪些旋钮及取值、对应配置键、命令行改键、同组 baseline。</li>
+<li><strong>大概要多久</strong>：2-3 天。</li>
+</ul>
+<h3 id="e-2">任务 E-2：验证"同一个实验跑两遍，结果一模一样"<a class="headerlink" href="#e-2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>这件事是干嘛的</strong>：对比实验可信的前提是"不改的地方真的没动"。你要读懂随机种子全链路，并在 CPU 上亲手验证：两次完全相同的运行，产出的 loss（损失值，即训练误差）序列逐位一致。这是所有后续实验的地基。</li>
+<li><strong>你要准备什么</strong>：<code>pip install -e '.[dev]'</code>（CPU 版 torch 即可），不需要权重。</li>
+<li><strong>具体怎么做</strong>：</li>
+<li>先跑现成的种子测试，边跑边读它们各自钉住了哪一层：
+     <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>OpenWAM
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_seeding.py<span class="w"> </span>tests/test_dataloader_seed.py<span class="w"> </span>-v
+</code></pre></div></li>
+<li>把种子调用链画成一张图：从配置里的 <code>project.seed</code> 出发，到训练入口脚本下发种子、数据集构造前播种，再到训练器里模型初始化前播种、钉住数据打乱顺序、每个训练步前重新播种。然后回答三个问题：为什么每张卡之间要隔离种子？为什么每步要重新播种，而不是只靠全局种子？<code>seed=null</code> 时哪几层会自动失效？</li>
+<li>写一个确定性验证脚本（CPU 上用小假模型，测试文件里有现成的假视频骨干可以参照）：固定 <code>seed=42</code>，把"建模型、喂一小批假数据、算 loss"这套流程完整跑两遍，用 <code>torch.equal</code>（不是 allclose）断言两遍的 loss 逐位相等；再把种子改成 43 跑第三遍，断言 loss 不一样；最后种子不动、只改一个无关的键（比如 <code>project.wandb.run_name</code>），断言 loss 仍然逐位相等。这三连就是"只改一个变量"的操作定义。</li>
+<li>顺带验证 debug 模式的语义（20 步、恒定学习率），写进结论。</li>
+<li><strong>做完交出什么</strong>：确定性验证脚本（三次断言全部成立）+ 种子调用链图 + 三问的回答。结论里必须写清边界：逐位一致在 CPU 小规模成立；GPU 多卡有非确定性，只能说"同配置同曲线可复现"，不能承诺跨硬件逐位一致。</li>
+<li><strong>大概要多久</strong>：2-3 天。</li>
+</ul>
+<h3 id="e-3-libero">任务 E-3：亲手做一组对比——两个官方实验模型在 LIBERO 考场上比一比<a class="headerlink" href="#e-3-libero" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>这件事是干嘛的</strong>：从同一组里下载两个官方实验存档（它们只差一个旋钮），用方向 D 的 LIBERO 评测流程各考一遍，比成功率。先小样本验证流程，再扩量出正式数字。这是前四个任务方法论的第一次实战。</li>
+<li><strong>你要准备什么</strong>：方向 C 的部署服务可用；方向 D 的 LIBERO 评测环境就绪；1 张 24GB 以上显卡；E-1 已完成。</li>
+<li><strong>具体怎么做</strong>：</li>
+<li>按 E-1 对照表选一对"只改一个变量"的存档，推荐 attention_mask 组（改动最干净）：
+     <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>scripts/download_assets/download_openwam_checkpoints.py<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--family<span class="w"> </span>study<span class="w"> </span>--study-type<span class="w"> </span>attention_mask<span class="w"> </span>--yes
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># 取 robotwin_dual_system_joint_self_attention{,_mutual} 两个（各 ~24.8GB）</span>
+</code></pre></div>
+     注意：实验存档多数在 robotwin 数据上训练，如果在 LIBERO 上考表现偏得太厉害，就改用方向 C/D 已支持的对应 benchmark，或改选架构组的一对。选这对的理由要写进报告。</li>
+<li>逐个把存档起成服务，跑小样本评测（每个任务 5–10 次尝试，先验证流程能跑通、结果稳定）：
+     <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>bash<span class="w"> </span>scripts/deploy.sh<span class="w"> </span>assets/openwam_ckpt/openwam_study/attention_mask/&lt;ckpt_a&gt;
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># 另一终端按方向D的 LIBERO 流程起 labtasker 客户端，限制 trials 数</span>
+</code></pre></div></li>
+<li>流程验证通过后，扩到方向 D 的标准尝试次数。两个存档必须用<strong>同一份 manifest</strong>（评测任务清单，保证同一批种子和初始状态，方向 D 的机制会管住这件事）各跑一遍。</li>
+<li>对比成功率。再打开两个存档目录里的 <code>config.yaml</code> 逐键对比，确认它们真的只差目标旋钮。如果差得更多，说明这组对比不成立，回 E-1 重选。</li>
+<li><strong>做完交出什么</strong>：复现报告，包含：选这对存档的依据、config.yaml 逐键对比的证据、两轮评测记录、带置信说明的对比结论（尝试次数、波动范围）。</li>
+<li><strong>大概要多久</strong>：1 周（含下载和排队评测）。</li>
+</ul>
+<h3 id="e-4">任务 E-4：写一份"安全网使用手册"——仓库自带的测试怎么用<a class="headerlink" href="#e-4" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>这件事是干嘛的</strong>：仓库自带一批测试，把"改一个变量不会弄坏别的"这条规矩固化成了代码。你要跑通它们、读懂每组测试守的是什么，再写一份手册：做哪类消融之前，该跑哪些测试。</li>
+<li><strong>你要准备什么</strong>：<code>pip install -e '.[dev]'</code>，全部 CPU 可跑，不需要权重。</li>
+<li><strong>具体怎么做</strong>：</li>
+<li>跑通四组测试：
+     <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>OpenWAM
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_split_attn_equivalence.py<span class="w"> </span>-v
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_train_deploy_consistency.py<span class="w"> </span>-v
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_mask_modes.py<span class="w"> </span>-v
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span><span class="s2">"tests/test_architecture_variants.py::test_framework_backbone_hydra_compose"</span><span class="w"> </span>-v
+</code></pre></div></li>
+<li>逐组读懂它们各自守住什么：<ul>
+<li>第一组：拆开的注意力算路和整块算出来的结果零误差相等——拆层实现不会引入数值偏移。</li>
+<li>第二组：训练时和部署时模型表现一致——评测数字才能归因到训练。</li>
+<li>第三组：四种掩码模式"谁能看见谁"没搞错——这是掩码消融的语义基线。</li>
+<li>第四组：3 种结构 × 3 种骨干共 9 种配置组合都能正常拼出模型——这是 E-1 矩阵每个格子的合法性门禁。</li>
+</ul>
+</li>
+<li>做一次"故意破坏"实验：临时改一处实现（比如掩码填充方向），确认对应测试变红，再还原。这证明安全网真的在守。</li>
+<li>写手册：按消融维度（换交流方式 / 换掩码 / 换骨干 / 换编码器 / 改训练循环）分别列出"动手前必跑"的测试子集和通过标准。注明 GPU 版测试要设 <code>OPENWAM_RUN_TRAIN_DEPLOY_GPU=1</code>，否则会静默跳过。</li>
+<li><strong>做完交出什么</strong>：四组测试全绿的输出存档 + 一份破坏-变红-还原记录 + 安全网使用手册（按消融维度索引测试，组内公共资产）。</li>
+<li><strong>大概要多久</strong>：2 天。</li>
+</ul>
+<h3 id="e-5">任务 E-5：做一份组内实验记录模板<a class="headerlink" href="#e-5" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>这件事是干嘛的</strong>：一次实验会留下三条记录通道：wandb 日志（一个实验追踪网站）、debug 的 loss 记录文件、存档目录里的 <code>config.yaml</code> 说明书。你要摸清这三条通道，做成一份全组统一的实验记录模板。</li>
+<li><strong>你要准备什么</strong>：E-1、E-2 已完成；跑过一次 debug 冒烟，或读通了训练器的日志代码。不需要显卡。</li>
+<li><strong>具体怎么做</strong>：</li>
+<li>wandb 通道：配置项 <code>cfg.project.wandb</code> 控制开关和 run 名。官方镜像默认离线记录（设了 <code>WANDB_MODE=offline</code>），日志落在 <code>wandb/offline-run-*</code> 目录，事后用 <code>wandb sync</code> 上传；想在线看板，启动前 <code>export WANDB_MODE=online</code> 并配 API key。验证方法：设 <code>project.wandb.run_name=e5_probe</code> 跑一次冒烟，确认 run 名和配置都传过去了。</li>
+<li>csv 通道：debug 运行会把 loss 写进 <code>debug_loss_history.csv</code>（首行写表头，列随标签走）。这是轻量留痕，不依赖 wandb。</li>
+<li>config 通道：训练时完整配置会写进存档目录的 <code>config.yaml</code>（只写一次），任何人拿到目录就能把模型原样重建，不需要口述配置。</li>
+<li>做模板：规定每个对比实验必须记录——完整的命令行改键、<code>project.seed</code>、git commit、存档目录路径、与 baseline 的 config.yaml 差异、wandb run 名和 csv 路径、（E-3 类评测实验的）manifest 哈希与尝试次数。模板第一条纪律写死：<strong>记录以存档里的 config.yaml 为准，口述和截图无效</strong>。</li>
+<li><strong>做完交出什么</strong>：实验记录模板（每个字段都注明由哪条通道产生）+ 用 E-2 或一次冒烟运行实填的样例一份。</li>
+<li><strong>大概要多久</strong>：1-2 天。</li>
+</ul>
+<p>推进顺序一句话：前两周并行做 E-1 和 E-4、读完 E-2 的种子部分；第 3–5 周收尾 E-2 并用它的产物填 E-5 样例；等方向 C/D 就绪后（约第 5–8 周）再做 E-3；小规模重训对比是可选加分项。</p>
+<h2 id="_4">容易踩的坑<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>官方没把完整训练配方全发出来</strong>（人视角视频那部分数据没有读取代码），论文 Study 章节的全量训练数字复现不了——只做"评测对比"或"小规模重训对比"，并把这条边界写在报告开头。</li>
+<li><strong>配置文件写的掩码和代码默认的掩码不是同一个</strong>（配置写 <code>mutual</code>，代码默认 <code>ACTION_SEES_VIDEO</code>），绕过配置直接建模型会悄悄换掩码，同一对"对比实验"可能根本不在比同一个变量——一切记录以存档里的 <code>config.yaml</code> 为准。</li>
+<li><strong>默认只保留最新一个存档，中间存档会被自动删掉</strong>——需要中间步曲线或多步评测时，提前把要留的存档拷出运行目录，或调大 <code>training.keep_last_k_ckpts</code>。</li>
+<li><strong>GPU 测试会静默跳过，"全绿"可能只是 CPU 绿</strong>——手册里写清要设的环境变量，说"测试绿"时一律注明实际跑了哪些用例。</li>
+</ol>
+<h2 id="_5">代码地图<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>configs/
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>├── train.yaml                     # 训练旋钮总清单，所有实验都从改它开始
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>├── model/
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>│   ├── single_system.yaml         # 单系统结构的旋钮
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>│   ├── dual_system.yaml           # 双系统结构的旋钮，消融实验的主战场
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>│   ├── tri_system.yaml            # 三系统结构的旋钮
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>│   ├── video_backbone/            # 视频骨干网络的候选名单
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>│   └── action_backbone/           # 动作模块的候选名单
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>└── dataloader/                    # 七个数据集的候选名单
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>scripts/
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>├── train.py                       # 训练入口，种子就是在这里播下去的
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>├── deploy.sh                      # 把训练存档起成服务的脚本
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>└── download_assets/
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    └── download_openwam_checkpoints.py  # 官方模型下载清单，34 个实验模型在这里分 5 组登记
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>openwam/
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>├── model/architectures/           # 模型结构的登记处，配置在这里被翻译成具体模型
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>└── train/
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>    ├── openwam_trainer.py         # 训练主循环，播种、存档、调试模式都在这里发生
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>    └── utils/
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>        ├── seeding.py             # 随机种子工具箱，管"两次跑得一模一样"
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>        ├── checkpointing.py       # 管训练存档的保存、说明书和自动清理
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>        ├── training_utils.py      # 管训练日志和调试时的损失记录
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>        └── ckpt_model_loader.py   # 从存档目录把模型原样重建出来
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>tests/                             # 实验安全网：改一个变量会不会弄坏别的，跑这里就知道
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>├── test_seeding.py                # 验证种子钉得死不死
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>├── test_dataloader_seed.py        # 验证数据打乱顺序可以复现
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>├── test_split_attn_equivalence.py # 验证两种注意力算法算出来完全一样
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>├── test_train_deploy_consistency.py # 验证训练时和部署时模型表现一致
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>├── test_mask_modes.py             # 验证四种掩码模式"谁看得见谁"没搞错
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>└── test_architecture_variants.py  # 验证各种结构组合都能正常拼出模型
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

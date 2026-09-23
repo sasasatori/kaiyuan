@@ -1,0 +1,1131 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="OpenWAM 仓库深度调研：方向分配说明与任务书（基于 OpenWAM-Official/OpenWAM @ 90e94ae）">
+      
+      
+      
+        <link rel="canonical" href="https://sasasatori.github.io/kaiyuan/%E6%96%B9%E5%90%91B-%E6%A8%A1%E5%9E%8B%E7%AE%A1%E7%BA%BF/">
+      
+      
+        <link rel="prev" href="../%E6%96%B9%E5%90%91A-%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF/">
+      
+      
+        <link rel="next" href="../%E6%96%B9%E5%90%91C-%E9%83%A8%E7%BD%B2%E7%AE%A1%E7%BA%BF/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>方向 B · 模型管线 - OpenWAM 调研任务书</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#b" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="OpenWAM 调研任务书" class="md-header__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenWAM 调研任务书
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              方向 B · 模型管线
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  总览
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../%E6%96%B9%E5%90%91A-%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF/" class="md-tabs__link">
+          
+  
+  
+  方向任务书
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenWAM 调研任务书" class="md-nav__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OpenWAM 调研任务书
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向任务书
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    方向任务书
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91A-%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 A · 数据管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 B · 模型管线
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 B · 模型管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        你需要准备什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        先搞懂这几件事
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务清单
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="任务清单">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#b-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 B-1：画出"一份配置文件怎么变成模型"的全流程图
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-2-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 B-2：讲清 6 种模型结构的区别 + 核对掩码四种模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 B-3：做一张"哪些骨干能配哪些结构"的可行性表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 B-4：动手：照官方扩展指南给框架加一个新积木（假的也行），跑通组装
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 B-5：搞懂"外接视觉编码器"这条线是怎么接上的（能构建出来就行，不训练）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 B-6：查清"冻结"和"分组学习率"的实际行为
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容易踩的坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91C-%E9%83%A8%E7%BD%B2%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 C · 部署管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91D-%E8%AF%84%E6%B5%8B%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 D · 评测管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91E-%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 E · 消融实验
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91F-%E6%A8%A1%E5%9E%8B%E8%A7%A3%E5%89%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 F · 模型解剖
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        你需要准备什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        先搞懂这几件事
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务清单
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="任务清单">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#b-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 B-1：画出"一份配置文件怎么变成模型"的全流程图
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-2-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 B-2：讲清 6 种模型结构的区别 + 核对掩码四种模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 B-3：做一张"哪些骨干能配哪些结构"的可行性表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 B-4：动手：照官方扩展指南给框架加一个新积木（假的也行），跑通组装
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 B-5：搞懂"外接视觉编码器"这条线是怎么接上的（能构建出来就行，不训练）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 B-6：查清"冻结"和"分组学习率"的实际行为
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容易踩的坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="b">方向 B：模型管线——一份配置文件怎么变成模型<a class="headerlink" href="#b" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>OpenWAM 的模型就像一盒积木。你写一份购物清单（配置文件），代码照着清单把积木拼成一个可以训练的模型。这个方向要搞懂三件事：积木有哪些、清单怎么写、拼的时候发生了什么。
+前两周只需要读代码、写文档，不需要显卡、不需要装环境。</p>
+</blockquote>
+<h2 id="_1">你需要准备什么<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>什么东西</th>
+<th>什么时候才需要</th>
+<th>怎么获取</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>源码 + 编辑器</td>
+<td>一开始就要</td>
+<td>前两周零依赖，checkout 下来就能读</td>
+</tr>
+<tr>
+<td>CPU 开发环境</td>
+<td>B-2、B-3、B-4、B-6</td>
+<td>在 <code>OpenWAM/</code> 下跑 <code>pip install -e '.[dev]'</code>，不用显卡</td>
+</tr>
+<tr>
+<td>DINOv3 或 FLUX.2 VAE 权重（约 0.4GB，二选一）</td>
+<td>只有 B-5 需要</td>
+<td>跑 <code>python scripts/download_assets/download_visual_encoder.py</code>；两个都要先在 HuggingFace 上申请授权，建议第二周就去申请</td>
+</tr>
+</tbody>
+</table>
+<p>平时做实验不用下载任何真权重：测试代码里自带一个假模型，拼装、冒烟都靠它。等授权的那几天用其他任务填满。</p>
+<h2 id="_2">先搞懂这几件事<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><strong>清单 + 电话簿。</strong> 代码里有一种"注册表"机制，可以理解成电话簿：每个积木类登记一个名字，以后按名字就能查到类。清单里写名字，组装代码就去电话簿查出对应的类造出来。模型层有三本电话簿，分别管结构、视频骨干、编码器；动作模块没有电话簿，由各个结构代码自己直接造。</p>
+<p><strong>6 种结构的区别只有一个：视频和动作两路信息怎么交流。</strong> 两种（vanilla、moe）把动作直接接在视频后面，当一条长序列一起算，区别只是中间用普通前馈网络还是"混合专家"版（一组子网络里每次挑几个来算）。一种（joint_cross_attn）先把视频算完，指定某几层把中间结果抓出来，交给专门的动作模块去"看"。一种（joint_self_attn）让视频和动作各算各的，但每一层都把两边拼在一起互相看一眼，要求两边层数、头数严格一致，不一致造模型时就报错。一种（idm）分两步：先想象未来的画面，再决定动作。最后一种（tri_system）额外加一个冻结的语言模型当"顾问"——只提供理解、不指挥动作，参数永远不许训练。</p>
+<p><strong>动作模块有两种用法。</strong> 长序列那族用的动作模块很简单：编码动作、编码机器人状态、解码回动作。其他结构用的是一台独立的小型 Transformer，接口多几个，由结构代码逐层驱动它。</p>
+<p><strong>谁能看谁：注意力掩码的四种模式。</strong> 掩码就是一张"谁允许看谁"的座位表。想象一个课堂：视频和动作是两个同学，<code>mutual</code> 是互相都能抄笔记，<code>action_sees_video</code> 是只有动作能看视频，<code>video_sees_action</code> 反过来，<code>isolated</code> 是谁都不许看谁。第一帧（首帧）有特殊处理，不参与这套互看。</p>
+<p><strong>搭桥层和外接编码器的闸门。</strong> 清单里的 <code>bridge_layers</code> 是一个层号列表：cross_attn 结构里它表示"视频的哪几层把结果交出去"，self_attn 和 idm 里它直接决定动作塔盖几层；写 <code>null</code> 时按 <code>bridge_interval</code>（每隔几层搭一座）自动推算。想换掉默认的视频编码器，必须把 <code>from_scratch</code> 设为 <code>true</code>；设成 <code>false</code> 却配了外部编码器会直接报错，因为预训练骨干第一层的通道数和原生编码器的输出维度（z_dim=48）绑死了。</p>
+<p><strong>冻结和分组学习率。</strong> 冻结 = 把某些模块标记成"不训练"，清单里在框架 yaml 顶层写 <code>freeze:</code> 列表；代码会关掉参数的可训练标志，并让它的前向不记录梯度。冻结是整棵子树生效的：冻一个父模块，它下面的子模块全跟着冻住。训练时参数按归属分三组——视频骨干一组、动作模块一组、剩下的一组，<code>video_lr</code> 和 <code>action_lr</code> 只管自己那组，"其他"组永远用基础学习率；被冻结的参数根本不进优化器。</p>
+<h2 id="_3">任务清单<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>整体顺序：B-1 最先做（是全组公共地基），B-2 和 B-3 可并行，B-4 依赖 B-1 的文档质量，B-6 独立，B-5 等授权到位后插入（约 2 天）。</p>
+<h3 id="b-1">任务 B-1：画出"一份配置文件怎么变成模型"的全流程图<a class="headerlink" href="#b-1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>这件事是干嘛的</strong>：方向 E 的每个消融、方向 F 的 α 配置，第一步都是把某份清单拼成模型。你画出这张图，别人照着走就不会迷路。</li>
+<li><strong>你要准备什么</strong>：零依赖，纯阅读。</li>
+<li><strong>具体怎么做</strong>：</li>
+<li>读 <code>configs/train.yaml</code> 的 defaults 段和三份框架清单，画出"命令行里写 <code>model=dual_system model/video_backbone=wan22_ti2v_5b</code> 会选中哪些清单文件"的选择树。</li>
+<li>跟踪结构电话簿：清单里的两个词怎么翻译成注册名、各段参数怎么合并、子配置怎么原样传下去。</li>
+<li>跟踪模型的构造过程：编码器闸门什么时候拦人、动作模块由结构自己造、几何参数（层数/头数/文本维度）怎么从视频骨干自动回填。</li>
+<li>用一张 mermaid 序列图把全链串起来，每一跳标上发生在哪个文件。</li>
+<li><strong>做完交出什么</strong>：一篇组装链路图解（markdown）。从任意一份清单组合出发，能照图复述每一步；至少覆盖 single/dual/tri 各一条链路的差异（tri 多一步造语言顾问）。</li>
+<li><strong>大概多久</strong>：3-4 天。</li>
+</ul>
+<h3 id="b-2-6">任务 B-2：讲清 6 种模型结构的区别 + 核对掩码四种模式<a class="headerlink" href="#b-2-6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>这件事是干嘛的</strong>：把上面"6 种结构"那段展开写透——每种 3-5 句大白话加一张代码位置表。掩码部分用测试把四种模式的"谁能看谁"逐格核对，这张表方向 E 做消融对照时直接要用。</li>
+<li><strong>你要准备什么</strong>：B-1 完成；CPU 环境。</li>
+<li><strong>具体怎么做</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>OpenWAM
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_mask_modes.py<span class="w"> </span>-v<span class="w">     </span><span class="c1"># 先看测试断言了什么</span>
+</code></pre></div></li>
+<li>每种结构填一行表：注册名、类在哪个文件、两路信息怎么交流（一句话）、关键配置字段、动作模块用哪种。</li>
+<li>读掩码的填表逻辑，把四种模式的"动作看视频、视频看动作"两个方向（含首帧特殊处理）填成对照矩阵，和测试断言逐格核对。</li>
+<li>标注特例：idm 不理会这个开关；清单里写 <code>mutual</code> 但代码默认值是 <code>action_sees_video</code>（见"容易踩的坑"第 1 条）。</li>
+<li><strong>做完交出什么</strong>：6 结构对照表 + 4 模式可见性矩阵 + 和测试一致的核对记录（作为 B-1 文档的一章）。</li>
+<li><strong>大概多久</strong>：3-5 天。</li>
+</ul>
+<h3 id="b-3">任务 B-3：做一张"哪些骨干能配哪些结构"的可行性表<a class="headerlink" href="#b-3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>这件事是干嘛的</strong>：5 个骨干 × 6 种结构 = 30 种组合，不是每种都拼得起来。你在 CPU 上逐个试拼（骨架级，不用真权重），拼不起来的查清原因。以后方向 E 选配置、方向 F 选骨架直接查这张表。</li>
+<li><strong>你要准备什么</strong>：B-1、B-2 完成；不需要权重。</li>
+<li><strong>具体怎么做</strong>：</li>
+<li>写一个临时矩阵脚本：对每个组合走一遍组装路径，抓住异常并归类（用测试里的假模型注入；Cosmos 系的重依赖要等加载权重才碰，所以 CPU 上试拼是安全的）。</li>
+<li>必须验证并归因的已知约束：VACE 和外接编码器互斥；joint_self_attn 要求两边层数/头数/头维严格一致；cosmos_predict25 配 joint_cross_attn 要在命令行手工补 <code>+model.action_backbone.num_heads=16 +model.action_backbone.attn_head_dim=64</code>；tri_system 必须配语言模型；cosmos3_edge 的 <code>freeze_und=false</code> 还没实现（设了就报 NotImplementedError，标为"已知未实现"，不当 bug）。</li>
+<li>矩阵每格标 ✅ 能拼 / ❌ + 报错原文 + 原因出在哪个文件。</li>
+<li><strong>做完交出什么</strong>：5×6 可行性矩阵，每个 ❌ 格有报错归因。</li>
+<li><strong>大概多久</strong>：2-3 天。</li>
+</ul>
+<h3 id="b-4">任务 B-4：动手：照官方扩展指南给框架加一个新积木（假的也行），跑通组装<a class="headerlink" href="#b-4" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>这件事是干嘛的</strong>：官方写了一篇"怎么加新组件"的指南。你照着它给框架加一个新的视频骨干（可以是最简假实现），走通"登记进电话簿 → 清单能选中 → CPU 上冒烟跑一次"全链。顺便检验你 B-1 写的文档是不是真能当施工图用。</li>
+<li><strong>你要准备什么</strong>：B-1 完成；CPU 环境。</li>
+<li><strong>具体怎么做</strong>：</li>
+<li>照指南写一个视频骨干子类（实现预处理/逐块计算/收尾三段接口和几何属性），用注册装饰器以 <code>my_video</code> 这个名字登记；可以大量借用测试里假模型的最小实现思路。</li>
+<li>新增 <code>configs/model/video_backbone/my_video.yaml</code>，验证命令行写 <code>model/video_backbone=my_video</code> 能解析到你的类。</li>
+<li>CPU 冒烟：在 single_system vanilla 下拼出来，跑一次假数据前向；故意用同一个名字再登记一次，应报 "already registered"。</li>
+<li>把每个"指南没写但实际要做的事"回注到 B-1 文档。</li>
+<li><strong>做完交出什么</strong>：最小扩展样例（脚本 + yaml）+ 指南缺口清单。</li>
+<li><strong>大概多久</strong>：2-3 天。</li>
+</ul>
+<h3 id="b-5">任务 B-5：搞懂"外接视觉编码器"这条线是怎么接上的（能构建出来就行，不训练）<a class="headerlink" href="#b-5" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>这件事是干嘛的</strong>：把默认的视频编码器换成 DINOv3 这类外部编码器，中间经过"闸门检查 → 造编码器 → 视频骨干重新初始化"三步。你把这条构建路径跑通，验证输出维度契约生效。只做构建和编码冒烟，训练对照是方向 E 的事。</li>
+<li><strong>你要准备什么</strong>：B-3 完成；DINOv3 或 FLUX.2 VAE 权重已下载（约 0.4GB，要授权）；CPU 或单卡即可。</li>
+<li><strong>具体怎么做</strong>：</li>
+<li>负例先行：<code>from_scratch=false</code> 配 <code>encoder.name=dinov3</code> 应被闸门拒绝，记录报错原文。</li>
+<li>正例：用 <code>model.video_backbone.from_scratch=true model.video_backbone.encoder.name=dinov3 model.video_backbone.encoder.model_path=&lt;权重目录&gt;</code> 构建，观察日志里编码器构建和骨干重新初始化的触发。</li>
+<li>契约核对：断言编码器输出维度不是 48（DINOv3 是 1408）、它不能解码回画面；确认对它调"生成并解码视频"会直接报错。</li>
+<li>用一帧随机图跑一次编码，记录输出张量的形状。</li>
+<li><strong>做完交出什么</strong>：负例报错记录 + 正例构建日志（含重新初始化的证据）+ 契约断言通过记录。</li>
+<li><strong>大概多久</strong>：2-4 天（含等授权的时间）。</li>
+</ul>
+<h3 id="b-6">任务 B-6：查清"冻结"和"分组学习率"的实际行为<a class="headerlink" href="#b-6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>这件事是干嘛的</strong>：训练超参归方向 C/F 配，但"哪些参数真的在训练"这条链的语义由你审计清楚。结论写成一页备忘，别人配超参时照它就不会配错。</li>
+<li><strong>你要准备什么</strong>：B-1 完成；CPU 环境（假模型即可测）。</li>
+<li><strong>具体怎么做</strong>：</li>
+<li>读冻结的实现，确认两个效果（关掉可训练标志 + 前向不记录梯度）和"写了不存在的名字会静默跳过"这个行为；用假模型验证：冻结视频骨干后它的参数全部不可训练。</li>
+<li>验证连带效果：冻结一个父模块会把它下面的可训练子模块一起冻住。写个小用例证明这一点，并在文档里标注"目前清单只冻结整棵子树所以不触发，但'只训投影层'这类部分微调会踩坑"。</li>
+<li>验证顾问保护：给 tri 结构的冻结列表加上 <code>understanding_expert</code>，应被直接报错拒绝。</li>
+<li>审计分桶：用假模型造三组参数，断言分组归属和学习率覆盖——<code>video_lr</code>、<code>action_lr</code> 只管自己那组，"其他"组永远用基础学习率，冻结参数进不了优化器。</li>
+<li><strong>做完交出什么</strong>：4 项语义各有一条可运行的验证记录（脚本输出）+ 一页冻结/优化器语义备忘（含连带冻结陷阱和 tri 特例）。</li>
+<li><strong>大概多久</strong>：2-3 天。</li>
+</ul>
+<h2 id="_4">容易踩的坑<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>清单写 <code>mutual</code>，代码默认值却是 <code>action_sees_video</code></strong>：绕过清单直接造模型会静默换掉座位表，实验结论悄悄失真。躲法：实验记录一律以训练存档里的 config.yaml 为准。</li>
+<li><strong>Wan 骨干一个类登记了两个名字，名字和权重路径不符只警告不报错</strong>：只改名字不改路径，会静默加载错的骨干。躲法：B-3 逐格核对名字和路径一致。</li>
+<li><strong>冻结父模块会连带冻住可训练的子模块</strong>：冻结是整棵子树生效，"只训投影层"这类部分微调会踩坑。躲法：B-6 用用例固化这条语义，备忘里显式警示。</li>
+<li><strong>语言顾问的参数不进模型存档</strong>：它以 <code>vlm_backbone.</code> 前缀被整体排除在外，在它上面加可训练的小层会被静默丢掉。躲法：动 tri 相关代码前先读它文件头部的注释。</li>
+</ol>
+<h2 id="_5">代码地图<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>openwam/model/architectures/            ← 模型的"总装车间"：只管把零件拼起来，不实现零件本身
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── base.py                             # 所有结构的公共爹类：组装、冻结、算损失、生成视频都在这
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├── registry.py                         # 结构电话簿：清单里的两个词在这翻译成具体的结构类
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>├── single_system/                      # 把动作接在视频后面当一条长序列的两种结构
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>├── dual_system/                        # 视频动作分开算的三种结构，外加逐层调度它们的驱动器
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>├── tri_system/                         # 再额外带一个冻结语言顾问的结构
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>└── utils/                              # 座位表（谁能看谁）和搭桥层推算这两个公共小工具
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>openwam/model/video_backbone/           ← 视频骨干：负责"看懂画面"的主力网络
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>├── base.py                             # 所有视频骨干都要遵守的三段式接口：预处理、逐块计算、收尾
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>├── registry.py + __init__.py           # 骨干电话簿，5 个内置骨干都在这里登记户口
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>├── wan_backbone.py + wan/              # Wan 家族骨干的实现，换编码器后的重新初始化也在这
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>├── cosmos_predict25_backbone.py + cosmos_predict25/   # Cosmos-Predict2.5-2B 骨干
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>├── cosmos3_backbone.py + cosmos3/      # Cosmos3-Edge 骨干
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>└── encoder/                            # 把原始视频压成小张量的编码器，默认的和外接的都在这
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>openwam/model/action_backbone/          ← 动作模块：两种用法（简单版/独立小网络）的接口和实现
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>openwam/model/vlm_backbone/             ← 语言顾问：只有 Qwen3-VL-2B 一个，造对象时就加载
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>configs/model/                          ← 清单目录：选哪份清单就是选哪种拼法
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>├── single_system.yaml / dual_system.yaml / tri_system.yaml   # 三份框架清单：冻结、座位表、搭桥层在这选
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>├── video_backbone/                     # 5 个骨干和 4 个编码器各自的清单
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>├── action_backbone/                    # 动作模块两种用法的清单
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>└── vlm_backbone/                       # 语言顾问的清单
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>openwam/train/utils/optimizer_groups.py  ← 三组学习率的分桶逻辑
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>assets/openwam_usage_docs/architecture-extension.md   ← 官方扩展指南，B-4 的操作手册
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>tests/test_openwam_trainer.py            ← 假模型的定义，做实验不用真权重就靠它
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>tests/test_architecture_variants.py      ← 演示怎么用假模型把各种结构拼起来
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>tests/test_mask_modes.py                 ← 座位表四种模式的行为断言，B-2 要逐格核对它
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
