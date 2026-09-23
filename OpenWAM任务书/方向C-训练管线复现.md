@@ -3,7 +3,7 @@
 > 一句话定位：把 OpenWAM 的「torchrun + Accelerate + DeepSpeed ZeRO-2」双流 flow-matching 训练管线从 20 步 debug 冒烟一路复现到 LIBERO 微调，并摸清资源-旋钮关系。读者：第一次接触该模块的同学。
 > 前置：先读本目录 README.md 的总览，了解本方向在全局中的位置。环境搭建依赖 [方向A-环境搭建与验证矩阵.md](方向A-环境搭建与验证矩阵.md)；训练产物的部署见 [方向B-部署与推理复现.md](方向B-部署与推理复现.md)。
 
-仓库根 `$R = /fact_home/yiyangyuan/workspace/projects/kaiyuan/OpenWAM`，下文所有路径均为仓库相对路径。行号以 main @ 90e94ae 为准；行号漂移时以符号名为准（下文引用格式 `path:line 符号`，符号均已逐一核对）。
+仓库根 `$R = OpenWAM`，下文所有路径均为仓库相对路径。行号以 main @ 90e94ae 为准；行号漂移时以符号名为准（下文引用格式 `path:line 符号`，符号均已逐一核对）。
 
 ## 1. 这个方向做什么、为什么值得做
 

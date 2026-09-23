@@ -4,7 +4,7 @@
 > 读者：第一次接触该模块的同学。
 > 前置：先读本目录 README.md 的总览，了解本方向在全局中的位置。
 
-仓库根记作 `$R = /fact_home/yiyangyuan/workspace/projects/kaiyuan/OpenWAM`，下文路径均为仓库相对路径。行号以 main @ 90e94ae 为准（文中以符号锚点为主，行号漂移时按符号名 grep 重新定位）。
+仓库根记作 `$R = OpenWAM`，下文路径均为仓库相对路径。行号以 main @ 90e94ae 为准（文中以符号锚点为主，行号漂移时按符号名 grep 重新定位）。
 
 ## 1. 这个方向做什么、为什么值得做
 
