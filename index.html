@@ -373,7 +373,7 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        这个仓库是干什么的
+        这份任务书的目标
       
     </span>
   </a>
@@ -384,7 +384,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        整个复现流程长什么样
+        这个仓库是干什么的
       
     </span>
   </a>
@@ -395,7 +395,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        六个方向，一人一个
+        整个复现流程长什么样
       
     </span>
   </a>
@@ -406,7 +406,7 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        怎么开展
+        六个方向，一人一个
       
     </span>
   </a>
@@ -417,7 +417,7 @@
   <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        排期建议
+        容易踩的坑（全组共用）
       
     </span>
   </a>
@@ -428,17 +428,6 @@
   <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        容易踩的坑（全组共用）
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         常用命令
       
     </span>
@@ -447,7 +436,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         这份任务书是怎么来的
@@ -722,7 +711,7 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        这个仓库是干什么的
+        这份任务书的目标
       
     </span>
   </a>
@@ -733,7 +722,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        整个复现流程长什么样
+        这个仓库是干什么的
       
     </span>
   </a>
@@ -744,7 +733,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        六个方向，一人一个
+        整个复现流程长什么样
       
     </span>
   </a>
@@ -755,7 +744,7 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        怎么开展
+        六个方向，一人一个
       
     </span>
   </a>
@@ -766,7 +755,7 @@
   <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        排期建议
+        容易踩的坑（全组共用）
       
     </span>
   </a>
@@ -777,17 +766,6 @@
   <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        容易踩的坑（全组共用）
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         常用命令
       
     </span>
@@ -796,7 +774,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         这份任务书是怎么来的
@@ -832,7 +810,49 @@
 分析对象：OpenWAM-Official/OpenWAM 的 main 分支（提交 <code>90e94ae</code>，文中行号以此为准）。</p>
 </blockquote>
 <hr />
-<h2 id="_1">这个仓库是干什么的<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="_1">这份任务书的目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>最终任务</strong>：学习结束后，组里每个人能独立做到四件事——</p>
+<ol>
+<li><strong>搭建 infra</strong>：数据、模型、部署、评测四条管线，每条都能从零搭起来（能新接一个数据集、新加一个模型组件、新起一个服务、新接入一个考场）；</li>
+<li><strong>设计消融</strong>：会按"每次只改一个变量"的规矩设计并执行对照实验；</li>
+<li><strong>训练</strong>：能跑通从头训练，也能基于官方存档做微调；</li>
+<li><strong>部署与评测</strong>：能把训练存档做成网络服务，并在仿真考场里复现论文的成功率。</li>
+</ol>
+<p><strong>阶段性任务</strong>（按顺序推进，每段都有明确产出）：</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>做什么</th>
+<th>产出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一（第 1–2 周）</td>
+<td>六个方向并行：读代码、写管线讲解、各完成一个动手建造物</td>
+<td>6 份管线文档；A 的新数据集类型、B 的新模型组件、C 的可请求服务、D 的评测管线总图、E 的可复现验证、F 的存档解剖报告</td>
+</tr>
+<tr>
+<td>二（第 3–5 周）</td>
+<td>各自动手复现：A 跑通数据链路、B 拼模型做组装实验、C 把服务搭起来、D 装好 LIBERO 考场、E 验证实验可复现、F 解剖官方存档</td>
+<td>服务可用 + LIBERO 考场就绪</td>
+</tr>
+<tr>
+<td>三（第 5–8 周）</td>
+<td>汇合产出：跑评测、做对比、微调 α</td>
+<td>LIBERO 成功率对照表 + 一组官方实验模型对比 + α 微调存档</td>
+</tr>
+<tr>
+<td>四（第 8 周以后）</td>
+<td>啃硬骨头</td>
+<td>RoboTwin/EBench 大评测、外接编码器/SVAE、预训练混合攻坚</td>
+</tr>
+</tbody>
+</table>
+<p>方向之间只有三处需要等别人，且都在第二阶段以后：D 正式评测要等 C 的服务；F 的第 5 个任务要等 C 的服务；E 的第 3 个任务要借 C 和 D 的设施。</p>
+<hr />
+<h2 id="_2">这个仓库是干什么的<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>OpenWAM 是一个训练"机器人世界模型"的开源项目。它想让模型做两件事：先看懂世界怎么变化（输入视频），再决定机器人该怎么动（输出动作）。仓库里有三样东西：</p>
 <ul>
 <li><strong>一套积木式框架</strong>：模型、训练、部署、评测都做成了可替换的模块。想换模型结构、换数据集、换评测环境，改配置就行，不用改代码。</li>
@@ -841,7 +861,7 @@
 </ul>
 <p>论文在 arXiv:2609.07398，代码是 Apache-2.0 协议。</p>
 <hr />
-<h2 id="_2">整个复现流程长什么样<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_3">整个复现流程长什么样<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>把 OpenWAM 跑起来一共六步，每一步对应一个方向（图里标了归属）：</p>
 <pre class="mermaid"><code>flowchart TD
     subgraph S1["① 下载东西"]
@@ -870,15 +890,15 @@
     REG --&gt; TR
     CKPT --&gt; SRV --&gt; EV
     SE["方向 E · 消融实验&lt;br/&gt;研究'怎么设计对照实验'"] -. 作用于 .-&gt; S4
-    AL["方向 F · 解剖官方模型&lt;br/&gt;OpenWAM-α 训练存档"] -. 直接进 .-&gt; S5</code></pre>
+    AL["方向 F · 模型解剖&lt;br/&gt;OpenWAM-α 训练存档"] -. 直接进 .-&gt; S5</code></pre>
 <p>两个方向的定位比较特殊：</p>
 <ul>
 <li><strong>方向 E（消融实验）不在这条链上</strong>。它研究的是方法论：官方那 34 个对比实验是怎么设计的，我们怎么照做。</li>
-<li><strong>方向 F（解剖 α）可以跳过训练</strong>。官方模型文件直接下载就能进第⑤步部署，不用自己训。</li>
+<li><strong>方向 F（模型解剖）可以跳过训练</strong>。官方模型文件直接下载就能进第⑤步部署，不用自己训。</li>
 </ul>
 <p>训练没有单独设方向：模型怎么拼装归 B，对照实验怎么跑归 E，α 微调归 F。</p>
 <hr />
-<h2 id="_3">六个方向，一人一个<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_4">六个方向，一人一个<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -929,22 +949,7 @@
 </table>
 <p>人少可以合并：A+F 一组，B+E 一组。</p>
 <hr />
-<h2 id="_4">怎么开展<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>前两周：读代码 + 写讲解</strong>。每人读自己方向的代码，写一份"这条管线是怎么回事"的文档。不需要 GPU，不需要装环境，今天就能开始。</li>
-<li><strong>环境各管各的</strong>。每个方向的文档开头有一张资源清单：需要什么、什么时候需要、怎么下载。没有"全组统一搭环境"这个环节，谁也不会被别人卡住。</li>
-<li><strong>两周后组内互讲</strong>。每人 20 分钟，把自己的管线讲给全组听，拼出完整图景。</li>
-</ol>
-<h2 id="_5">排期建议<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>flowchart TD
-    M1["第一阶段（第 1–2 周）&lt;br/&gt;六人并行读代码&lt;br/&gt;产出：6 份管线讲解文档"]
-    M2["第二阶段（第 3–5 周）&lt;br/&gt;各自动手&lt;br/&gt;A 跑通数据链路 · B 拼模型做实验&lt;br/&gt;C 把服务搭起来 · D 装好 LIBERO 考试环境&lt;br/&gt;E 验证实验可复现 · F 解剖官方存档"]
-    M3["第三阶段（第 5–8 周）&lt;br/&gt;汇合出成果&lt;br/&gt;D 跑出 LIBERO 成功率 · E 做模型对比 · F 微调 α"]
-    M4["第四阶段（第 8 周以后）&lt;br/&gt;啃硬骨头&lt;br/&gt;RoboTwin/EBench 大评测 · 预训练数据攻坚"]
-    M1 --&gt; M2 --&gt; M3 --&gt; M4</code></pre>
-<p>方向之间只有三处需要等待别人，而且都在第二阶段以后：D 正式评测要等 C 的服务；F 的第 5 个任务要等 C 的服务；E 的第 3 个任务要借 C 和 D 的设施。</p>
-<hr />
-<h2 id="_6">容易踩的坑（全组共用）<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h2 id="_5">容易踩的坑（全组共用）<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -995,7 +1000,7 @@
 </table>
 <p>每个方向文档的最后一节还有该方向专属的踩坑清单。</p>
 <hr />
-<h2 id="_7">常用命令<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h2 id="_6">常用命令<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># 装环境（普通 Python 路线）</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>openwam<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>conda<span class="w"> </span>activate<span class="w"> </span>openwam
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">torch</span><span class="o">==</span><span class="m">2</span>.7.1<span class="w"> </span><span class="nv">torchvision</span><span class="o">==</span><span class="m">0</span>.22.1<span class="w"> </span><span class="nv">torchaudio</span><span class="o">==</span><span class="m">2</span>.7.1<span class="w"> </span><span class="se">\</span>
@@ -1035,7 +1040,7 @@
 <li><code>benchmarks/README.md</code>：评测客户端总指南（方向 D 的必读）</li>
 </ul>
 <hr />
-<h2 id="_8">这份任务书是怎么来的<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<h2 id="_7">这份任务书是怎么来的<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
 <p>对仓库做了 8 路并行代码调研（模型结构、骨干网络、训练、数据、部署、评测、基础设施、测试），关键结论都经过源码核对（比如"官方没发布人视角数据读取代码"这条，是全局搜索验证过的）。单文件完整版见 main 分支 <code>OpenWAM调研方向分配与任务书.md</code>。</p>
 
 
