@@ -1,0 +1,1281 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="OpenWAM 仓库深度调研：方向分配说明与任务书（基于 OpenWAM-Official/OpenWAM @ 90e94ae）">
+      
+      
+      
+        <link rel="canonical" href="https://sasasatori.github.io/kaiyuan/%E6%96%B9%E5%90%91G-%E8%A7%86%E8%A7%89%E8%A1%A8%E5%BE%81%E4%B8%8E%E9%AA%A8%E5%B9%B2%E7%A0%94%E7%A9%B6/">
+      
+      
+        <link rel="prev" href="../%E6%96%B9%E5%90%91F-%E6%9E%B6%E6%9E%84%E5%8F%98%E4%BD%93%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">
+      
+      
+        <link rel="next" href="../%E6%96%B9%E5%90%91H-%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%B4%A8%E9%87%8F%E5%9F%BA%E5%BB%BA/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>方向 G · 视觉表征与骨干研究 - OpenWAM 调研任务书</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#g" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="OpenWAM 调研任务书" class="md-header__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenWAM 调研任务书
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              方向 G · 视觉表征与骨干研究
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  总览
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../%E6%96%B9%E5%90%91A-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AA%8C%E8%AF%81%E7%9F%A9%E9%98%B5/" class="md-tabs__link">
+          
+  
+  
+  方向任务书
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenWAM 调研任务书" class="md-nav__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OpenWAM 调研任务书
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向任务书
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    方向任务书
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91A-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AA%8C%E8%AF%81%E7%9F%A9%E9%98%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 A · 环境搭建与验证矩阵
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91B-%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%8E%A8%E7%90%86%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 B · 部署与推理复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91C-%E8%AE%AD%E7%BB%83%E7%AE%A1%E7%BA%BF%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 C · 训练管线复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91D-%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%8A%A8%E4%BD%9C%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 D · 数据管线与动作空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91E-%E4%BB%BF%E7%9C%9F%E8%AF%84%E6%B5%8B%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 E · 仿真评测复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91F-%E6%9E%B6%E6%9E%84%E5%8F%98%E4%BD%93%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 F · 架构变体与注意力机制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 G · 视觉表征与骨干研究
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 G · 视觉表征与骨干研究
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 这个方向做什么、为什么值得做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 最小必要背景
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 任务书
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 任务书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#g1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 G1：五骨干几何/代价基线表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g2-encoder-dinov3-flux2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 G2：外部 encoder 替换端到端复现（DINOv3 或 FLUX.2）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g3svae" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 G3：SVAE 两阶段复现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 G4：骨干×架构可行性矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g5tri_system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 G5：tri_system 理解专家参与度分析
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g6cosmos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 G6：Cosmos 路线打通（选做）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 建议推进顺序与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 风险与坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 推荐阅读顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91H-%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%B4%A8%E9%87%8F%E5%9F%BA%E5%BB%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 H · 测试与质量基建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 这个方向做什么、为什么值得做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 最小必要背景
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 任务书
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 任务书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#g1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 G1：五骨干几何/代价基线表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g2-encoder-dinov3-flux2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 G2：外部 encoder 替换端到端复现（DINOv3 或 FLUX.2）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g3svae" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 G3：SVAE 两阶段复现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 G4：骨干×架构可行性矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g5tri_system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 G5：tri_system 理解专家参与度分析
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g6cosmos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 G6：Cosmos 路线打通（选做）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 建议推进顺序与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 风险与坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 推荐阅读顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="g">方向 G：视觉表征与骨干研究<a class="headerlink" href="#g" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>一句话定位：研究 OpenWAM 最底层的可替换组件——视频骨干（5 个注册键）、外部视觉 encoder、动作骨干与 tri_system 的冻结 VLM，复现"预训练视觉表征 ↔ 生成式 VAE latent"的取舍实验。
+读者：第一次接触该模块的同学。
+前置：先读本目录 README.md 的总览，了解本方向在全局中的位置。训练相关命令的前置环境见 <code>方向C-训练管线复现.md</code>。</p>
+</blockquote>
+<p>仓库根记为 <code>$R = OpenWAM</code>；下文所有路径均为仓库相对路径。行号以 main @ <code>90e94ae</code> 为准；若行号漂移，以符号锚点（<code>path:line 符号</code> 中的符号名）为准。</p>
+<h2 id="1">1. 这个方向做什么、为什么值得做<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>OpenWAM 是一个"世界-动作模型"（WAM）：视频 DiT 负责世界建模，动作 DiT 负责动作生成。本方向研究的是这个技术栈的<strong>最底层可插拔组件</strong>：视频骨干把原始帧编码成 latent 并提供扩散块循环；它默认用 Wan 系列自带的 VAE，但仓库预留了一个实验旋钮——当 <code>from_scratch=true</code> 时可以用外部预训练视觉 encoder（DINOv3 / V-JEPA2.1 / FLUX.2 VAE）替换原生 VAE。这正是论文"世界知识继承"议题的实验入口：生成式 VAE 的 latent 是为了像素重建优化的，而 DINOv3/V-JEPA 的特征是为了语义理解优化的，换掉它们意味着什么，是一个真正可发表的研究问题。</p>
+<p>V-JEPA2.1 的特征维度（128 维 token 嵌入）与 Wan VAE 的 latent 维度（48）不一致，仓库为此提供了一条独立的 SVAE 工具链：先用 V-JEPA 在全数据集上收集高维特征，再训练一个小 VAE 把特征压到 48 维与 Wan VAE 对齐，最后通过 <code>svae_path</code> 接回主训练。这条链是 G3 的核心。</p>
+<p>另一条表征路线是 tri_system 架构里的冻结 VLM（Qwen3-VL）：它不参与生成，只把 (prompt, 首帧) 编码成 hidden states 喂给一个可训练的"理解专家"（UnderstandingExpert），再投影进三模态联合注意力。这个专家到底贡献多少，是 G5 的消融问题。</p>
+<p>做这个方向能学到：可插拔骨干的注册表/契约设计、DiT 从头重初始化的代价与机制、VAE latent 几何（z_dim、时空压缩率、因果首帧）、以及表征学习（自监督特征 vs 生成 latent）在下游控制任务上的实证方法。</p>
+<h2 id="2">2. 最小必要背景<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p><strong>VideoBackbone ABC 三段式</strong>。所有视频骨干都实现同一个抽象基类，架构只通过三个方法驱动扩散循环：<code>prepare</code>（前处理：patchify/频率/时间调制）→ <code>run_block</code>（逐块跑 DiT，梯度检查点对架构透明）→ <code>finalize</code>（head + unpatchify）。
+锚点：<code>openwam/model/video_backbone/base.py:57 class VideoBackbone</code>；<code>prepare</code> :122、<code>run_block</code> :126、<code>finalize</code> :130。</p>
+<p><strong>registry 工厂</strong>。骨干不直接 new，而是通过名字注册/构建。5 个内置注册键：<code>wan22_ti2v_5b</code>、<code>wan21_vace_1_3b</code>、<code>wan21_i2v_14b_480p</code>、<code>cosmos_predict25_2b</code>、<code>cosmos3_edge</code>。
+锚点：<code>openwam/model/video_backbone/__init__.py:43-57</code>（注册语句）；<code>openwam/model/video_backbone/registry.py:30 build_video_backbone</code>。</p>
+<p><strong>外部 encoder 门控</strong>。encoder 块<strong>仅当 <code>from_scratch=true</code> 时才生效</strong>；<code>from_scratch=false</code> 且 <code>encoder.name != wan22_vae</code> 会直接 fail-fast 报错。原因写在报错文案里：预训练 DiT 的第一层卷积通道数绑死原生 Wan VAE 的 z_dim=48，换 encoder 就必须重初始化 DiT。DINOv3（z_dim 1408）、V-JEPA2.1、FLUX.2 VAE 的 z_dim 都不是 48，因此这三个 encoder 都必须 <code>from_scratch=true</code>。
+锚点：<code>openwam/model/architectures/base.py:199 _init_video_backbone</code>；门控四象限注释 :229-237；实际闸门 <code>if enc_cfg is not None and from_scratch:</code> :248；fail-fast raise :297-304；DiT 重初始化调用 :385-386 <code>reinit_for_from_scratch</code>。</p>
+<p><strong>encoder ABC 契约</strong>。每个 encoder 加载权重后导出一个 <code>VideoEncoderProperties</code>（冻结 dataclass），声明 latent 几何：<code>z_dim</code>（latent 通道数）、<code>spatial/temporal_compression</code>、<code>causal_temporal</code>（首帧是否独立成 token）、<code>pixel_decode</code>（能否解码回像素——DINOv3/V-JEPA 为 False，只能用 latent 级指标）。
+锚点：<code>openwam/model/video_backbone/encoder/base.py:26 class VideoEncoderProperties</code>；<code>z_dim</code> :60、<code>causal_temporal</code> :63、<code>pixel_decode</code> :64；<code>batch_encode</code> 形状契约 :107-108。</p>
+<p><strong>SVAE reducer</strong>。把 V-JEPA 高维特征压到 <code>latent_dim=48</code>（与 Wan VAE 对齐）的小 VAE，作为 encoder 内部的可选冻结模块。
+锚点：<code>openwam/model/video_backbone/encoder/svae/model.py:87 class SVAE</code>（<code>latent_dim: int = 48</code> :102，加载入口 <code>load_svae</code> :344）；<code>openwam/model/video_backbone/encoder/svae/reducer.py</code>（<code>build/reduce/effective_z_dim</code>）。</p>
+<p><strong>action_backbone 两套 ABC</strong>。动作侧不是独立模型，而是两组参数化 I/O/Transformer：<code>SharedActionBackbone</code>（single_system 用，把动作 token 直接拼进视频 DiT 序列，契约 <code>encode/encode_state/decode</code>）与 <code>ActionDiTBackbone</code>（dual/tri 用，独立动作 Transformer，契约 <code>forward/prepare_state/pre_attn_at_layer/post_attn_at_layer/extract_prediction</code>）。动作骨干<strong>没有 registry</strong>，由各架构 <code>__init__</code> 直接构造。
+锚点：<code>openwam/model/action_backbone/base.py:38 class SharedActionBackbone</code>；:147 <code>class ActionDiTBackbone</code>。</p>
+<p><strong>VlmBackbone</strong>。tri_system 专用的冻结视觉-语言特征抽取器（Qwen3-VL-2B）。注意它与 video/encoder 的两段式不一致：<strong>没有 <code>from_pretrained</code></strong>，构造即加载；且其权重以 <code>vlm_backbone.</code> 前缀整体排除在架构 state_dict 之外。
+锚点：<code>openwam/model/vlm_backbone/base.py:20 class VlmBackbone</code>；实现 <code>openwam/model/vlm_backbone/qwen3_vl_backbone.py</code>。</p>
+<p><strong>冻结与 <code>_NEVER_FREEZE</code></strong>。冻结走单点 API <code>freeze_modules</code>（子树级 <code>requires_grad_(False)</code> + <code>forward</code> 包 <code>no_grad</code>），列表在框架 yaml 顶层。tri_system 有一个硬约束：<code>understanding_expert</code> 永远不许冻结。
+锚点：<code>openwam/model/architectures/base.py:742 freeze_modules</code>；<code>openwam/model/architectures/tri_system/joint_self_attn.py:85 _NEVER_FREEZE = frozenset({"understanding_expert"})</code>（拒绝逻辑 :242）。</p>
+<h2 id="3">3. 代码地图<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>openwam/model/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── video_backbone/                  ← 本方向主战场
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│   ├── base.py                      【入口文件①】VideoBackbone ABC（三段式 + reinit_for_from_scratch :157）
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   ├── registry.py                  build_video_backbone (:30) 工厂
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   ├── __init__.py                  5 个注册键 (:43-57)
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   ├── wan_backbone.py              Wan 系骨干实现（reinit_for_from_scratch :197）
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   ├── wan/                         Wan 管线 internals
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   │   ├── pipeline_builder.py      权重加载；_warn_on_name_path_mismatch (:87) 只 WARN
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│   │   ├── encode.py                VAE/VACE 编码；VACE+外部 encoder 互斥注释 (:82)
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│   │   ├── reinit.py                reinit_dit_from_scratch (:74) DiT 全随机重初始化
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│   │   ├── encode.py / models/      文本编码与 DiT 定义
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│   │   └── shared/configs/model_configs.py  三套 Wan 几何硬编码（dim/层数/头数）
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│   ├── cosmos_predict25_backbone.py + cosmos_predict25/   Cosmos-Predict2.5-2B（pipeline_builder.py 几何/权重通配）
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│   ├── cosmos3_backbone.py + cosmos3/                     Cosmos3-Edge（vendored transformer，双流+und 前缀 KV）
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│   └── encoder/                     外部 encoder 层
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│       ├── base.py                  【入口文件②】VideoEncoder ABC + VideoEncoderProperties
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│       ├── registry.py              build_video_encoder
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│       ├── wan22_vae.py             原生 VAE 包装（默认）
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│       ├── dinov3.py / vjepa21.py / flux2_vae.py   三个外部 encoder（pixel_decode=False）
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│       └── svae/                    model.py（SVAE）+ reducer.py（降维封装）
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>├── action_backbone/                 动作扩散侧（两套 ABC，无 registry）
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│   ├── base.py                      SharedActionBackbone (:38) / ActionDiTBackbone (:147)
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│   ├── components.py                ActionEncoder/ActionOutputMLP（注意：只是 MLP，不是 LAPA）
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>│   ├── separate_action_dit.py       dual/tri 的独立动作 Transformer
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>│   └── shared_action_backbone.py    single_system 的共享骨干
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>└── vlm_backbone/                    tri_system 专用冻结 VLM
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    ├── base.py                      VlmBackbone ABC (:20，无 from_pretrained)
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    ├── registry.py                  build_vlm_backbone
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    └── qwen3_vl_backbone.py         Qwen3-VL-2B 实现
+</code></pre></div>
+<p>配置与脚本：
+- <code>configs/model/video_backbone/*.yaml</code> — 5 个骨干 yaml；<code>wan22_ti2v_5b.yaml:11 from_scratch</code>、:5 encoder 可选值注释。
+- <code>configs/model/video_backbone/encoder/*.yaml</code> — encoder 组；<code>vjepa21.yaml:16 svae_path</code>、:17 <code>svae_target_dim</code>。
+- <code>configs/model/video_backbone/encoder/svae/train.yaml</code> — SVAE 训练配置（<code>latent_dim: 48</code> :7、<code>beta: 1.0e-4</code> :31、<code>num_epochs: 50</code> :18）。
+- <code>scripts/svae_train/collect_svae_features.sh</code>（MASTER_PORT 29502，:49）/ <code>train_svae.sh</code>（29503，:43）。
+- <code>scripts/download_assets/download_video_backbone.py</code> / <code>download_visual_encoder.py</code> / <code>download_vlm_backbone.py</code> — 权重下载（会回写 yaml 的 model_path）。
+- <code>scripts/install_cosmos_predict25.sh</code> — Cosmos 依赖安装（编译 transformer-engine）。
+- <code>openwam/model/architectures/base.py:199 _init_video_backbone</code> — 所有骨干构建的唯一入口。</p>
+<h2 id="4">4. 任务书<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h3 id="g1">任务 G1：五骨干几何/代价基线表<a class="headerlink" href="#g1" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：对 5 个注册骨干各测一组基线：几何参数（dim/层数/头数/latent z_dim）、单卡加载峰值显存、单次 forward 时延。
+<strong>前置</strong>：环境可用（见方向C）；至少下载 Wan2.2-TI2V-5B 与 Wan2.1-VACE-1.3B 两个权重（其余可后补）。
+<strong>步骤</strong>：
+1. 下载权重（脚本会回写 yaml 的 <code>model_path</code>）：
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>scripts/download_assets/download_video_backbone.py<span class="w"> </span>--help<span class="w">   </span><span class="c1"># 先看条目清单</span>
+</code></pre></div>
+2. 几何参数不必实测，直接抄代码里的硬编码：<code>openwam/model/video_backbone/wan/shared/configs/model_configs.py</code>（Wan2.2-5B：dim=3072/24头/30层/in_out_dim=48，:441-455；VACE-1.3B：dim=1536/12头/30层，:184-197；I2V-14B：dim=5120/40头/40层，:88-99）；Cosmos 两骨干看各自 <code>pipeline_builder.py</code> 的 <code>_*_NET_KWARGS</code> / <code>_*_GEOMETRY</code>。
+3. 写一个 throwaway 测量脚本：<code>build_video_backbone(name, cfg)</code> 加载到单卡，<code>torch.cuda.max_memory_allocated()</code> 记峰值显存，<code>torch.cuda.Event</code> 计时 <code>prepare→逐块 run_block→finalize</code> 一轮。bf16、固定输入形状（如 B=1, T=33, 384×320，对齐 dataloader 默认）。
+4. 汇总成 markdown 表：骨干 | 参数量 | z_dim | 峰值显存 | forward ms | 权重体积。
+<strong>验收标准</strong>：5 行基线表 + 每行可复现的命令/脚本。
+<strong>产出</strong>：基线表（markdown）+ 测量脚本。
+<strong>难度（估计）</strong>：低。<strong>工作量（估计）</strong>：1–2 天（主要是等权重下载）。
+<strong>代码锚点</strong>：<code>openwam/model/video_backbone/registry.py:30 build_video_backbone</code>；几何硬编码见上。</p>
+<h3 id="g2-encoder-dinov3-flux2">任务 G2：外部 encoder 替换端到端复现（DINOv3 或 FLUX.2）<a class="headerlink" href="#g2-encoder-dinov3-flux2" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：跑通"外部 encoder 替换原生 VAE"的完整路径：<code>from_scratch=true</code> + encoder 块 + DiT 重初始化，训练 smoke 跑通并做 latent 可视化。
+<strong>前置</strong>：G1 完成；DINOv3 需提前在 HF 申请 gated 授权（facebook/dinov3-vitb16），FLUX.2-dev 同理；单卡可起步但正式训练需多卡（见 §6 风险）。
+<strong>步骤</strong>：
+1. 授权后下载 encoder 权重：<code>python scripts/download_assets/download_visual_encoder.py</code>（选 dinov3 或 flux2_vae 条目）。
+2. 训练 smoke（20 步 debug 模式）：
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>bash<span class="w"> </span>scripts/train.sh<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nv">dataloader</span><span class="o">=</span>libero<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nv">model</span><span class="o">=</span>dual_system<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>model/video_backbone<span class="o">=</span>wan22_ti2v_5b<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span>model.video_backbone.from_scratch<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span>model.video_backbone.encoder.name<span class="o">=</span>dinov3<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span>model.video_backbone.encoder.model_path<span class="o">=</span>&lt;dinov3<span class="w"> </span>权重目录&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span>training.debug<span class="o">=</span><span class="nb">true</span>
+</code></pre></div>
+   观察日志中 DiT 重初始化（<code>reinit_dit_from_scratch</code>，<code>openwam/model/video_backbone/wan/reinit.py:74</code>）与 encoder 构建（<code>architectures/base.py:253 build_video_encoder</code>）。
+3. latent 可视化：注意 DINOv3 <code>pixel_decode=False</code>（<code>encoder/base.py:64</code>），<strong>不能解码回像素</strong>；用 PCA/t-SNE 对 <code>batch_encode</code> 输出的 (B, 1408, T_lat, H_lat, W_lat) latent 做降维可视化，并与原生 Wan VAE 的 48 维 latent 对照。若选 FLUX.2 VAE（pixel_decode=True），可直接解码像素对照。
+<strong>验收标准</strong>：smoke 训练日志无错 + 至少一组 latent 可视化图 + 与原生 VAE 的对照说明。
+<strong>产出</strong>：跑通记录 + 可视化报告。
+<strong>难度（估计）</strong>：中。<strong>工作量（估计）</strong>：3–5 天（含 gated 授权等待）。
+<strong>代码锚点</strong>：门控 <code>architectures/base.py:248</code>；fail-fast :297-304；重初始化 :385-386。</p>
+<h3 id="g3svae">任务 G3：SVAE 两阶段复现<a class="headerlink" href="#g3svae" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：在 V-JEPA2.1 上走完 SVAE 工具链：收集特征 → 训 reducer → 接回主训练，验证 latent 维度变成 z_dim=48，并监控 active_units 防 latent 坍缩。
+<strong>前置</strong>：V-JEPA2.1 权重（16.9GB，官方直链下载，见 §6）；benchmark 数据集；G2 的经验有助于理解 encoder 层。
+<strong>步骤</strong>：
+1. 下载 V-JEPA2.1：<code>python scripts/download_assets/download_visual_encoder.py</code>（vjepa2_1_vitg_384 条目，直链 <code>dl.fbaipublicfiles.com</code>，见 <code>download_visual_encoder.py:111</code>）。
+2. <strong>阶段一：收集特征</strong>（encoder 必须 <code>svae_path=null</code>，否则 <code>collect_svae_features.py:155-158</code> 直接报错）：
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>bash<span class="w"> </span>scripts/svae_train/collect_svae_features.sh<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>model.video_backbone.encoder.name<span class="o">=</span>vjepa21<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>model.video_backbone.encoder.model_path<span class="o">=</span>/path/to/vjepa2_1_vitg_384<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>model.video_backbone.encoder.svae_path<span class="o">=</span>null<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span>training.batch_size<span class="o">=</span><span class="m">4</span>
+</code></pre></div>
+   注意嵌套入口下 encoder 组选择不解析，必须用上面这种 FIELD 覆盖写法（<code>collect_svae_features.py:126</code> 注释）。产物：分片 <code>features_rank{r}_part{p}.pt</code> + <code>stats.pt</code>。
+3. <strong>阶段二：训练 reducer</strong>（默认配置 <code>configs/model/video_backbone/encoder/svae/train.yaml</code>：<code>latent_dim: 48</code>、<code>beta: 1.0e-4</code>、<code>num_epochs: 50</code>）：
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>bash<span class="w"> </span>scripts/svae_train/train_svae.sh<span class="w"> </span>train.features_dir<span class="o">=</span>&lt;阶段一输出目录&gt;
+</code></pre></div>
+   产物 <code>svae.pt</code>；训练日志里的 <code>_latent_diagnostics</code>（<code>scripts/svae_train/train_svae.py</code>）会报告 active_units 等诊断量，画成曲线盯坍缩。
+4. <strong>接回验证</strong>：主训练中设置
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>model/video_backbone<span class="o">=</span>wan22_ti2v_5b<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>model.video_backbone.from_scratch<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>model.video_backbone.encoder.name<span class="o">=</span>vjepa21<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>model.video_backbone.encoder.svae_path<span class="o">=</span>&lt;svae.pt<span class="w"> </span>路径&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>training.debug<span class="o">=</span><span class="nb">true</span>
+</code></pre></div>
+   断言 encoder 的 <code>properties.z_dim == 48</code>（reducer 生效后 <code>effective_z_dim</code>，<code>encoder/svae/reducer.py</code>）。<strong>两个坑</strong>：encoder 须 <code>svae_path=null</code> 才能 collect；主训练必须 <code>from_scratch=true</code> 整个 encoder 块才生效。
+<strong>验收标准</strong>：<code>svae.pt</code> 产物 + 训练曲线（含 active_units 监控）+ 主训练中 z_dim=48 的验证记录 + latent 诊断说明。
+<strong>产出</strong>：SVAE 训练产物 + 诊断报告。
+<strong>难度（估计）</strong>：中-高。<strong>工作量（估计）</strong>：5–7 天（全数据集特征收集耗时占大头）。
+<strong>代码锚点</strong>：<code>scripts/svae_train/collect_svae_features.sh:49</code>（port 29502）、<code>train_svae.sh:43</code>（port 29503）；<code>encoder/svae/model.py:87 SVAE</code>。</p>
+<h3 id="g4">任务 G4：骨干×架构可行性矩阵<a class="headerlink" href="#g4" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：枚举 5 骨干 × 6 架构（single_system: vanilla/moe；dual_system: joint_self_attn/joint_cross_attn/idm；tri_system: joint_self_attn）共 30 个组合，实测哪些能 build，不能的归因到具体约束。
+<strong>前置</strong>：无需全部权重——build 冒烟可用 <code>materialize_weights=false</code> 级别的骨架构建（CPU 即可）；需要各骨干的 yaml cfg。
+<strong>步骤</strong>：
+1. 写 throwaway 矩阵脚本：对每个 (video_backbone, architecture) 组合调用 <code>build_architecture</code> 路径（<code>openwam/model/architectures/registry.py resolve_architecture_config</code> → <code>BaseWAMArchitecture.__init__</code>），捕获异常并归类。
+2. 已知约束（需在矩阵中验证并归因）：
+   - <strong>VACE + 外部 encoder 互斥</strong>：<code>wan/encode.py:82</code> 注释标明 fail-fast；
+   - <strong>cosmos_predict25 + joint_cross_attn 需手工钉头数</strong>：<code>+model.action_backbone.num_heads=16 +model.action_backbone.attn_head_dim=64</code>（其 DiT 是 16 头×128 head_dim，与默认动作 DiT 几何不对齐）；
+   - <strong>tri_system 必须有 vlm_backbone 配置</strong>（Qwen3-VL）；
+   - <strong>joint_self_attn 要求 ActionDiT 与视频 DiT 几何严格对齐</strong>（层数/头数/head_dim，driver 构造即报错——此项与方向F的 F3 互补：F3 做收敛对照，G4 只做 build 可行性）；
+   - <strong>cosmos3_edge 的 <code>freeze_und=false</code> 未实现</strong>（NotImplementedError）。
+3. 矩阵每格标注：✅ 可 build / ❌ + 报错信息 + 归因代码锚点。
+<strong>验收标准</strong>：5×6 矩阵表 + 每个 ❌ 格的报错归因（锚到具体文件:行）。
+<strong>产出</strong>：可行性矩阵 + 报错归因表。
+<strong>难度（估计）</strong>：中。<strong>工作量（估计）</strong>：2–3 天。
+<strong>代码锚点</strong>：<code>openwam/model/architectures/base.py:199 _init_video_backbone</code>；各架构构造点（如 <code>dual_system/joint_cross_attn.py</code>、<code>tri_system/joint_self_attn.py</code>）。</p>
+<h3 id="g5tri_system">任务 G5：tri_system 理解专家参与度分析<a class="headerlink" href="#g5tri_system" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：量化 tri_system 中"VLM → vlm_projector → understanding_expert（und）"这条理解支路的贡献：做 und 只读尾消融（冻结/移除 und），并验证 <code>_NEVER_FREEZE</code> 硬约束。
+<strong>前置</strong>：方向C的可训练环境；Qwen3-VL-2B 权重（4.3GB）；大显存（tri_system 关掉 <code>mot_checkpoint_mixed_attn</code> 通常 OOM）。本任务与方向F的 F5（idm 两阶段推理）互补，可共用 tri 环境经验。
+<strong>步骤</strong>：
+1. 读契约：<code>tri_system/joint_self_attn.py:70-97</code>——und 是架构级<strong>可训练</strong>专家；<code>UnderstandingExpert</code> 构造在 :139。
+2. 验证 <code>_NEVER_FREEZE</code>：在 yaml 的 freeze 列表里加 <code>understanding_expert</code>，启动训练，应被 :242 的拒绝逻辑拦下（<code>joint_self_attn.py:85 _NEVER_FREEZE = frozenset({"understanding_expert"})</code>）。记录报错作为约束验证证据。
+3. 基线 run：标准 tri_system 训练 smoke，记录 loss 曲线与（若可行）下游指标。
+4. 消融 run A（移除 und）：将 und 支路绕过（<code>joint_self_attn.py:189</code> 有 <code>self.understanding_expert is None</code> 的分支，说明无 und 是合法配置；构造时把 <code>model.architecture.understanding_expert</code> 置空），同数据同步数对照。
+5. 消融 run B（冻结 VLM 本体之外的全部 vs 只冻结 VLM）：<code>vlm_backbone.vlm_model</code> 本就在冻结列表里；对比冻结范围的显存/性能影响，写 profiling 报告。
+<strong>验收标准</strong>：und 贡献消融报告（基线 vs 移除 und 的对照曲线 + 结论）+ <code>_NEVER_FREEZE</code> 约束验证记录。
+<strong>产出</strong>：消融报告。
+<strong>难度（估计）</strong>：高。<strong>工作量（估计）</strong>：5–8 天（tri_system 显存与训练成本最高）。
+<strong>代码锚点</strong>：<code>tri_system/joint_self_attn.py:85/_NEVER_FREEZE</code>、:139 und 构造、:189 无 und 分支；<code>vlm_backbone/base.py:20 VlmBackbone</code>。</p>
+<h3 id="g6cosmos">任务 G6：Cosmos 路线打通（选做）<a class="headerlink" href="#g6cosmos" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：把 Cosmos-Predict2.5-2B 骨干的环境与 smoke 跑通，记录安装坑。
+<strong>前置</strong>：nvcc + cuDNN 环境（编译 transformer-engine 用）；建议提前一周发起（见 §6 风险 R9）。
+<strong>步骤</strong>：
+1. 拉子模块与装依赖：
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>bash<span class="w"> </span>scripts/install_cosmos_predict25.sh
+</code></pre></div>
+2. 下载权重：<code>python scripts/download_assets/download_video_backbone.py</code> 的 Cosmos-Predict2.5-2B 条目（nvidia/Cosmos-Predict2.5-2B + 文本编码器 nvidia/Cosmos-Reason1-7B，共约 21GB）。
+3. smoke：用 <code>model/video_backbone=cosmos_predict25_2b</code> 跑 <code>training.debug=true</code>；joint_cross_attn 变体记得钉 <code>+model.action_backbone.num_heads=16 +model.action_backbone.attn_head_dim=64</code>。
+4. 把每一步的报错与解法记入"安装坑记录"。
+<strong>验收标准</strong>：smoke 通过 + 安装坑记录（每条含报错原文与解法）。
+<strong>产出</strong>：环境 SOP 片段 + smoke 日志。
+<strong>难度（估计）</strong>：高。<strong>工作量（估计）</strong>：3–5 天（编译与环境问题不可预期）。
+<strong>代码锚点</strong>：<code>scripts/install_cosmos_predict25.sh</code>；<code>cosmos_predict25/pipeline_builder.py</code>（几何与权重通配）。</p>
+<h2 id="5">5. 建议推进顺序与里程碑<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>第 1 周</strong>：G1（基线表，同时等 G2 的 HF gated 授权与 G3 的 V-JEPA 直链下载）。里程碑：基线表。</li>
+<li><strong>第 2–3 周</strong>：G2（外部 encoder 端到端）+ G4（build 矩阵，CPU 可做，与 G2 并行）。里程碑：替换路径跑通 + 5×6 矩阵。</li>
+<li><strong>第 3–5 周</strong>：G3（SVAE 两阶段，特征收集可挂后台跑）。里程碑：<code>svae.pt</code> + z_dim=48 验证。</li>
+<li><strong>第 5 周起（高阶/选做）</strong>：G5（需 tri 大显存环境）、G6（选做，依赖编译环境）。里程碑：und 消融报告 / Cosmos smoke。</li>
+</ol>
+<p>依赖关系：G2/G3 依赖方向C的可训练环境；G4 无 GPU 依赖可最早穿插；G5 依赖 G1 的显存常识与方向C环境。</p>
+<h2 id="6">6. 风险与坑<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>外部 encoder 必须 from_scratch，算力代价大</strong>。DINOv3/V-JEPA/FLUX.2 的 z_dim ≠ 48，门控强制 <code>from_scratch=true</code>，意味着 DiT 全随机重初始化、从头训练（<code>architectures/base.py:297-304</code> 报错文案、<code>wan/reinit.py:74</code>）。这不是微调路径，正式实验需单独申请算力（仓库 README 推荐 8×80GB）。规避：G2/G3 一律先用 <code>training.debug=true</code> 20 步 smoke 验证链路，再评估是否投入正式训练。</li>
+<li><strong>DINOv3/FLUX.2 是 HF gated 资产</strong>。需人工在 HuggingFace 申请授权后才能下载（<code>scripts/download_assets/download_visual_encoder.py</code> 对应条目）。规避：开工第一周就提交授权申请，等待期先做 G1/G4。</li>
+<li><strong>V-JEPA 走官方直链，可达性存疑</strong>。权重托管在 <code>dl.fbaipublicfiles.com</code>（<code>download_visual_encoder.py:111</code> 的 <code>direct_url</code>），无 HF 镜像。规避：尽早下载并落盘共享存储；若直链不可达，记录为阻塞项并切换 G3 的 encoder 为 DINOv3（SVAE 链同样支持）。</li>
+<li><strong>Wan21 一个类注册两个名字，name/path 失配仅 WARN</strong>。<code>wan21_vace_1_3b</code> 与 <code>wan21_i2v_14b_480p</code> 注册到同一个 <code>Wan21</code> 类（<code>video_backbone/__init__.py:44-45</code>），实际加载由 <code>model_path</code> 决定；<code>pipeline_builder.py:87 _warn_on_name_path_mismatch</code> 只 WARN 不中止——只改 name 不改 path 会<strong>静默加载错骨干</strong>。规避：G4 矩阵实验时逐格核对 name↔path 一致性。</li>
+<li><strong>Cosmos 需 submodule + 现场编译 transformer-engine</strong>。<code>scripts/install_cosmos_predict25.sh</code> 依赖 nvcc/cuDNN，编译失败是 G6 最常见的阻塞。规避：提前一周发起；把编译错记入安装坑记录。</li>
+<li><strong>无 LAPA/latent-action 模块</strong>。README 提到 "SVAE / LAPA tooling"，但全仓 grep 不到任何 <code>lapa</code>/<code>LatentAction</code> 标识符（已核验）；<code>action_backbone/components.py</code> 的 <code>ActionEncoder</code> 只是 raw action→hidden 的 MLP，不是可学习的 latent action 抽象。规避：本方向不做任何基于 LAPA 的假设；如论文需要 latent action 分析，明确标注为仓库缺口。</li>
+<li><strong>外部 encoder 不可像素解码</strong>。DINOv3/V-JEPA <code>pixel_decode=False</code>（<code>encoder/base.py:64</code>），<code>generate(decode_video=True)</code> 会 fail-fast（<code>architectures/base.py:117-119</code>）。规避：G2/G3 的可视化一律走 latent 级（PCA/t-SNE/active_units），不要试图解码成视频。</li>
+</ol>
+<h2 id="7">7. 推荐阅读顺序<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<ol>
+<li>本目录 <code>README.md</code> —— 全局定位与方向间依赖。</li>
+<li><code>openwam/model/video_backbone/base.py</code> —— 先建立三段式契约的心智模型（57 行起的类 docstring 写得很好）。</li>
+<li><code>openwam/model/architectures/base.py:199-390</code> 的 <code>_init_video_backbone</code> —— 搞清 encoder 门控与 from_scratch 语义，这是 G2/G3 的地基。</li>
+<li><code>configs/model/video_backbone/wan22_ti2v_5b.yaml</code> + <code>configs/model/video_backbone/encoder/vjepa21.yaml</code> —— 看注释就知道所有旋钮（yaml 注释即文档）。</li>
+<li><code>openwam/model/video_backbone/encoder/base.py</code> —— VideoEncoderProperties 契约，理解 z_dim/pixel_decode 对实验设计的约束。</li>
+<li><code>openwam/model/video_backbone/encoder/svae/model.py</code> + <code>scripts/svae_train/</code> 两个脚本 —— G3 开工前读。</li>
+<li><code>方向C-训练管线复现.md</code> —— 所有 <code>train.sh</code> 命令的环境与配置背景。</li>
+<li><code>openwam/model/architectures/tri_system/joint_self_attn.py:60-200</code> —— G5 开工前读 und 契约与 <code>_NEVER_FREEZE</code>。</li>
+<li><code>方向F-架构变体与注意力机制.md</code> 的 F3/F5 节 —— 与 G4/G5 互补，避免重复劳动。</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

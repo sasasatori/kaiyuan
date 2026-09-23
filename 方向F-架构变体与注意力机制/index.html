@@ -1,0 +1,1258 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="OpenWAM 仓库深度调研：方向分配说明与任务书（基于 OpenWAM-Official/OpenWAM @ 90e94ae）">
+      
+      
+      
+        <link rel="canonical" href="https://sasasatori.github.io/kaiyuan/%E6%96%B9%E5%90%91F-%E6%9E%B6%E6%9E%84%E5%8F%98%E4%BD%93%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">
+      
+      
+        <link rel="prev" href="../%E6%96%B9%E5%90%91E-%E4%BB%BF%E7%9C%9F%E8%AF%84%E6%B5%8B%E5%A4%8D%E7%8E%B0/">
+      
+      
+        <link rel="next" href="../%E6%96%B9%E5%90%91G-%E8%A7%86%E8%A7%89%E8%A1%A8%E5%BE%81%E4%B8%8E%E9%AA%A8%E5%B9%B2%E7%A0%94%E7%A9%B6/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>方向 F · 架构变体与注意力机制 - OpenWAM 调研任务书</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#f" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="OpenWAM 调研任务书" class="md-header__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenWAM 调研任务书
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              方向 F · 架构变体与注意力机制
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  总览
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../%E6%96%B9%E5%90%91A-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AA%8C%E8%AF%81%E7%9F%A9%E9%98%B5/" class="md-tabs__link">
+          
+  
+  
+  方向任务书
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenWAM 调研任务书" class="md-nav__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OpenWAM 调研任务书
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向任务书
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    方向任务书
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91A-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AA%8C%E8%AF%81%E7%9F%A9%E9%98%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 A · 环境搭建与验证矩阵
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91B-%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%8E%A8%E7%90%86%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 B · 部署与推理复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91C-%E8%AE%AD%E7%BB%83%E7%AE%A1%E7%BA%BF%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 C · 训练管线复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91D-%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%8A%A8%E4%BD%9C%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 D · 数据管线与动作空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91E-%E4%BB%BF%E7%9C%9F%E8%AF%84%E6%B5%8B%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 E · 仿真评测复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 F · 架构变体与注意力机制
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 F · 架构变体与注意力机制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 这个方向做什么、为什么值得做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 最小必要背景
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 任务书
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 任务书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#f-1-attention_mask_mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F-1：四种 attention_mask_mode 语义核对
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f-2mask-mode-mutual-vs-action_sees_video" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F-2：mask mode 训练消融（mutual vs action_sees_video）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f-3dual-joint_self_attn-vs-joint_cross_attn-vs-idm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F-3：dual 三变体对照（joint_self_attn vs joint_cross_attn vs idm）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f-4detach_bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F-4：detach_bridge 梯度流验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f-5idm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F-5：idm 两阶段推理复现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f-6single_system-moe-expert-ffn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F-6：single_system moe 的 expert FFN 贡献分析
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 建议推进顺序与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 风险与坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 推荐阅读顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91G-%E8%A7%86%E8%A7%89%E8%A1%A8%E5%BE%81%E4%B8%8E%E9%AA%A8%E5%B9%B2%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 G · 视觉表征与骨干研究
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91H-%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%B4%A8%E9%87%8F%E5%9F%BA%E5%BB%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 H · 测试与质量基建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 这个方向做什么、为什么值得做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 最小必要背景
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 任务书
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 任务书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#f-1-attention_mask_mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F-1：四种 attention_mask_mode 语义核对
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f-2mask-mode-mutual-vs-action_sees_video" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F-2：mask mode 训练消融（mutual vs action_sees_video）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f-3dual-joint_self_attn-vs-joint_cross_attn-vs-idm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F-3：dual 三变体对照（joint_self_attn vs joint_cross_attn vs idm）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f-4detach_bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F-4：detach_bridge 梯度流验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f-5idm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F-5：idm 两阶段推理复现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f-6single_system-moe-expert-ffn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F-6：single_system moe 的 expert FFN 贡献分析
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 建议推进顺序与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 风险与坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 推荐阅读顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="f">方向 F：架构变体与注意力机制<a class="headerlink" href="#f" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>一句话定位：复现并扩展 OpenWAM 的架构消融——6 个注册架构共享同一套生命周期，差异全部集中在 video↔action 的耦合方式与注意力掩码上，本方向要回答"哪种耦合在什么设定下最优"。
+读者：第一次接触该模块的同学。
+前置：先读本目录 README.md 的总览，了解本方向在全局中的位置。</p>
+</blockquote>
+<p>仓库根记作 <code>$R = OpenWAM</code>，下文路径均为仓库相对路径。行号以 main @ 90e94ae 为准（文中以符号锚点为主，行号漂移时按符号名 grep 重新定位）。</p>
+<h2 id="1">1. 这个方向做什么、为什么值得做<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>OpenWAM 是「视频 DiT（世界模型）+ 动作 DiT（策略）+ 可选理解专家」的多流扩散架构。视频流和动作流怎么"说话"，直接决定策略能利用多少世界知识：是把动作 token 拼进视频序列共享注意力（single_system），还是两个独立 DiT 之间做交叉注意力（joint_cross_attn），还是逐层把 Q/K/V 拼接成一次混合自注意力（joint_self_attn / MoT），还是先让视频自己降噪、动作去 attend 冻结的视频 KV（idm）？这四种耦合范式就是论文 OpenWAM-Study 的核心设计空间。</p>
+<p>架构层的实现非常"薄"：<code>openwam/model/architectures/base.py:154</code> 的 <code>BaseWAMArchitecture</code> 统一定义构造、冻结、scheduler 初始化、<code>compute_loss</code>/<code>generate</code> 生命周期；6 个具体架构类彼此没有继承关系，差异只在各自的 <code>forward</code> 怎么组织两侧 backbone。这意味着消融实验的控制变量天然干净——换耦合方式时，数据、加噪、loss、推理循环全都不变。</p>
+<p>你能学到：多流扩散 Transformer 的几种主流耦合设计及其工程代价（显存、吞吐、几何约束）；注意力掩码作为"信息流阀门"的语义设计；以及如何用仓库已有的测试安全网（split-attn 零 atol 等价、detach 梯度不变量）做可信消融。</p>
+<h2 id="2">2. 最小必要背景<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p><strong>BaseWAMArchitecture 生命周期</strong> — 所有架构共用的骨架：构造时建视频 backbone，训练时 <code>compute_loss</code> 采样 timestep 加噪后调 <code>self.forward</code>，推理时 <code>generate</code> 逐步调 <code>forward</code>。
+锚点：<code>openwam/model/architectures/base.py:154</code>（类）、<code>base.py:1044 compute_loss</code>、<code>base.py:1361 generate</code>、<code>base.py:1691</code> 抽象 <code>forward</code>。依赖方向严格单向：architecture → backbones，backbone 不得反向 import。</p>
+<p><strong>registry 解析</strong> — yaml 里写的 <code>(framework, variant)</code> 二元组经索引映射为 6 个注册名之一，再合并参数实例化。
+锚点：<code>openwam/model/architectures/registry.py:96 resolve_architecture_config</code>；注册名清单（registry.py:12-17 docstring）：<code>single_system_vanilla</code>、<code>single_system_moe</code>、<code>dual_system_cross_attn</code>、<code>dual_system_self_attn</code>、<code>dual_system_idm</code>、<code>tri_system_joint_self_attn</code>。</p>
+<p><strong>四种耦合范式（三族）</strong>：
+- single 共享序列：动作 token 经 <code>inject_shared_tokens</code> 拼到视频序列尾部，掩码挂到 <code>state.extras['shared_attention_mask']</code>，跑完同一个 DiT 再 <code>extract_shared_tokens</code> 取出（<code>single_system/vanilla.py:118,126,142</code>）。
+- dual cross_attn bridge：视频 DiT 全跑完，按 <code>bridge_layers</code> 抓取中间 hidden_states 作为 K/V 送给独立的 ActionDiT 做交叉注意力（<code>dual_system/joint_cross_attn.py:43</code>）。
+- dual self_attn MoT：<code>DualSystemMoTDriver</code>（<code>dual_system/mot_driver.py:38</code>）逐层把双侧 Q/K/V 拼接成单次混合自注意力再 split 回去，要求几何严格对齐。
+- idm teacher-forcing：训练时把"噪声视频 + 干净条件视频 + 噪声动作"三分支合并进一次 joint loop；推理时视频先行、动作 attend 缓存的视频 KV（<code>dual_system/idm.py:392</code>）。</p>
+<p><strong>mask 四模式</strong> — <code>attention_mask_mode ∈ {mutual, action_sees_video, video_sees_action, isolated}</code> 控制 video↔action 两个方向的可见性（video↔video 由独立的 <code>video_attention_mask_mode</code> 控制）。
+锚点：<code>openwam/model/architectures/utils/mask_modes.py:26-30</code>（四个常量）、<code>mask_modes.py:57 fill_cross_modal_va_blocks</code>、<code>mask_modes.py:90 build_cross_modal_attention_mask</code>。</p>
+<p><strong>bridge_layers 解析</strong> — <code>bridge_layers</code> 显式给层号列表；为 <code>null</code> 时用 <code>bridge_interval</code> 推导（1=每层，2=隔层）。
+锚点：<code>openwam/model/architectures/utils/common.py:96 resolve_bridge_layers</code>。注意该字段在不同变体语义不同：joint_cross_attn 里是"哪些视频层给 bridge"，joint_self_attn/idm 里决定 ActionDiT 的层数（configs/model/dual_system.yaml:33-34 注释）。</p>
+<h2 id="3">3. 代码地图<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>入口文件：做消融先读 <code>openwam/model/architectures/registry.py</code>，再按变体进具体文件。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>openwam/model/architectures/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── base.py                      # 生命周期基类：compute_loss:1044 / generate:1361 / forward:1691（抽象）
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── registry.py                  # (framework,variant)→注册名解析 resolve_architecture_config:96
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├── single_system/
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   ├── vanilla.py               # 【入口】SingleSystemVanillaArchitecture:37，共享序列最简实现
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   ├── moe.py                   # SingleSystemMoEArchitecture:39，bridge 层上加 expert FFN
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   └── state.py                 # 共享序列状态辅助
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>├── dual_system/
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│   ├── joint_cross_attn.py      # DualSystemCrossAttnArchitecture:43；detach_bridge 生效点 :242
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│   ├── joint_self_attn.py       # DualSystemSelfAttnArchitecture:44；代码默认 mask :97
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│   ├── idm.py                   # DualSystemIDMArchitecture:392（1246 行，最长，见任务 F5）
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│   └── mot_driver.py            # DualSystemMoTDriver:38；几何校验 :69-82
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>├── tri_system/
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│   ├── joint_self_attn.py       # TriSystemJointSelfAttnArchitecture:67（本方向只做背景了解）
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│   ├── mot_driver.py            # TriSystemMoTDriver:45，und 只读尾掩码 :113-176
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│   └── und_expert.py            # UnderstandingExpert:82
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>└── utils/
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    ├── mask_modes.py            # 四模式常量 :26-30、跨模态掩块填充 :57、联合掩码构建 :90
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    └── common.py                # resolve_bridge_layers:96 等工具
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>openwam/model/action_backbone/
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>└── shared_action_backbone.py    # SharedVanillaActionBackbone:37；ExpertFFNBlock:86；
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>                                 # SharedMoEActionBackbone:137（expert_layer_to_index :177）
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>configs/model/
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>├── single_system.yaml           # attention_mask_mode: mutual（:28），与代码默认不一致，见 §6
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>├── dual_system.yaml             # variant 三选一；detach_bridge/idm_video_cond_noise_prob 在此（:38-40）
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>├── tri_system.yaml              # mot_checkpoint_mixed_attn: true（:39，关掉通常 OOM）
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>└── action_backbone/             # shared_action_backbone.yaml / separate_action_dit.yaml
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>tests/                           # 安全网（详见 方向H-测试与质量基建.md）
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>├── test_mask_modes.py           # 四模式行为测试（test_mutual:82 等）
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>└── test_wam_architecture.py     # detach 梯度不变量 test_..._blocks_grad_to_video:868
+</code></pre></div>
+<h2 id="4">4. 任务书<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h3 id="f-1-attention_mask_mode">任务 F-1：四种 attention_mask_mode 语义核对<a class="headerlink" href="#f-1-attention_mask_mode" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：对照 <code>utils/mask_modes.py</code> 与 <code>tests/test_mask_modes.py</code>，逐模式验证 mutual / action_sees_video / video_sees_action / isolated 的 v→a、a→v 可见性及首帧行排除规则，产出模式对照矩阵。
+<strong>前置</strong>：无 GPU、无权重；CPU 环境装好即可（<code>pip install -e '.[dev]'</code>）。测试用 <code>_MockVideoBackbone</code>（tests/test_architecture_variants.py:54-62）绕过真实权重。
+<strong>步骤</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span><span class="nv">$R</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_mask_modes.py<span class="w"> </span>-v<span class="w">        </span><span class="c1"># 7 个用例，先看它们断言了什么</span>
+</code></pre></div>
+1. 读 <code>mask_modes.py:57 fill_cross_modal_va_blocks</code>：两个 if 分别决定 action→video（L76-78）与 video→action（L83-86）块是"全连"还是"仅首帧"，把四种模式两两填进矩阵。
+2. 读 <code>tests/test_mask_modes.py:56 test_shared_invariants</code> 与 :69/:75/:82/:90 四个逐模式用例，确认你的矩阵与断言一致。
+3. 写一个独立脚本用 mock backbone 构造 small joint mask，逐格打印 mask 值，肉眼核对（可选加分）。
+<strong>验收标准</strong>：4×4（或 2×2 方向）模式对照矩阵 + 与测试断言的一致性确认记录；若发现测试未覆盖的格子（如与 <code>video_attention_mask_mode=causal</code> 叠加），单独标注。
+<strong>产出</strong>：mask 语义矩阵（消融报告的附录材料）。
+<strong>难度（估计）</strong>：低-中。<strong>工作量（估计）</strong>：1-2 天。
+<strong>代码锚点</strong>：<code>utils/mask_modes.py:26-30,57,90</code>；<code>tests/test_mask_modes.py:50-98</code>。</p>
+<h3 id="f-2mask-mode-mutual-vs-action_sees_video">任务 F-2：mask mode 训练消融（mutual vs action_sees_video）<a class="headerlink" href="#f-2mask-mode-mutual-vs-action_sees_video" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：同一数据/骨干/步数下对比 <code>attention_mask_mode=mutual</code> 与 <code>action_sees_video</code> 的训练曲线，并评估"yaml 默认 mutual、代码默认 ACTION_SEES_VIDEO"这一不一致（见 §6 风险 1）对实验可复现性的影响。
+<strong>前置</strong>：方向 C 的可训练环境（见 方向C-训练管线复现.md；4×80GB+，或先用 VACE-1.3B 小骨干）；F-1 完成。
+<strong>步骤</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># 冒烟先跑通（20 步）</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>bash<span class="w"> </span>scripts/train.sh<span class="w"> </span><span class="nv">dataloader</span><span class="o">=</span>libero<span class="w"> </span><span class="nv">model</span><span class="o">=</span>dual_system<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>model/video_backbone<span class="o">=</span>wan22_ti2v_5b<span class="w"> </span>model.architecture.variant<span class="o">=</span>joint_self_attn<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>model.architecture.attention_mask_mode<span class="o">=</span>mutual<span class="w"> </span>training.debug<span class="o">=</span><span class="nb">true</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># 正式两组实验仅改一个字段：</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1">#   model.architecture.attention_mask_mode=mutual | action_sees_video</span>
+</code></pre></div>
+1. 固定种子/数据/骨干，只改 <code>model.architecture.attention_mask_mode</code>，各训一组。
+2. 对比 loss_action 收敛曲线与（有条件时）LIBERO 成功率。
+3. 影响评估：grep 全部代码默认值（<code>single_system/vanilla.py:50</code>、<code>single_system/moe.py:50</code>、<code>dual_system/joint_self_attn.py:97</code>、<code>tri_system/joint_self_attn.py:177</code> 均为 <code>ACTION_SEES_VIDEO</code>），论证"不带 yaml 直接 build"与"带 yaml 训练"实际跑的掩码不同；检查 idm 变体是否免疫（idm 忽略该字段，<code>dual_system/idm.py:443-446</code> 注释）。
+<strong>验收标准</strong>：两条消融曲线 + 一段明确结论（含默认不一致的影响评估）；曲线需可复现（命令与随机种子记录完整）。
+<strong>产出</strong>：消融曲线图 + 结论段落（论文 Study 章节素材）。
+<strong>难度（估计）</strong>：中。<strong>工作量（估计）</strong>：1 周（含排队训练）。
+<strong>代码锚点</strong>：<code>utils/mask_modes.py:57</code>；<code>configs/model/dual_system.yaml:29</code>；各架构默认值四处。</p>
+<h3 id="f-3dual-joint_self_attn-vs-joint_cross_attn-vs-idm">任务 F-3：dual 三变体对照（joint_self_attn vs joint_cross_attn vs idm）<a class="headerlink" href="#f-3dual-joint_self_attn-vs-joint_cross_attn-vs-idm" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：在同一骨干/数据/预算下对照三个 dual 变体的收敛速度、训练吞吐（it/s、峰值显存）与下游成功率，产出三变体对照表。
+<strong>前置</strong>：方向 C 可训练环境；F-2 的训练流程已跑熟。三变体共用 <code>model=dual_system</code>，只切 <code>model.architecture.variant</code>。
+<strong>步骤</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">for</span><span class="w"> </span>V<span class="w"> </span><span class="k">in</span><span class="w"> </span>joint_self_attn<span class="w"> </span>joint_cross_attn<span class="w"> </span>idm<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>bash<span class="w"> </span>scripts/train.sh<span class="w"> </span><span class="nv">dataloader</span><span class="o">=</span>libero<span class="w"> </span><span class="nv">model</span><span class="o">=</span>dual_system<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span>model/video_backbone<span class="o">=</span>wan22_ti2v_5b<span class="w"> </span>model.architecture.variant<span class="o">=</span><span class="nv">$V</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span>training.debug<span class="o">=</span><span class="nb">true</span><span class="w">    </span><span class="c1"># 先各跑冒烟，确认能 build + 能 step</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">done</span>
+</code></pre></div>
+1. 记录每组：loss 曲线、it/s、<code>torch.cuda.max_memory_allocated</code>、（有条件）评测成功率。
+2. 归因差异时对照实现：joint_self_attn 走 MoT 逐层拼接（<code>dual_system/mot_driver.py:38</code>）；joint_cross_attn 走 bridge 抓取 + ActionDiT 交叉注意力（<code>dual_system/joint_cross_attn.py:43</code>，注意 :238-242 的 Cosmos 5D→3D reshape）；idm 走 teacher-forcing 三分支（<code>dual_system/idm.py:644</code>）。
+3. 注意 joint_self_attn/idm 有 <code>mot_checkpoint_mixed_attn</code> 而 joint_cross_attn 没有——吞吐对比时说明该旋钮状态（<code>configs/model/dual_system.yaml:38</code>）。
+<strong>验收标准</strong>：三变体对照表（收敛/吞吐/显存/成功率四列以上）+ 每行差异的代码级归因。
+<strong>产出</strong>：对照表（Study 章节主表）。
+<strong>难度（估计）</strong>：中-高。<strong>工作量（估计）</strong>：2 周。
+<strong>代码锚点</strong>：<code>registry.py:96</code>；三个变体文件类定义行；<code>configs/model/dual_system.yaml:33-40</code>。</p>
+<h3 id="f-4detach_bridge">任务 F-4：detach_bridge 梯度流验证<a class="headerlink" href="#f-4detach_bridge" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：验证 <code>detach_bridge=True/False</code> 对视频 DiT 梯度的阻断/放行效果，并做小规模训练对照评估其对最终性能的影响。
+<strong>前置</strong>：F-3 中 joint_cross_attn 冒烟已通过；读懂 <code>tests/test_wam_architecture.py:868 test_dual_system_detached_joint_cross_attn_blocks_grad_to_video</code>。
+<strong>步骤</strong>：
+1. 先跑现成不变量测试：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_wam_architecture.py<span class="w"> </span>-k<span class="w"> </span>detached<span class="w"> </span>-v
+</code></pre></div>
+2. 写一个梯度探测脚本：构造 joint_cross_attn（mock 或小骨干），分别在 <code>model.architecture.detach_bridge=true/false</code> 下前向 + 对 action loss 反传，断言 <code>video_backbone</code> 参数的 grad 为 None/非 None（复刻 :868 用例的断言逻辑，但在你的配置下）。
+3. 训练对照：两组仅改 <code>model.architecture.detach_bridge</code>，对比 loss_video 是否被动作 loss 影响、最终动作性能。
+<strong>验收标准</strong>：梯度探测脚本输出（True→视频侧无梯度，False→有）+ 训练对照曲线 + 结论（detach 是否值得默认开）。生效点必须指到 <code>dual_system/joint_cross_attn.py:242</code>（<code>bridge.detach() if detach_bridge else bridge</code>）。
+<strong>产出</strong>：梯度探测脚本 + 对照结论。
+<strong>难度（估计）</strong>：中。<strong>工作量（估计）</strong>：3-4 天。
+<strong>代码锚点</strong>：<code>dual_system/joint_cross_attn.py:78,111-112,230-242</code>；<code>tests/test_wam_architecture.py:868</code>；配置默认值 <code>dual_system/joint_cross_attn.py:32</code>（False）。</p>
+<h3 id="f-5idm">任务 F-5：idm 两阶段推理复现<a class="headerlink" href="#f-5idm" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：复现 idm 的"Stage 1 视频独立降噪 + Stage 2 冻结视频 KV 的动作降噪"两阶段推理，核对训练侧 teacher-forcing mask 布局，并与联合推理（joint_self_attn）做延迟/质量对比。
+<strong>前置</strong>：F-3 完成（有 idm 训练 checkpoint）或先用 mock backbone 走通逻辑；理解 idm 是六个变体中最复杂的（<code>dual_system/idm.py</code> 约 1246 行）。</p>
+<p>先读懂两侧机制（这是本任务的核心学习量）：</p>
+<ul>
+<li><strong>训练三分支</strong>（<code>dual_system/idm.py:644 _forward_idm_training</code>，由 <code>forward</code> 在 <code>cond_video_latents is not None</code> 时分派）：一次 forward 同时跑 A 噪声视频分支、B teacher-forcing 条件视频分支（以 <code>idm_video_cond_noise_prob</code> 概率加噪，0=干净，默认 0.5，<code>idm.py:453</code> 校验 ∈[0,1]）、C 噪声动作分支。<code>IDMMoTDriver.run_idm_training_loop</code>（<code>idm.py:101</code>）用 <code>vb.merge_idm_video_branches</code> 把 A/B 沿序列轴合并，由 <code>_build_teacher_forcing_mask</code>（<code>idm.py:59</code>）构造布局：v2v 各自子掩码、action→cond_video+action 全连、其余方向阻断，单次 joint loop 后 <code>split_idm_video_branches</code> 拆回。<code>compute_loss</code>（<code>idm.py:779</code>）对 A/B/C 独立采样 timestep。idm <strong>忽略</strong> <code>attention_mask_mode</code>（<code>idm.py:443-446</code> 注释）。</li>
+<li><strong>推理两阶段</strong>（<code>dual_system/idm.py:934 generate</code>）：Stage 1 用 <code>_run_video_only_backbone</code> 独立把视频降噪干净；Stage 2 以 t=0 干净视频调 <code>driver.prefill_video_cache</code>（<code>idm.py:170</code>，<code>@torch.no_grad</code> 缓存每层 K/V + prefix 门），随后循环里 <code>run_action_with_video_cache</code>（<code>idm.py:246</code>，或编译版 <code>..._tensor_loop</code> <code>idm.py:301</code>）只跑动作分支、attend 缓存的视频 K/V。Stage 1 无视频步且无 <code>input_video_latents</code> 时 fail-fast（<code>idm.py:1105</code> 附近）。</li>
+</ul>
+<p><strong>步骤</strong>：
+1. 用已有 checkpoint（或方向 C 的微调产物）起推理，逐 stage 打日志确认两段都走到：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>bash<span class="w"> </span>scripts/deploy.sh<span class="w"> </span>&lt;idm_ckpt_dir&gt;<span class="w">     </span><span class="c1"># 或写独立脚本直接调 architecture.generate</span>
+</code></pre></div>
+2. 在 Stage 2 循环里埋点：确认动作步不再跑视频 DiT（视频 K/V 来自缓存），记录每步耗时。
+3. 对照组：同 checkpoint 格式下 joint_self_attn 的联合推理逐步耗时；产出延迟对比表（prefill 一次性成本 vs 每步节省）。
+4. mask 布局核对：用小尺寸配置调 <code>_build_teacher_forcing_mask</code>（<code>idm.py:59</code>）打印分块掩码，对照 §2 的布局描述逐块确认。
+<strong>验收标准</strong>：可运行的两阶段推理脚本 + 每阶段耗时分解表 + teacher-forcing mask 布局核对记录 + 与联合推理的延迟/质量对比结论。
+<strong>产出</strong>：两阶段推理脚本与对比报告（高阶项，排期靠后）。
+<strong>难度（估计）</strong>：高。<strong>工作量（估计）</strong>：2-3 周。
+<strong>代码锚点</strong>：<code>dual_system/idm.py:392,644,779,934</code>；<code>idm.py:59,101,170,246,301</code>；<code>configs/model/dual_system.yaml:40</code>（<code>idm_video_cond_noise_prob: 0.5</code>）。</p>
+<h3 id="f-6single_system-moe-expert-ffn">任务 F-6：single_system moe 的 expert FFN 贡献分析<a class="headerlink" href="#f-6single_system-moe-expert-ffn" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：量化 <code>SharedMoEActionBackbone</code> 中 expert FFN 对动作预测的贡献，做 <code>bridge_layers</code> 位置/数量敏感性分析。
+<strong>前置</strong>：方向 C 可训练环境；single_system moe 冒烟通过。
+<strong>步骤</strong>：
+1. 读懂机制：<code>openwam/model/action_backbone/shared_action_backbone.py:86 ExpertFFNBlock</code>、<code>:137 SharedMoEActionBackbone</code>（<code>expert_layer_to_index</code> :177，每个 bridge 层一个 expert）；架构侧在 bridge 层调 <code>ab.apply_expert</code> 做残差修正，越界有校验（<code>single_system/moe.py:84</code>）。
+2. 敏感性网格：改 <code>configs/model/single_system.yaml</code> 的 <code>architecture.bridge_layers</code>（显式列表）或 <code>bridge_interval</code>，例如 <code>{全部层(interval=1)} × {每隔2层} × {仅后半段层} × {仅首层}</code> 四组，其余固定。
+3. 极端对照：<code>bridge_layers</code> 只留 0 个/1 个 expert 时（interval 调大）退化为接近 vanilla，验证贡献单调性。
+4. 每组记录 loss_action 收敛与（有条件）成功率；绘"expert 数量 vs 性能"曲线。
+<strong>验收标准</strong>：敏感性报告：至少 4 组 bridge 配置的训练曲线 + 位置/数量两个维度的结论 + expert FFN 是否"值得其参数开销"的判断。
+<strong>产出</strong>：敏感性报告（Study 章节素材）。
+<strong>难度（估计）</strong>：中。<strong>工作量（估计）</strong>：1-1.5 周。
+<strong>代码锚点</strong>：<code>shared_action_backbone.py:86,137,160,177</code>；<code>single_system/moe.py:39,84</code>；<code>utils/common.py:96 resolve_bridge_layers</code>。</p>
+<h2 id="5">5. 建议推进顺序与里程碑<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>W1</strong>：F-1（无 GPU 即可启动，顺带把 §2 概念读实）。里程碑：mask 语义矩阵。</li>
+<li><strong>W2–W3</strong>（等方向 C 环境就绪后）：F-2 启动训练；并行写 F-4 的梯度探测脚本（逻辑验证不依赖大规模训练）。里程碑：mask 消融曲线 + detach 梯度结论。</li>
+<li><strong>W3–W5</strong>：F-3 三变体对照（最吃算力，尽早排队）；F-6 可在 F-3 排队间隙用 single_system 跑。里程碑：三变体对照表。</li>
+<li><strong>W6+</strong>：F-5 idm 两阶段推理（依赖 F-3 的 idm checkpoint，逻辑最长，放最后）。里程碑：两阶段推理报告。</li>
+</ol>
+<p>测试安全网：本方向所有结论性断言都应能对应到 <code>tests/</code> 既有不变量，测试维护与扩展见 方向H-测试与质量基建.md。</p>
+<h2 id="6">6. 风险与坑<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>yaml <code>mutual</code> vs 代码默认 <code>ACTION_SEES_VIDEO</code> 不一致</strong>：三份 model yaml 写 <code>attention_mask_mode: mutual</code>（<code>configs/model/single_system.yaml:28</code>、<code>dual_system.yaml:29</code>、<code>tri_system.yaml:31</code>），但代码默认是 <code>ACTION_SEES_VIDEO</code>（<code>single_system/vanilla.py:50</code>、<code>single_system/moe.py:50</code>、<code>dual_system/joint_self_attn.py:97</code>、<code>tri_system/joint_self_attn.py:177</code>）。绕过 yaml 直接 <code>build_architecture</code> 会静默换掩码。规避：实验记录一律以 checkpoint 内 config.yaml 为准；这正是 F-2 的影响评估对象。</li>
+<li><strong>joint_self_attn 几何严格对齐</strong>：<code>DualSystemMoTDriver</code> 构造期强校验 <code>num_layers</code>/<code>num_heads</code>/<code>head_dim</code> 双侧一致（<code>dual_system/mot_driver.py:69-82</code>），不满足即 raise，改 <code>bridge_layers</code>/<code>bridge_interval</code> 就是在改 ActionDiT 层数。规避：切骨干或改 bridge 配置后先跑 <code>training.debug=true</code> 冒烟，把构造期报错当预期行为而非 bug。</li>
+<li><strong>tri_system 关 <code>mot_checkpoint_mixed_attn</code> 易 OOM</strong>：<code>configs/model/tri_system.yaml:39</code> 注释明确"disabling typically OOMs Wan22 + Qwen3-VL"。本方向只做背景了解，但若顺手做 tri 实验，勿为"排除检查点干扰"关掉它；dual 侧同名字段（<code>dual_system.yaml:38</code>）只对 joint_self_attn/idm 生效，joint_cross_attn 没有该机制，F-3 对比吞吐时须说明。</li>
+<li><strong>idm <code>lambda_action==0</code> 分支死计算</strong>：<code>dual_system/idm.py:733</code> 注释 <code>TODO(perf)</code>——video-only（<code>lambda_action==0</code>）路径下 cond 分支被算了但从不读取（相关逻辑 <code>idm.py:732-738</code>、<code>:901</code>）。规避：复现 video-only 训练时知道这部分开销是已知的；不要把它当成自己引入的 bug，也不要在未评估前"顺手修复"。</li>
+<li><strong>idm 对 backbone 的结构性要求</strong>：teacher-forcing 需 backbone 支持 <code>merge/split_idm_video_branches</code>，且要求 per-token 4D <code>t_mod</code>（Wan 需 TI2V 原生或 <code>force_per_token_t_mod</code>，<code>idm.py:737-738</code> 为强制赋值）。规避：F-5 选骨干时优先 wan22_ti2v_5b；换 VACE/I2V 前先确认该路径。</li>
+<li><strong>"CI 绿 ≠ 消融可信"</strong>（母文档 R4）：CI 无 GPU/模型覆盖，长训练收敛未验证。规避：所有消融结论以本方向实测曲线为准，F-1 的矩阵只保证掩码逻辑正确，不保证训练效果。</li>
+</ol>
+<h2 id="7">7. 推荐阅读顺序<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>openwam/model/architectures/registry.py</code>（:96 <code>resolve_architecture_config</code> + docstring 6 注册名）——知道 yaml 字段怎么变成对象。</li>
+<li><code>openwam/model/architectures/base.py</code>（:154 类、:1044、:1361、:1691）——知道训练/推理在哪进入架构。</li>
+<li><code>openwam/model/architectures/utils/mask_modes.py</code> + <code>tests/test_mask_modes.py</code>——F-1 的全部素材。</li>
+<li><code>openwam/model/architectures/single_system/vanilla.py</code>（:118/:126/:142 的注入/掩码/取出三步）——最简耦合范式，建立直觉。</li>
+<li><code>openwam/model/architectures/dual_system/mot_driver.py</code>（:38、:69-82）——MoT 逐层拼接与几何约束，F-3/F-5 的前置。</li>
+<li><code>openwam/model/architectures/dual_system/joint_cross_attn.py</code>（:43、:230-242）——bridge 与 detach，F-4 前置。</li>
+<li><code>openwam/model/architectures/dual_system/idm.py</code>（按 :392 → :644 → :59/:101 → :779 → :934 → :170/:246 顺序读）——F-5 专项，最后读。</li>
+<li><code>openwam/model/action_backbone/shared_action_backbone.py</code>（:86/:137/:177）——F-6 专项。</li>
+<li>交叉阅读：方向C-训练管线复现.md（F-2 至 F-6 的环境前置）、方向H-测试与质量基建.md（测试安全网的维护方式）。</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1312 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="OpenWAM 仓库深度调研：方向分配说明与任务书（基于 OpenWAM-Official/OpenWAM @ 90e94ae）">
+      
+      
+      
+        <link rel="canonical" href="https://sasasatori.github.io/kaiyuan/%E6%96%B9%E5%90%91A-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AA%8C%E8%AF%81%E7%9F%A9%E9%98%B5/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../%E6%96%B9%E5%90%91B-%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%8E%A8%E7%90%86%E5%A4%8D%E7%8E%B0/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>方向 A · 环境搭建与验证矩阵 - OpenWAM 调研任务书</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#a" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="OpenWAM 调研任务书" class="md-header__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenWAM 调研任务书
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              方向 A · 环境搭建与验证矩阵
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  总览
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  方向任务书
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenWAM 调研任务书" class="md-nav__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OpenWAM 调研任务书
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向任务书
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    方向任务书
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 A · 环境搭建与验证矩阵
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 A · 环境搭建与验证矩阵
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 这个方向做什么、为什么值得做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 最小必要背景
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 任务书
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 任务书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 A1：Docker 路线搭建
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 A2：Native 路线搭建
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a3cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 A3：CPU 验证矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 A4：架构不变量门禁复现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 A5：资产下载演练
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 A6：已知坑验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 建议推进顺序与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 风险与坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 推荐阅读顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91B-%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%8E%A8%E7%90%86%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 B · 部署与推理复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91C-%E8%AE%AD%E7%BB%83%E7%AE%A1%E7%BA%BF%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 C · 训练管线复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91D-%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%8A%A8%E4%BD%9C%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 D · 数据管线与动作空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91E-%E4%BB%BF%E7%9C%9F%E8%AF%84%E6%B5%8B%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 E · 仿真评测复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91F-%E6%9E%B6%E6%9E%84%E5%8F%98%E4%BD%93%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 F · 架构变体与注意力机制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91G-%E8%A7%86%E8%A7%89%E8%A1%A8%E5%BE%81%E4%B8%8E%E9%AA%A8%E5%B9%B2%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 G · 视觉表征与骨干研究
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91H-%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%B4%A8%E9%87%8F%E5%9F%BA%E5%BB%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 H · 测试与质量基建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 这个方向做什么、为什么值得做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 最小必要背景
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 任务书
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 任务书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 A1：Docker 路线搭建
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 A2：Native 路线搭建
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a3cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 A3：CPU 验证矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 A4：架构不变量门禁复现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 A5：资产下载演练
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 A6：已知坑验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 建议推进顺序与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 风险与坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 推荐阅读顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="a">方向 A：环境搭建与验证矩阵<a class="headerlink" href="#a" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>一句话定位：搭好全组共享的 OpenWAM 运行环境，并产出"什么能跑、什么不能跑"的权威验证矩阵。读者：第一次接触该模块的同学。
+前置：先读本目录 README.md 的总览，了解本方向在全局中的位置。
+所有路径相对仓库根 <code>$R = OpenWAM/</code>；行号以 main @ <code>90e94ae</code> 为准（本文引用均已实际核对），若上游更新导致行号漂移，以符号锚点为准。</p>
+</blockquote>
+<h2 id="1">1. 这个方向做什么、为什么值得做<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>OpenWAM 是一个 World–Action Model（WAM）系统预训练研究栈：数据层（13 种注册数据集）→ 模型层（6 架构 × 5 骨干）→ 训练（torchrun + Accelerate + ZeRO-2）→ 部署（WebSocket PolicyServer）→ 评测（8 个 benchmark 客户端）。这一切的前提是一台机器能把代码跑起来——本方向就是这个前提。</p>
+<p>好消息是仓库的工程化程度很高：Docker 镜像用 CUDA digest 钉死 + Ubuntu snapshot apt + uv 锁文件三层手段保证可复现（<code>docker/Dockerfile</code>）；CPU 测试门禁 <code>make test</code> 与 CI 等价（<code>Makefile:19</code>、<code>.github/workflows/ci.yml:44</code>）；还有一套离线 bundle 交付协议（<code>docker/offline.py:13 SCHEMA = 4</code>）。坏消息是 <strong>CI 只覆盖 CPU</strong>：GPU 路径、真实权重、模型端到端都没有 CI 保障，<code>assets/openwam_usage_docs/docker-validation.md</code> 诚实列出了未验证项。所以"CI 绿"不等于"复现可行"——本方向产出的验证矩阵才是全组的地面实况。</p>
+<p>做完本方向你会得到：Docker 镜像构建与 compose 编排的实战经验、pytest marker 分层测试体系的理解、Hydra 配置回写机制的认识，以及一份全组都会引用的环境 SOP 与排障 wiki。方向 B（部署与推理复现，见 <code>方向B-部署与推理复现.md</code>）和方向 C（训练管线复现，见 <code>方向C-训练管线复现.md</code>）都直接阻塞在你这里。</p>
+<h2 id="2">2. 最小必要背景<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p><strong>概念 1：Docker 五阶段镜像</strong>。镜像分层构建，每层职责单一，最终产物是 <code>default</code> 阶段。
+- 锚点：<code>docker/Dockerfile:1</code> <code>ARG CUDA_IMAGE</code>（基底 <code>nvidia/cuda:12.8.1-devel-ubuntu24.04</code> 以 sha256 digest 钉死）；<code>docker/Dockerfile:6</code> <code>ARG UBUNTU_SNAPSHOT=20260910T000000Z</code>（apt 全部走 snapshot.ubuntu.com 不可变归档，禁用 rolling NVIDIA apt 源）。
+- 五个阶段：<code>docker/Dockerfile:2</code> <code>AS system-dependencies</code>（snapshot apt）→ <code>:26</code> <code>AS dependencies</code>（venv + torch cu128 + uv 锁）→ <code>:60</code> <code>AS openwam</code>（<code>pip install -e .</code> 可编辑安装、<code>USER 1000:1000</code>、<code>EXPOSE 8848</code>）→ <code>:106</code> <code>AS cosmos</code>（可选，跑 submodule 安装脚本）→ <code>:112</code> <code>AS default</code>（<code>docker build</code> 默认目标，即 openwam）。</p>
+<p><strong>概念 2：依赖锁文件</strong>。Python 依赖不看 <code>pyproject.toml</code> 的范围约束，而是看 uv 生成的精确锁。
+- 锚点：<code>docker/requirements-cu128.txt</code>（441 行全精确钉版）：<code>torch==2.7.1+cu128</code>（<code>:357</code>）、<code>transformers==5.16.1</code>（<code>:383</code>）、<code>deepspeed==0.18.9</code>（<code>:43</code>）、<code>nvidia-cudnn-cu12==9.7.1.26</code>（<code>:180</code>）。顶层范围约束在 <code>docker/constraints-cu128.txt</code>。</p>
+<p><strong>概念 3：离线 bundle（schema-4）</strong>。把镜像 + 配置文件打包成 gzip，可在完全离线机器上 verify/load。
+- 锚点：<code>docker/offline.py:13</code> <code>SCHEMA = 4</code>；<code>docker/offline.py:16</code> <code>CONFIG_FILES</code>（bundle 内含 compose.yaml、compose override、<code>.env.example</code>、docker.md、docker-validation.md、offline.py 自身）。导出经 <code>make docker-export</code>（<code>docker/docker.mk:66</code>）。<strong>注意：bundle 不含任何权重/数据</strong>。</p>
+<p><strong>概念 4：pytest marker 分层</strong>。测试分 CPU 层（默认跑）与 GPU 层（<code>@pytest.mark.gpu</code>，默认排除）；GPU 用例经 <code>asset_path()</code> 找权重，找不到就 skip 而不是 fail。
+- 锚点：<code>tests/conftest.py:18</code> <code>pytest_configure</code> 注册 <code>gpu</code>/<code>data</code> 两个 marker；<code>tests/_assets.py:23</code> <code>_ASSETS</code>（5 个权重键，如 <code>OPENWAM_WAN22_TI2V_5B</code>）、<code>tests/_assets.py:32</code> <code>asset_path(name)</code>（解析顺序：env 变量 → 遗留 env 别名 → <code>assets/video_backbone_ckpt/&lt;name&gt;</code> 默认目录）。
+- 另有两个 env 开关控制 GPU 集成用例：<code>OPENWAM_RUN_TRAIN_DEPLOY_GPU=1</code>、<code>OPENWAM_RUN_TRI_SYSTEM_GPU_SMOKE=1</code>，不设则即使有 GPU 也 skip。</p>
+<p><strong>概念 5：<code>make test</code> 与 CI 的边界</strong>。<code>make test</code> = <code>pytest -q -m "not gpu" tests --ignore=tests/test_tri_system_smoke.py</code>（<code>Makefile:19-20</code>，<code>Makefile:4</code> <code>CORE_TEST_ARGS</code>）。CI（<code>.github/workflows/ci.yml</code>）只装 <strong>CPU 版</strong> torch（<code>ci.yml:40</code> <code>--index-url .../whl/cpu</code>），跑 <code>make check</code>（<code>ci.yml:44</code>）外加一条 import 边界检查（<code>ci.yml:46-51</code>：禁止 <code>openwam/</code> import <code>benchmarks</code>）。<strong>CI 无任何 GPU/model 覆盖</strong>；<code>docker.yml</code> 会真实 build CUDA 镜像，但也只跑容器内 CPU 校验。</p>
+<p><strong>概念 6：compose 四种运行形态</strong>。<code>compose.yaml</code> 定义 <code>serve</code>（起 PolicyServer）、<code>train</code>（torchrun 训练）、<code>dev</code>（开发 shell）、<code>gpu-check</code>（<code>compose.yaml:107</code>，GPU 冒烟：BF16 matmul / torch.compile / DeepSpeed FusedAdam / 多卡 NCCL all-reduce，见 <code>docker/gpu_smoke.py:10</code> <code>main</code>、<code>:15</code> <code>--all-visible</code>）。入口链：<code>docker/runtime_user.py</code>（伪造 NSS 身份）→ <code>docker/entrypoint.sh:16</code> <code>serve)</code> / <code>:20</code> <code>train)</code> 分发。</p>
+<h2 id="3">3. 代码地图<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$R/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── docker/                        # 环境与交付底座（本方向主战场）
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│   ├── Dockerfile                 # 五阶段镜像定义【入口文件，A1 必读】
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   ├── requirements-cu128.txt     # uv 锁文件（441 行精确钉版）
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   ├── constraints-cu128.txt      # 顶层版本约束
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   ├── .env.example               # compose 配置模板【A1 第一步要 cp 它】
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   ├── docker.mk                  # make 目标集：docker-build:33 / docker-check:53 / docker-integration-check:63 / docker-export:66
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   ├── compose.dev.yaml / compose.host.yaml / compose.worktree.yaml  # 三种 compose override
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│   ├── runtime_user.py            # 容器内身份/home 适配（:1 configure_cuda_compat）
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│   ├── entrypoint.sh              # serve/train 分发（:16/:20）
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│   ├── gpu_smoke.py               # GPU 冒烟脚本（:10 main，:15 --all-visible 多卡 NCCL）
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│   ├── healthcheck.py             # 纯 websockets ping/pong，不 import torch
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│   └── offline.py                 # 离线 bundle 协议（:13 SCHEMA=4）
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>├── compose.yaml                   # serve/train/dev/gpu-check 四服务（:107 gpu-check）
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>├── Makefile                       # make test:19（CPU 核心集）/ test-full:22 / check:38
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>├── pytest.ini                     # testpaths=tests；GPU 排除靠 Makefile 而非 ini
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>├── .github/workflows/
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│   ├── ci.yml                     # CPU-only CI（:40 CPU torch，:44 make check）
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│   └── docker.yml                 # 真实构建 CUDA 镜像 + docker-check（要求 ≥60GB 盘）
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>├── tests/
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│   ├── conftest.py                # marker 注册（:18）+ _StubReason1Encoder（:24）
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│   ├── _assets.py                 # GPU 测试权重解析（:23 _ASSETS，:32 asset_path）
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│   ├── test_split_attn_equivalence.py     # A4 门禁①（:106/:142/:195）
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>│   ├── test_train_deploy_consistency.py   # A4 门禁②（:50/:369；:437 GPU 变体）
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>│   ├── test_save_deploy_assets_hook.py    # A4 门禁③（:32/:46）
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>│   ├── test_no_execution_plan.py          # A4 门禁④（:12/:20/:28/:41）
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>│   └── dataloader/conftest.py     # fixture 缓存 tests/dataloader/.cache（需手工删除刷新）
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>├── scripts/download_assets/       # 5 个资产下载器【A5 主战场】
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>│   ├── download_video_backbone.py       # :83 MODELS，5 个视频骨干，回写 model_path
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>│   ├── download_benchmark_data.py       # :81 BENCHMARKS（8 个），:360 _POST_DOWNLOAD，自动建 stats + 回写 dataset_dir
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>│   ├── download_visual_encoder.py       # :97 MODELS（4 个编码器，含 gated/直链）
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>│   ├── download_vlm_backbone.py         # :83 MODELS（Qwen3-VL-2B，回写 checkpoint_path）
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>│   └── download_openwam_checkpoints.py  # :99 ALPHA（14 个），:120 STUDY_GROUPS（34 个）
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>├── scripts/install_cosmos_predict25.sh  # Cosmos 可选依赖安装（编 transformer-engine）
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>├── third_party/cosmos-predict2.5/       # 唯一 submodule，【当前为空，未 init】
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>└── assets/openwam_usage_docs/
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>    ├── docker.md                  # 环境/Docker/离线/排障权威文档【先读这个】
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>    └── docker-validation.md       # 官方验证记录与未验证项清单
+</code></pre></div>
+<h2 id="4">4. 任务书<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h3 id="a1docker">任务 A1：Docker 路线搭建<a class="headerlink" href="#a1docker" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：从零 build 出镜像并通过全部容器校验。
+<strong>前置</strong>：联网 Linux 机器；Docker Engine + Compose ≥2.30；NVIDIA driver + Container Toolkit（<code>nvidia-smi</code> 可见卡）；<strong>空闲磁盘 ≥60GB</strong>（<code>docker.yml</code> 对 CI runner 的硬性要求，本地同理；镜像本身约 25GB）。
+<strong>步骤</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span><span class="nv">$R</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cp<span class="w"> </span>docker/.env.example<span class="w"> </span>.env
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># 编辑 .env：把 OPENWAM_UID / OPENWAM_GID 改成 id -u / id -g 的输出（.env.example:7-8）</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>.cache/docker<span class="w"> </span>outputs
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>make<span class="w"> </span>docker-build<span class="w">                            </span><span class="c1"># docker/docker.mk:33；首次拉 CUDA 层最慢，1.5–4h（估计）</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>make<span class="w"> </span>docker-check<span class="w">                            </span><span class="c1"># docker/docker.mk:53；compose 校验 + 容器内 pip check + CPU 测试</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>make<span class="w"> </span>docker-integration-check<span class="w"> </span><span class="nv">PYTHON</span><span class="o">=</span>python3<span class="w"> </span><span class="c1"># docker/docker.mk:63</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-T<span class="w"> </span>gpu-check<span class="w">         </span><span class="c1"># compose.yaml:107；多卡机加 -- --all-visible 验 NCCL</span>
+</code></pre></div>
+<strong>验收标准</strong>：四条命令全部通过；记录各步耗时与 <code>docker images</code> 体积、构建前后磁盘占用。
+<strong>产出</strong>：Docker 环境 SOP 一页（含耗时/磁盘实测表）。
+<strong>难度（估计）</strong>：中。<strong>工作量（估计）</strong>：0.5–1 天（大部分是等待构建）。
+<strong>代码锚点</strong>：<code>docker/Dockerfile:1</code>、<code>docker/Dockerfile:6</code>、<code>docker/docker.mk:33</code>、<code>compose.yaml:107</code>、<code>docker/gpu_smoke.py:15</code>。</p>
+<h3 id="a2native">任务 A2：Native 路线搭建<a class="headerlink" href="#a2native" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：不用 Docker，在 conda 环境直接装出可跑 <code>make test</code> 的环境，作为 Docker 路线的对照（也让改代码-跑测试的循环更快）。
+<strong>前置</strong>：conda；gcc（deepspeed 是 sdist 需现场编译）；约 20GB 磁盘。
+<strong>步骤</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd</span><span class="w"> </span><span class="nv">$R</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>openwam<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>-y<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>conda<span class="w"> </span>activate<span class="w"> </span>openwam
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">torch</span><span class="o">==</span><span class="m">2</span>.7.1<span class="w"> </span><span class="nv">torchvision</span><span class="o">==</span><span class="m">0</span>.22.1<span class="w"> </span><span class="nv">torchaudio</span><span class="o">==</span><span class="m">2</span>.7.1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/cu128
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s1">'.[dev]'</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>make<span class="w"> </span><span class="nb">test</span>
+</code></pre></div>
+<strong>验收标准</strong>：<code>make test</code> 全绿（skip 允许，fail 不允许）；记录与 A1 容器内测试结果的差异。
+<strong>产出</strong>：Native 环境 SOP + 与 Docker 路线的差异说明（包版本差异用 <code>pip freeze | diff</code> 对 <code>docker/requirements-cu128.txt</code>）。
+<strong>难度（估计）</strong>：中。<strong>工作量（估计）</strong>：0.5 天。
+<strong>代码锚点</strong>：<code>docker/requirements-cu128.txt:357</code>（torch 版本以此为基准）、<code>Makefile:19</code>、<code>.github/workflows/ci.yml:40</code>（CI 同款装法，但 CI 装的是 CPU torch）。</p>
+<h3 id="a3cpu">任务 A3：CPU 验证矩阵<a class="headerlink" href="#a3cpu" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：跑 <code>make test</code>，统计 pass/skip，并逐项解释 skip 原因，产出"GPU 层 skip 说明表"。
+<strong>前置</strong>：A1 或 A2 任一完成。
+<strong>步骤</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span><span class="nv">$R</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-m<span class="w"> </span><span class="s2">"not gpu"</span><span class="w"> </span>tests<span class="w"> </span>--ignore<span class="o">=</span>tests/test_tri_system_smoke.py<span class="w"> </span>-ra<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-40
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># 收集 skip 明细：</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-m<span class="w"> </span><span class="s2">"not gpu"</span><span class="w"> </span>tests<span class="w"> </span>--ignore<span class="o">=</span>tests/test_tri_system_smoke.py<span class="w"> </span>-rs<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>SKIPPED<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-rn
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># 再反向收集"被 -m 'not gpu' 排除"的 GPU 用例清单：</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests<span class="w"> </span>--collect-only<span class="w"> </span>-q<span class="w"> </span>-m<span class="w"> </span>gpu<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-50
+</code></pre></div>
+把 skip 原因归成四类：① 缺 <code>diffusers</code>（<code>test_cosmos3_*</code> 用 <code>pytest.importorskip</code>）；② 缺 <code>labtasker</code>（<code>tests/benchmarks/</code> 部分用例）；③ 缺权重（<code>tests/_assets.py:32 asset_path</code> 解析不到路径）；④ 缺 env 开关（<code>OPENWAM_RUN_TRAIN_DEPLOY_GPU</code> / <code>OPENWAM_RUN_TRI_SYSTEM_GPU_SMOKE</code>）。
+<strong>验收标准</strong>：全绿；skip 说明表每一行都能指到代码里的 skipif/importorskip 位置。
+<strong>产出</strong>：验证矩阵表（用例组 × 状态 × skip 原因 × 代码锚点）。
+<strong>难度（估计）</strong>：低。<strong>工作量（估计）</strong>：0.5 天。
+<strong>代码锚点</strong>：<code>Makefile:19-20</code>、<code>tests/conftest.py:18</code>、<code>tests/_assets.py:23</code>、<code>tests/dataloader/conftest.py:1-6</code>。</p>
+<h3 id="a4">任务 A4：架构不变量门禁复现<a class="headerlink" href="#a4" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：单独跑通 4 个"漂移即静默出错"的契约测试，理解它们各自冻结什么，并做一次"故意破坏 → 变红 → 恢复"的对照实验，证明门禁真的在守门。
+<strong>前置</strong>：A2（native 跑测试循环最快）；无需 GPU、无需权重。
+<strong>步骤</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span><span class="nv">$R</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_split_attn_equivalence.py<span class="w">    </span><span class="c1"># 拆分注意力零 atol 等价：:106 wan_dit_block / :142 action_mot / :195 异构 hidden_dim</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_train_deploy_consistency.py<span class="w">  </span><span class="c1"># train↔deploy 数值一致：:50 idm stage2 / :369 tri vlm mask padding</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_save_deploy_assets_hook.py<span class="w">   </span><span class="c1"># save_assets_for_deployment 无条件分发：:32 分发 / :46 全骨干声明 hook</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_no_execution_plan.py<span class="w">         </span><span class="c1"># 旧 dispatch 状态机必须 import 失败：:12/:20/:28/:41</span>
+</code></pre></div>
+故意破坏对照（示例，任选其一）：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># 例：破坏拆分等价——临时把 pre_attn/post_attn 拆分路径中一处残差删掉或改 atol</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>git<span class="w"> </span>stash<span class="w"> </span>list<span class="w">   </span><span class="c1"># 先确认工作区干净</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># 修改后重跑对应测试，确认变红；然后：</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>git<span class="w"> </span>checkout<span class="w"> </span>--<span class="w"> </span>&lt;改过的文件&gt;<span class="w">   </span><span class="c1"># 恢复，重跑确认回绿</span>
+</code></pre></div>
+<strong>验收标准</strong>：4 项全过 + 1 份破坏对照实验记录（改了什么 → 哪个测试变红 → 报错信息 → 恢复后回绿）。
+<strong>产出</strong>：不变量清单（每个门禁一句话说明"它防止什么回归"）+ 破坏对照记录。
+<strong>难度（估计）</strong>：低-中。<strong>工作量（估计）</strong>：0.5–1 天。
+<strong>代码锚点</strong>：<code>tests/test_split_attn_equivalence.py:106</code>、<code>tests/test_train_deploy_consistency.py:50</code>、<code>tests/test_save_deploy_assets_hook.py:46</code>、<code>tests/test_no_execution_plan.py:12</code>。<strong>注意</strong>：<code>test_train_deploy_consistency.py:437</code> 的 GPU 变体注释自承"只是把 CPU 桩重跑在 CUDA"，真正的 Wan 端到端一致性默认路径缺位——不要误认为已被覆盖。</p>
+<h3 id="a5">任务 A5：资产下载演练<a class="headerlink" href="#a5" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：逐个跑 5 个下载器，核对它们回写的 yaml 字段与归一化统计生成，产出支持矩阵表。
+<strong>前置</strong>：A1 或 A2；联网；磁盘按选下的资产预留（见下表）；DINOv3/FLUX.2 需先在 HF 页面 accept license 并 <code>hf auth login</code>。
+<strong>步骤</strong>（5 个下载器统一支持交互菜单与 <code>--name/--source/--root/--yes</code> 非交互模式）：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span><span class="nv">$R</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>python<span class="w"> </span>scripts/download_assets/download_benchmark_data.py<span class="w"> </span>--name<span class="w"> </span>LIBERO<span class="w"> </span>--yes<span class="w">   </span><span class="c1"># 最小 1.9GB，先拿它练手；自动建 stats + 回写 dataset_dir</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>python<span class="w"> </span>scripts/download_assets/download_video_backbone.py<span class="w"> </span>--name<span class="w"> </span>Wan2.2-TI2V-5B<span class="w"> </span>--yes<span class="w">  </span><span class="c1"># 34.2GB；可选 --source modelscope</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>python<span class="w"> </span>scripts/download_assets/download_vlm_backbone.py<span class="w"> </span>--yes<span class="w">                    </span><span class="c1"># Qwen3-VL-2B，4.3GB</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>python<span class="w"> </span>scripts/download_assets/download_visual_encoder.py<span class="w"> </span>--yes<span class="w">                  </span><span class="c1"># 选一个非 gated 的试，如 Wan2.2 VAE</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>python<span class="w"> </span>scripts/download_assets/download_openwam_checkpoints.py<span class="w">                   </span><span class="c1"># 先看菜单选 1 个 alpha ckpt（~17–50GB/个）</span>
+</code></pre></div>
+下载后核对：① 对应 yaml 的 <code>model_path</code>/<code>dataset_dir</code>/<code>checkpoint_path</code> 是否被回写（<code>configs/model/video_backbone/*.yaml</code> 等）；② benchmark 数据是否生成了归一化统计（<code>download_benchmark_data.py:360 _POST_DOWNLOAD</code> 链路）；③ 体积与预期是否吻合。
+<strong>验收标准</strong>：支持矩阵表（模型 × 源(huggingface/modelscope/直链) × 体积 × 回写字段 × 是否 gated）+ 至少 3 个下载器实际下载验证（其中必须含 LIBERO 与 Wan2.2-TI2V-5B，它们是方向 B/C 的入口资产）。
+<strong>产出</strong>：资产清单表 + 下载验证记录。
+<strong>难度（估计）</strong>：中（受带宽与 gated 授权影响）。<strong>工作量（估计）</strong>：1 天（主要是下载等待）。
+<strong>代码锚点</strong>：<code>scripts/download_assets/download_video_backbone.py:83</code>、<code>download_benchmark_data.py:81</code>/<code>:360</code>、<code>download_visual_encoder.py:97</code>、<code>download_vlm_backbone.py:83</code>、<code>download_openwam_checkpoints.py:99</code>/<code>:120</code>。</p>
+<h3 id="a6">任务 A6：已知坑验证<a class="headerlink" href="#a6" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：在本组 GPU 机上确认两个 NCCL workaround 的有效性，形成本组卡型的适配结论。
+<strong>前置</strong>：A1 完成；多卡 GPU 机（H100 或同级）。
+<strong>步骤</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># ① NCCL_RAS_ENABLE=0（镜像内已默认 ENV，docker/Dockerfile:78）：H100 上不设会 SIGSEGV 退出</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-T<span class="w"> </span>gpu-check<span class="w"> </span>--<span class="w"> </span>--all-visible
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># ② NCCL_NVLS_ENABLE=0：四卡以上 NVLS 初始化 hang 时需要在 .env / compose 环境追加</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># ③ 对照实验（可选，有风险意识再做）：在容器内 unset NCCL_RAS_ENABLE 重跑，观察是否复现 SIGSEGV</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>nvidia-smi<span class="w"> </span>-q<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"Product Name"</span><span class="w">   </span><span class="c1"># 记录本组卡型与驱动版本</span>
+</code></pre></div>
+<strong>验收标准</strong>：gpu-check 多卡 NCCL all-reduce 通过；排障记录（卡型、驱动、CUDA、是否触发 RAS/NVLS 问题、workaround 是否必需）并入组内 wiki。
+<strong>产出</strong>：本组 GPU 适配结论一页。
+<strong>难度（估计）</strong>：中。<strong>工作量（估计）</strong>：0.5 天。
+<strong>代码锚点</strong>：<code>docker/Dockerfile:78</code>、<code>docker/gpu_smoke.py:15</code>、<code>assets/openwam_usage_docs/docker.md</code>（排障表）。</p>
+<h2 id="5">5. 建议推进顺序与里程碑<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>第 1 天</strong>：A2（native 先装起来，装的过程读 <code>docker.md</code>）→ A3（当天就能出验证矩阵初稿）。</li>
+<li><strong>第 1–2 天</strong>：A1 并行挂着 build（耗时最长，先启动），等待期间做 A4。</li>
+<li><strong>第 2–3 天</strong>：A5（LIBERO + Wan2.2-TI2V-5B 优先，这是方向 B/C 的入口资产；gated 授权当天就发起申请）。</li>
+<li><strong>第 3–4 天</strong>：A6（需要多卡机时间片）。</li>
+<li><strong>里程碑</strong>：W1 末交付——环境 SOP（双路线）、验证矩阵、资产清单、GPU 适配结论，全组 unblock。</li>
+</ol>
+<h2 id="6">6. 风险与坑<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>锚点</th>
+<th>规避方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>third_party/cosmos-predict2.5</code> submodule <strong>当前为空</strong>（已核实 90e94ae 工作区）</td>
+<td><code>third_party/cosmos-predict2.5/</code>（空目录）；安装脚本 <code>scripts/install_cosmos_predict25.sh</code></td>
+<td>Cosmos 路线先 <code>git submodule update --init third_party/cosmos-predict2.5</code> 再跑 install 脚本（编 transformer-engine 需 nvcc + cuDNN，约 10 min）；本方向不阻塞，仅记录</td>
+</tr>
+<tr>
+<td>DINOv3 / FLUX.2 为 HF <strong>gated</strong> 资产</td>
+<td><code>scripts/download_assets/download_visual_encoder.py:97</code></td>
+<td>提前一周在 HF 页面 accept license + <code>hf auth login</code>；V-JEPA 走官方直链 <code>dl.fbaipublicfiles.com</code>，国内可达性需实测</td>
+</tr>
+<tr>
+<td><strong>CI 无 GPU 覆盖</strong>，"CI 绿"≠"复现可行"</td>
+<td><code>.github/workflows/ci.yml:40-44</code>；未验证项清单 <code>assets/openwam_usage_docs/docker-validation.md</code></td>
+<td>以本方向 A3/A6 的验证矩阵为准，不引用 CI 状态做结论</td>
+</tr>
+<tr>
+<td><code>tests/dataloader/.cache</code> 复用且<strong>需手工删除</strong>才刷新，fixture schema 变更后会假失败</td>
+<td><code>tests/dataloader/conftest.py:1-6</code>（docstring 明说）</td>
+<td>改 fixture/reader 后 <code>rm -rf tests/dataloader/.cache</code>；遇到诡异失败先删缓存再排查</td>
+</tr>
+<tr>
+<td><code>.env.example</code> 的 <code>OPENWAM_CHECKPOINT_DIR</code> 默认指向 <code>OpenWAM-Alpha-Sim-RoboTwin-Full</code>，未下载该 ckpt 时 serve 起不来（<code>create_host_path:false</code>）</td>
+<td><code>docker/.env.example:26</code></td>
+<td>先跑 A5 下载对应 checkpoint，或先把 <code>.env</code> 该字段改指向已存在的目录</td>
+</tr>
+<tr>
+<td>Docker 构建吃盘：<strong>≥60GB</strong> 空闲是硬要求</td>
+<td><code>.github/workflows/docker.yml</code>（CI 清理磁盘步骤）</td>
+<td>构建前 <code>df -h</code> 确认；<code>.cache/docker</code> 与镜像层都在本机盘</td>
+</tr>
+<tr>
+<td>H100 多卡 NCCL 坑：RAS SIGSEGV、四卡 NVLS hang</td>
+<td><code>docker/Dockerfile:78</code>（默认 <code>NCCL_RAS_ENABLE=0</code>）；<code>docker.md</code> 排障表</td>
+<td>保持镜像默认 ENV；hang 时追加 <code>NCCL_NVLS_ENABLE=0</code>；结论记入 A6</td>
+</tr>
+<tr>
+<td>GPU 集成用例有 env 开关，不设则<strong>有 GPU 也 skip</strong>，易误以为已覆盖</td>
+<td><code>tests/test_train_deploy_consistency.py:437</code>（<code>_GPU_INTEGRATION_FLAG</code> 门控）</td>
+<td>跑 GPU 层时显式 <code>OPENWAM_RUN_TRAIN_DEPLOY_GPU=1 OPENWAM_RUN_TRI_SYSTEM_GPU_SMOKE=1</code></td>
+</tr>
+<tr>
+<td>benchmark 下载器建 stats 需要 openwam 可 import</td>
+<td><code>scripts/download_assets/download_benchmark_data.py:360</code> 链路</td>
+<td>在已完成 A1/A2 的环境里跑下载器，裸 shell 不行</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7">7. 推荐阅读顺序<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>assets/openwam_usage_docs/docker.md</code> — 环境/Docker/离线/排障的官方权威文档，搭建前通读。</li>
+<li><code>docker/Dockerfile</code>（配 <code>docker/requirements-cu128.txt</code> 翻阅）— 弄清五阶段镜像每层装了什么、为什么钉死。</li>
+<li><code>docker/.env.example</code> + <code>compose.yaml</code> — 弄清四个服务与全部 <code>OPENWAM_*</code> 旋钮。</li>
+<li><code>assets/openwam_usage_docs/docker-validation.md</code> — 官方验证过/未验证的边界，校准预期。</li>
+<li><code>Makefile</code> + <code>pytest.ini</code> + <code>tests/conftest.py</code> — 弄清 <code>make test</code> 到底跑了什么、marker 怎么分层。</li>
+<li><code>tests/_assets.py</code> + A4 的四个测试文件 — 弄清 GPU 用例的资产解析与四条架构不变量。</li>
+<li><code>scripts/download_assets/</code> 五个下载器 — 边跑 A5 边读，重点看 <code>write_config</code> 回写与 <code>_POST_DOWNLOAD</code> 统计链路。</li>
+<li>完成后转交：方向 B 见 <code>方向B-部署与推理复现.md</code>（部署与推理复现，依赖 A5 下载的 checkpoint），方向 C 见 <code>方向C-训练管线复现.md</code>（训练管线复现，依赖 A5 的 LIBERO 数据与 Wan2.2-5B 权重）。</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
