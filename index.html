@@ -371,7 +371,7 @@
   <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. 仓库一分钟速览与组织理念
+        1. 仓库速览
       
     </span>
   </a>
@@ -382,7 +382,7 @@
   <a href="#2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. 方向总表（点进对应文档）
+        2. 端到端复现主干
       
     </span>
   </a>
@@ -393,7 +393,7 @@
   <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. 依赖关系与里程碑（估计）
+        3. 六个方向
       
     </span>
   </a>
@@ -401,10 +401,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-6" class="md-nav__link">
+  <a href="#4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. 全局风险登记册（各方向文档 §6 有展开与代码锚点）
+        4. 排期建议（估计）
       
     </span>
   </a>
@@ -415,7 +415,7 @@
   <a href="#5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. 命令速查
+        5. 风险登记册
       
     </span>
   </a>
@@ -426,7 +426,18 @@
   <a href="#6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. 附：调研方法说明
+        6. 命令速查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 附：调研方法
       
     </span>
   </a>
@@ -698,7 +709,7 @@
   <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. 仓库一分钟速览与组织理念
+        1. 仓库速览
       
     </span>
   </a>
@@ -709,7 +720,7 @@
   <a href="#2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. 方向总表（点进对应文档）
+        2. 端到端复现主干
       
     </span>
   </a>
@@ -720,7 +731,7 @@
   <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. 依赖关系与里程碑（估计）
+        3. 六个方向
       
     </span>
   </a>
@@ -728,10 +739,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-6" class="md-nav__link">
+  <a href="#4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. 全局风险登记册（各方向文档 §6 有展开与代码锚点）
+        4. 排期建议（估计）
       
     </span>
   </a>
@@ -742,7 +753,7 @@
   <a href="#5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. 命令速查
+        5. 风险登记册
       
     </span>
   </a>
@@ -753,7 +764,18 @@
   <a href="#6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. 附：调研方法说明
+        6. 命令速查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 附：调研方法
       
     </span>
   </a>
@@ -782,141 +804,126 @@
 
 <h1 id="openwam">OpenWAM 调研任务书（总索引）<a class="headerlink" href="#openwam" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p>版本：v2.0（2026-09-23，六管线重组版）｜分析对象：<code>OpenWAM-Official/OpenWAM</code> @ <code>main</code> <code>90e94ae</code>
-本文档是入口：先读 §1 了解仓库与组织理念，§2 选方向，再进入对应方向文档。
-文中所有路径均为 OpenWAM 仓库（<code>OpenWAM/</code>）下的相对路径，行号以 <code>90e94ae</code> 为准。</p>
+<p>分析对象：<code>OpenWAM-Official/OpenWAM</code> @ <code>main</code> <code>90e94ae</code>（行号以此为准）
+本文档是入口：读 §1 了解仓库，看 §2 的端到端全景图，按 §3 选方向，然后进入对应方向文档。
+文中所有路径均为 OpenWAM 仓库（<code>OpenWAM/</code>）下的相对路径。</p>
 </blockquote>
 <hr />
-<h2 id="1">1. 仓库一分钟速览与组织理念<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<h2 id="1">1. 仓库速览<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p><strong>OpenWAM</strong> 是一个 World–Action Model（WAM）系统预训练研究栈（论文 arXiv:2609.07398，Apache-2.0），由三部分组成：</p>
 <ul>
-<li><strong>OpenWAM-Infra</strong>：模块化基础设施——模型（架构×骨干）、训练、推理部署、评测全部可组合替换；</li>
-<li><strong>OpenWAM-Study</strong>：受控消融实验体系（官方发布 34 个 study checkpoint）；</li>
-<li><strong>OpenWAM-α</strong>：518.5M 帧（约 6400 小时）egocentric human + robot 数据上预训练的开放基础模型（14 个 alpha checkpoint 发布在 HuggingFace）。</li>
+<li><strong>OpenWAM-Infra</strong>：模块化基础设施。模型（架构 × 骨干）、训练、部署、评测全部可组合替换。</li>
+<li><strong>OpenWAM-Study</strong>：受控消融实验体系。官方发布了 34 个 study checkpoint。</li>
+<li><strong>OpenWAM-α</strong>：预训练基础模型。518.5M 帧（约 6400 小时）egocentric human + robot 数据，14 个 alpha checkpoint 发布在 HuggingFace。</li>
 </ul>
-<p><strong>为什么按六条管线拆分</strong>：第一版方案把环境搭建设为全组公共前置（方向 A），一旦环境卡住，所有人都无法开工。本版改为<strong>六条各自独立的管线调研方向</strong>：</p>
-<ol>
-<li><strong>第一阶段（W1–W2）全员纯阅读 + 文档化</strong>：每个方向的第一批任务只需要读代码和写文档，<strong>零 GPU、零环境依赖</strong>，随时开工；</li>
-<li><strong>每个方向自带"最小环境路径"</strong>（见各文档 §0）：需要什么权重/数据/卡、什么时候需要，精确到下载命令，不再有"全组统一大环境"这个阻塞点；</li>
-<li>跨方向硬依赖只剩三处（见 §3 依赖图），其余全部并行。</li>
-</ol>
-<p><strong>端到端复现主干</strong>（六个方向各管一段）：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>data-infra(A)      model-infra(B)        deployment-infra(C)     evaluation-infra(D)
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>下载器+reader ──→ Hydra 组合+registry ──→ checkpoint+WS server ──→ benchmark 客户端
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                         │                                              ↑
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>              study(E)：控制变量矩阵 ←────── openwam-alpha(F)：具体模型 artifact
-</code></pre></div>
 <hr />
-<h2 id="2">2. 方向总表（点进对应文档）<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<h2 id="2">2. 端到端复现主干<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>一次完整复现要走的六个阶段，以及每个阶段的归属方向：</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph S1["① 资产准备"]
+        DL["scripts/download_assets/&lt;br/&gt;下载权重 · 数据 · checkpoint"]
+    end
+    subgraph S2["② 数据管线 — 方向 A"]
+        DS["openwam/dataloader/&lt;br/&gt;13 种 reader → 统一样本格式&lt;br/&gt;80 维动作空间 · 归一化"]
+    end
+    subgraph S3["③ 模型组装 — 方向 B"]
+        CFG["configs/model/*.yaml&lt;br/&gt;Hydra 配置组合"]
+        REG["registry 注册表&lt;br/&gt;6 种架构 × 5 种骨干"]
+        CFG --&gt; REG
+    end
+    subgraph S4["④ 训练"]
+        TR["scripts/train.sh&lt;br/&gt;torchrun + DeepSpeed ZeRO-2&lt;br/&gt;视频+动作双流 flow-matching"]
+        CKPT["自包含 checkpoint&lt;br/&gt;config.yaml + safetensors&lt;br/&gt;+ normalization_stats.npy"]
+        TR --&gt; CKPT
+    end
+    subgraph S5["⑤ 部署 — 方向 C"]
+        SRV["scripts/deploy.sh&lt;br/&gt;WebSocket PolicyServer&lt;br/&gt;ws://0.0.0.0:8848"]
+    end
+    subgraph S6["⑥ 评测 — 方向 D"]
+        EV["benchmarks/ 客户端&lt;br/&gt;仿真器闭环 → 成功率"]
+    end
+    DL --&gt; DS --&gt; TR
+    REG --&gt; TR
+    CKPT --&gt; SRV --&gt; EV
+    SE["方向 E · study&lt;br/&gt;控制变量矩阵&lt;br/&gt;↔ 34 个 study checkpoint"] -. 设计对照实验 .-&gt; S4
+    AL["方向 F · openwam-alpha&lt;br/&gt;解剖 + 微调官方 checkpoint"] -. 产物进部署 .-&gt; S5</code></pre>
+<p>两点说明：</p>
+<ul>
+<li><strong>方向 E 和 F 不在主链上，而是横切</strong>：E 管"怎么设计受控对照实验"（作用于训练阶段），F 管"alpha 这个具体模型是什么"（它的 checkpoint 直接进入部署）。</li>
+<li><strong>训练没有单独设方向</strong>：模型怎么组装归 B，对照实验怎么跑归 E，alpha 微调归 F。</li>
+</ul>
+<hr />
+<h2 id="3">3. 六个方向<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>方向</th>
 <th>文档</th>
 <th>研究问题</th>
-<th>动手起点</th>
-<th>外部依赖</th>
+<th>何时需要什么资源</th>
+<th>跨方向依赖</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>A</strong></td>
 <td><a href="%E6%96%B9%E5%90%91A-Data-Infra%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF/">方向A-Data-Infra数据管线.md</a></td>
-<td>数据管线如何搭建：13 种异构数据 → 一种训练样本</td>
-<td>读代码 → CPU + LIBERO(1.9GB)</td>
+<td>数据管线如何搭建：13 种异构数据统一成一种训练样本</td>
+<td>前两周零依赖；之后 CPU + LIBERO（1.9GB）</td>
 <td>无</td>
 </tr>
 <tr>
 <td><strong>B</strong></td>
 <td><a href="%E6%96%B9%E5%90%91B-Model-Infra%E6%A8%A1%E5%9E%8B%E7%AE%A1%E7%BA%BF/">方向B-Model-Infra模型管线.md</a></td>
-<td>模型模块化管线如何搭建：yaml → registry → 架构×骨干</td>
-<td>读代码 → CPU（mock backbone）</td>
+<td>模型模块化管线如何搭建：yaml 经 registry 组装出架构 × 骨干</td>
+<td>前两周零依赖；之后仅 CPU（mock backbone）</td>
 <td>无</td>
 </tr>
 <tr>
 <td><strong>C</strong></td>
 <td><a href="%E6%96%B9%E5%90%91C-Deployment-Infra%E9%83%A8%E7%BD%B2%E7%AE%A1%E7%BA%BF/">方向C-Deployment-Infra部署管线.md</a></td>
-<td>部署管线如何搭建：自包含 checkpoint → WebSocket server</td>
-<td>读代码 → 1×≥24GB GPU + 1 checkpoint</td>
+<td>部署管线如何搭建：自包含 checkpoint 变成 WebSocket 服务</td>
+<td>前两周零依赖；之后 1 张 ≥24GB GPU + 1 个 checkpoint</td>
 <td>无</td>
 </tr>
 <tr>
 <td><strong>D</strong></td>
 <td><a href="%E6%96%B9%E5%90%91D-Evaluation-Infra%E8%AF%84%E6%B5%8B%E7%AE%A1%E7%BA%BF/">方向D-Evaluation-Infra评测管线.md</a></td>
-<td>评测管线如何搭建：薄客户端+厚服务端，8 大 benchmark</td>
-<td>读代码 → 方向C的 server + 各仿真器 env</td>
-<td>C（仅评测阶段）</td>
+<td>评测管线如何搭建：薄客户端 + 厚服务端，8 个 benchmark</td>
+<td>前两周零依赖；评测阶段需方向 C 的 server + 各仿真器环境</td>
+<td>C</td>
 </tr>
 <tr>
 <td><strong>E</strong></td>
 <td><a href="%E6%96%B9%E5%90%91E-Study%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C%E5%AE%9E%E7%8E%B0/">方向E-Study消融实验实现.md</a></td>
-<td>受控消融如何实现：实验矩阵、确定性、对照方法论</td>
-<td>读代码 → CPU；对比评测时借 C/D</td>
+<td>受控消融如何实现：实验矩阵、训练确定性、对照方法论</td>
+<td>前两周零依赖；E3 对比评测时借方向 C/D 的设施</td>
 <td>C/D（仅 E3）</td>
 </tr>
 <tr>
 <td><strong>F</strong></td>
 <td><a href="%E6%96%B9%E5%90%91F-OpenWAM-Alpha%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0/">方向F-OpenWAM-Alpha模型实现.md</a></td>
-<td>α 模型实现：配置链、80 维契约、预训练配方、微调路径</td>
-<td>读代码 → 1 checkpoint 考古（CPU 可）</td>
+<td>α 模型如何实现：配置链、80 维契约、预训练配方、微调路径</td>
+<td>前两周零依赖；checkpoint 考古只需 CPU；微调需 4×80GB</td>
 <td>C（仅 F5）</td>
 </tr>
 </tbody>
 </table>
-<p><strong>建议分工</strong>（6 人最佳；人少可合并 A+F、B+E）：每人一条管线，W1–W2 各自产出管线搭建文档后组内互讲。</p>
+<p><strong>工作方式</strong>：</p>
+<ol>
+<li><strong>前两周（W1–W2）全员纯阅读 + 写文档</strong>。每个方向的第一批任务只要求读代码、画调用链、写管线搭建文档，不需要 GPU，不需要装环境，今天就能开工。</li>
+<li><strong>环境各管各的</strong>。每个方向文档的 §0 写清了它自己需要什么资源、哪个阶段需要、怎么获取。没有"全组统一搭环境"这个环节，谁也不会被别人卡住。</li>
+<li>建议一人一个方向（人少可合并 A+F、B+E）。W2 结束各自讲一遍自己的管线，拼出全图。</li>
+</ol>
 <hr />
-<h2 id="3">3. 依赖关系与里程碑（估计）<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h2 id="4">4. 排期建议（估计）<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart LR
-    A[方向A data-infra] -. reader 机制 .-&gt; F[方向F openwam-alpha]
-    B[方向B model-infra] -. 机制前置 .-&gt; E[方向E study]
-    C[方向C deployment-infra] == server ==&gt; D[方向D evaluation-infra]
-    C == server ==&gt; F
-    D -. 评测 harness .-&gt; E
-    E -. study 结论 .-&gt; F
-    B -. 机制前置 .-&gt; F
-    A -. 数据契约 .-&gt; B
-    note[实线=硬依赖 虚线=知识共享]</code></pre>
-<blockquote>
-<p>硬依赖只有：D 需要 C 的 server（评测阶段）、F5 需要 C 的 server、E3 需要 C+D。全部在第二阶段才出现。</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>阶段</th>
-<th>周（估计）</th>
-<th>全员动作</th>
-<th>里程碑产出</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>M1</td>
-<td>W1–W2</td>
-<td>六方向并行纯阅读：各自完成"管线搭建文档"（各文档 §4 的前 1–2 个任务）</td>
-<td>6 份管线文档 + 组内互讲</td>
-</tr>
-<tr>
-<td>M2</td>
-<td>W3–W5</td>
-<td>各自动手：A 跑通数据链路、B 做组装矩阵/扩展冒烟、C 起 server、D 准备 LIBERO env、E 确定性验证、F checkpoint 考古</td>
-<td>server 可用 + LIBERO 环境就绪</td>
-</tr>
-<tr>
-<td>M3</td>
-<td>W5–W8</td>
-<td>汇合：D 跑 LIBERO 评测、E 做 checkpoint 对比、F 微调 alpha、A/C 继续纵深任务</td>
-<td>首批复现数字 + 对照实验</td>
-</tr>
-<tr>
-<td>M4</td>
-<td>W8+</td>
-<td>高阶项：RoboTwin/EBench、SVAE/encoder、预训练混合攻坚</td>
-<td>完整复现报告</td>
-</tr>
-</tbody>
-</table>
+    M1["M1 · W1–W2&lt;br/&gt;六方向并行阅读&lt;br/&gt;产出 6 份管线文档"] --&gt; M2["M2 · W3–W5&lt;br/&gt;各自动手&lt;br/&gt;A 数据链路 · B 组装矩阵&lt;br/&gt;C 起 server · D 备 LIBERO 环境&lt;br/&gt;E 确定性验证 · F checkpoint 考古"]
+    M2 --&gt; M3["M3 · W5–W8&lt;br/&gt;汇合产出&lt;br/&gt;D 跑 LIBERO 评测&lt;br/&gt;E 做 checkpoint 对比 · F 微调 alpha"]
+    M3 --&gt; M4["M4 · W8+&lt;br/&gt;高阶项&lt;br/&gt;RoboTwin/EBench · encoder/SVAE&lt;br/&gt;预训练混合攻坚"]</code></pre>
+<p>跨方向硬依赖只有三处，且全部出现在 M2 之后：D 评测需要 C 的 server；F5 冒烟需要 C 的 server；E3 对比评测需要 C+D。</p>
 <hr />
-<h2 id="4-6">4. 全局风险登记册（各方向文档 §6 有展开与代码锚点）<a class="headerlink" href="#4-6" title="Permanent link">&para;</a></h2>
+<h2 id="5">5. 风险登记册<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -931,7 +938,7 @@
 <td>R1</td>
 <td><strong>预训练数据混合不完整</strong>：egocentric human（EgoDex/Ego4D）reader 未发布（<code>openwam/dataloader/registry.py:91-106</code> 无注册，仅 docstring 残留）；<code>configs/dataloader/pretrain_data/</code> 全是 <code>/path/to</code> 占位</td>
 <td>OpenWAM-α 从头预训练<strong>不可完整复现</strong></td>
-<td>A（A7 证据链）/ F（F3 配方结论）</td>
+<td>A（A7）/ F（F3）</td>
 </tr>
 <tr>
 <td>R2</td>
@@ -942,18 +949,18 @@
 <tr>
 <td>R3</td>
 <td>算力门槛：训练最低 4×80GB（2 卡 OOM 有官方记录）</td>
-<td>重训类任务（F4、E 的重训对照）需专项申请</td>
+<td>重训类任务需专项申请</td>
 <td>F / E</td>
 </tr>
 <tr>
 <td>R4</td>
 <td>CI 无 GPU/模型覆盖（<code>.github/workflows/ci.yml</code> 仅 CPU torch）</td>
 <td>"CI 绿" ≠ "复现可行"</td>
-<td>全员（各方向自建验证）</td>
+<td>全员</td>
 </tr>
 <tr>
 <td>R5</td>
-<td>文档/代码不一致多处：<code>project.output_dir</code>（<code>configs/train.yaml:66</code> 定义但 trainer 用 <code>training.output_path</code>）；<code>--state-dim</code>（README 10 vs docker.md 20）；<code>attention_mask_mode</code> 代码默认 <code>ACTION_SEES_VIDEO</code>（<code>openwam/model/architectures/single_system/vanilla.py:50</code>）vs yaml <code>mutual</code></td>
+<td>文档/代码不一致多处：<code>project.output_dir</code>、<code>--state-dim</code>、<code>attention_mask_mode</code> 默认值</td>
 <td>按文档操作会踩坑；以代码与 checkpoint 内 <code>config.yaml</code> 为准</td>
 <td>B / C / F</td>
 </tr>
@@ -972,58 +979,61 @@
 <tr>
 <td>R8</td>
 <td>EGL×CUDA 驱动冲突（MuJoCo 系 benchmark，exit=-6）</td>
-<td>评测进程随机崩溃；<code>--render-gpus</code> 隔离</td>
+<td>评测进程随机崩溃；用 <code>--render-gpus</code> 隔离</td>
 <td>D</td>
 </tr>
 <tr>
 <td>R9</td>
 <td>Cosmos 路线需 submodule（当前为空）+ 编译 transformer-engine；DINOv3/FLUX.2 为 HF gated</td>
-<td>B5/G6 类任务启动前一周发起</td>
+<td>相关任务启动前一周发起授权/下载</td>
 <td>B</td>
 </tr>
 <tr>
 <td>R10</td>
-<td><code>Wan21</code> 一个类注册两个名字，加载由 <code>model_path</code> 决定，name/path 失配仅 WARN</td>
+<td><code>Wan21</code> 一个类注册两个名字，加载由 <code>model_path</code> 决定，失配仅 WARN</td>
 <td>静默加载错骨干</td>
 <td>B / F</td>
 </tr>
 </tbody>
 </table>
+<p>各方向文档的 §6 有展开说明和代码锚点。</p>
 <hr />
-<h2 id="5">5. 命令速查<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># ---- 环境（Native 路线；Docker 见方向C §0）----</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>openwam<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>conda<span class="w"> </span>activate<span class="w"> </span>openwam
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">torch</span><span class="o">==</span><span class="m">2</span>.7.1<span class="w"> </span><span class="nv">torchvision</span><span class="o">==</span><span class="m">0</span>.22.1<span class="w"> </span><span class="nv">torchaudio</span><span class="o">==</span><span class="m">2</span>.7.1<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/cu128
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s1">'.[dev]'</span><span class="w">               </span><span class="c1"># deepspeed 现场编译需 gcc</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># ---- 测试门禁（各方向共用的最低验证）----</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>make<span class="w"> </span><span class="nb">test</span><span class="w">                             </span><span class="c1"># CPU 核心集（CI 等价）</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># ---- 资产下载（均有 --name/--yes 非交互模式）----</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>python<span class="w"> </span>scripts/download_assets/download_video_backbone.py<span class="w">       </span><span class="c1"># Wan2.2-TI2V-5B 等</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>python<span class="w"> </span>scripts/download_assets/download_benchmark_data.py<span class="w">       </span><span class="c1"># LIBERO 等（自动建 stats+回写 yaml）</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>python<span class="w"> </span>scripts/download_assets/download_openwam_checkpoints.py<span class="w">  </span><span class="c1"># alpha 14 + study 34</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>python<span class="w"> </span>scripts/download_assets/download_vlm_backbone.py<span class="w">         </span><span class="c1"># tri_system 专用</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>python<span class="w"> </span>scripts/download_assets/download_visual_encoder.py<span class="w">       </span><span class="c1"># DINOv3/V-JEPA/VAE</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="c1"># ---- 训练 / 部署 / 推理 ----</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>bash<span class="w"> </span>scripts/train.sh<span class="w"> </span><span class="nv">dataloader</span><span class="o">=</span>libero<span class="w"> </span><span class="nv">model</span><span class="o">=</span>dual_system<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">  </span>model/video_backbone<span class="o">=</span>wan22_ti2v_5b<span class="w"> </span>model.architecture.variant<span class="o">=</span>joint_self_attn<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">  </span>model.architecture.attention_mask_mode<span class="o">=</span>mutual<span class="w"> </span>training.debug<span class="o">=</span><span class="nb">true</span><span class="w">   </span><span class="c1"># 20 步冒烟</span>
-<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>bash<span class="w"> </span>scripts/train.sh<span class="w"> </span><span class="nv">dataloader</span><span class="o">=</span>libero<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">  </span>training.finetune_ckpt_path<span class="o">=</span>&lt;foundation_ckpt_dir&gt;<span class="w">                   </span><span class="c1"># α 微调</span>
-<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>bash<span class="w"> </span>scripts/deploy.sh<span class="w"> </span>&lt;ckpt_dir&gt;<span class="w">                                     </span><span class="c1"># ws://0.0.0.0:8848</span>
-<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>python<span class="w"> </span>scripts/inference_test/inference_single_test.py<span class="w"> </span>--server<span class="w"> </span>ws://127.0.0.1:8848<span class="w"> </span>--test<span class="w"> </span>--state-dim<span class="w"> </span>&lt;N&gt;
-<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>
-<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="c1"># ---- Cosmos 可选依赖（方向B 的 cosmos 任务才需要）----</span>
-<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>third_party/cosmos-predict2.5
-<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>bash<span class="w"> </span>scripts/install_cosmos_predict25.sh<span class="w">   </span><span class="c1"># 需 nvcc + cuDNN</span>
+<h2 id="6">6. 命令速查<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># ---- 环境（Native 路线；Docker 路线见方向C §0）----</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>openwam<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>conda<span class="w"> </span>activate<span class="w"> </span>openwam
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">torch</span><span class="o">==</span><span class="m">2</span>.7.1<span class="w"> </span><span class="nv">torchvision</span><span class="o">==</span><span class="m">0</span>.22.1<span class="w"> </span><span class="nv">torchaudio</span><span class="o">==</span><span class="m">2</span>.7.1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/cu128
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s1">'.[dev]'</span><span class="w">               </span><span class="c1"># deepspeed 现场编译需 gcc</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># ---- 测试门禁（各方向共用的最低验证）----</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>make<span class="w"> </span><span class="nb">test</span><span class="w">                             </span><span class="c1"># CPU 核心集（CI 等价）</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># ---- 资产下载（均有 --name/--yes 非交互模式）----</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>python<span class="w"> </span>scripts/download_assets/download_video_backbone.py<span class="w">       </span><span class="c1"># Wan2.2-TI2V-5B 等</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>python<span class="w"> </span>scripts/download_assets/download_benchmark_data.py<span class="w">       </span><span class="c1"># LIBERO 等（自动建 stats+回写 yaml）</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>python<span class="w"> </span>scripts/download_assets/download_openwam_checkpoints.py<span class="w">  </span><span class="c1"># alpha 14 + study 34</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>python<span class="w"> </span>scripts/download_assets/download_vlm_backbone.py<span class="w">         </span><span class="c1"># tri_system 专用</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>python<span class="w"> </span>scripts/download_assets/download_visual_encoder.py<span class="w">       </span><span class="c1"># DINOv3/V-JEPA/VAE</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1"># ---- 训练 ----</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>bash<span class="w"> </span>scripts/train.sh<span class="w"> </span><span class="nv">dataloader</span><span class="o">=</span>libero<span class="w"> </span><span class="nv">model</span><span class="o">=</span>dual_system<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">  </span>model/video_backbone<span class="o">=</span>wan22_ti2v_5b<span class="w"> </span>model.architecture.variant<span class="o">=</span>joint_self_attn<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">  </span>model.architecture.attention_mask_mode<span class="o">=</span>mutual<span class="w"> </span>training.debug<span class="o">=</span><span class="nb">true</span><span class="w">   </span><span class="c1"># 20 步冒烟</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>bash<span class="w"> </span>scripts/train.sh<span class="w"> </span><span class="nv">dataloader</span><span class="o">=</span>libero<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">  </span>training.finetune_ckpt_path<span class="o">=</span>&lt;foundation_ckpt_dir&gt;<span class="w">                   </span><span class="c1"># α 微调</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="c1"># ---- 部署与推理 ----</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>bash<span class="w"> </span>scripts/deploy.sh<span class="w"> </span>&lt;ckpt_dir&gt;<span class="w">     </span><span class="c1"># ws://0.0.0.0:8848</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>python<span class="w"> </span>scripts/inference_test/inference_single_test.py<span class="w"> </span>--server<span class="w"> </span>ws://127.0.0.1:8848<span class="w"> </span>--test<span class="w"> </span>--state-dim<span class="w"> </span>&lt;N&gt;
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="c1"># ---- Cosmos 可选依赖（方向B 相关任务才需要）----</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>third_party/cosmos-predict2.5
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>bash<span class="w"> </span>scripts/install_cosmos_predict25.sh<span class="w">   </span><span class="c1"># 需 nvcc + cuDNN</span>
 </code></pre></div>
-<p><strong>仓库内权威文档索引</strong>：</p>
+<p><strong>仓库内权威文档</strong>：</p>
 <ul>
 <li><code>assets/openwam_usage_docs/train-and-deploy.md</code> — 训练与部署</li>
-<li><code>assets/openwam_usage_docs/architecture-extension.md</code> — 架构/骨干扩展约定（方向B B4 的依据）</li>
+<li><code>assets/openwam_usage_docs/architecture-extension.md</code> — 架构/骨干扩展约定（方向B B-4 的依据）</li>
 <li><code>assets/openwam_usage_docs/benchmark-integration.md</code> — benchmark/dataloader 接入（方向A A5 的依据）</li>
 <li><code>assets/openwam_usage_docs/openwam-alpha-finetuning.md</code> — α 微调（方向F F2 的权威来源）</li>
 <li><code>assets/openwam_usage_docs/docker.md</code> — Docker/离线部署（方向C C7）</li>
@@ -1031,8 +1041,8 @@
 <li><code>benchmarks/{robotwin,libero}/LABTASKER.md</code> — Labtasker 分布式评测</li>
 </ul>
 <hr />
-<h2 id="6">6. 附：调研方法说明<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
-<p>本任务书基于对仓库的 8 路并行只读调研（架构/骨干/训练/数据/部署/评测/基建/测试），关键结论经源码交叉核验（LAPA 缺席、EgoDex reader 缺席、mask 默认值不一致等均经 grep 复核）。v2.0 按"六条独立管线"重组，消除全组环境单点阻塞。完整版单文档见 main 分支 <code>OpenWAM调研方向分配与任务书.md</code>（含速查表全集）。</p>
+<h2 id="7">7. 附：调研方法<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>本任务书基于对仓库的 8 路并行只读调研（架构/骨干/训练/数据/部署/评测/基建/测试），关键结论经源码交叉核验（LAPA 缺席、EgoDex reader 缺席、mask 默认值不一致等均经 grep 复核）。完整版单文档见 main 分支 <code>OpenWAM调研方向分配与任务书.md</code>（含速查表全集）。</p>
 
 
 
