@@ -21,7 +21,7 @@
 一次完整复现要走的六个阶段，以及每个阶段的归属方向：
 
 ```mermaid
-flowchart LR
+flowchart TD
     subgraph S1["① 资产准备"]
         DL["scripts/download_assets/<br/>下载权重 · 数据 · checkpoint"]
     end
@@ -80,7 +80,7 @@ flowchart LR
 ## 4. 排期建议（估计）
 
 ```mermaid
-flowchart LR
+flowchart TD
     M1["M1 · W1–W2<br/>六方向并行阅读<br/>产出 6 份管线文档"] --> M2["M2 · W3–W5<br/>各自动手<br/>A 数据链路 · B 组装矩阵<br/>C 起 server · D 备 LIBERO 环境<br/>E 确定性验证 · F checkpoint 考古"]
     M2 --> M3["M3 · W5–W8<br/>汇合产出<br/>D 跑 LIBERO 评测<br/>E 做 checkpoint 对比 · F 微调 alpha"]
     M3 --> M4["M4 · W8+<br/>高阶项<br/>RoboTwin/EBench · encoder/SVAE<br/>预训练混合攻坚"]

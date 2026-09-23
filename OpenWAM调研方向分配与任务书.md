@@ -22,7 +22,7 @@ OpenWAM 是一个 **World–Action Model（WAM）系统预训练研究栈**，�
 ### 1.2 模块地图与六管线划分
 
 ```mermaid
-flowchart LR
+flowchart TD
     subgraph A[方向A data-infra]
         D[openwam/dataloader<br/>13 种注册数据集<br/>80-D unify action<br/>归一化/多视角拼图]
     end
@@ -54,7 +54,7 @@ flowchart LR
 一次完整复现的六个阶段及各阶段归属方向：
 
 ```mermaid
-flowchart LR
+flowchart TD
     subgraph S1["① 资产准备"]
         DL["scripts/download_assets/<br/>下载权重 · 数据 · checkpoint"]
     end
@@ -206,7 +206,7 @@ F1 alpha checkpoint 考古（解剖 config.yaml + safetensors 键结构）｜F2 
 ## 5. 依赖关系与排期建议（估计）
 
 ```mermaid
-flowchart LR
+flowchart TD
     A[方向A data-infra] -. reader 机制 .-> F[方向F openwam-alpha]
     B[方向B model-infra] -. 机制前置 .-> E[方向E study]
     C[方向C deployment-infra] == server ==> D[方向D evaluation-infra]
