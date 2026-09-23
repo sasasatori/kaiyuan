@@ -51,6 +51,8 @@
       
     
     
+      <link rel="stylesheet" href="stylesheets/extra.css">
+    
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -819,7 +821,7 @@
 <hr />
 <h2 id="2">2. 端到端复现主干<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <p>一次完整复现要走的六个阶段，以及每个阶段的归属方向：</p>
-<pre class="mermaid"><code>flowchart LR
+<pre class="mermaid"><code>flowchart TD
     subgraph S1["① 资产准备"]
         DL["scripts/download_assets/&lt;br/&gt;下载权重 · 数据 · checkpoint"]
     end
@@ -917,7 +919,7 @@
 </ol>
 <hr />
 <h2 id="4">4. 排期建议（估计）<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>flowchart LR
+<pre class="mermaid"><code>flowchart TD
     M1["M1 · W1–W2&lt;br/&gt;六方向并行阅读&lt;br/&gt;产出 6 份管线文档"] --&gt; M2["M2 · W3–W5&lt;br/&gt;各自动手&lt;br/&gt;A 数据链路 · B 组装矩阵&lt;br/&gt;C 起 server · D 备 LIBERO 环境&lt;br/&gt;E 确定性验证 · F checkpoint 考古"]
     M2 --&gt; M3["M3 · W5–W8&lt;br/&gt;汇合产出&lt;br/&gt;D 跑 LIBERO 评测&lt;br/&gt;E 做 checkpoint 对比 · F 微调 alpha"]
     M3 --&gt; M4["M4 · W8+&lt;br/&gt;高阶项&lt;br/&gt;RoboTwin/EBench · encoder/SVAE&lt;br/&gt;预训练混合攻坚"]</code></pre>

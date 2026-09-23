@@ -1,0 +1,20 @@
+/* 站点可读性定制 */
+
+/* 正文字号上调（Material 默认 0.8rem ≈ 16px，偏小） */
+.md-typeset {
+  font-size: 0.9rem;
+}
+
+/* 代码块保持略小但同步上调 */
+.md-typeset code {
+  font-size: 0.85em;
+}
+
+/* mermaid 图不被压缩到不可读：保持自然尺寸，超宽时横向滚动 */
+.md-typeset .mermaid {
+  overflow-x: auto;
+  text-align: center;
+}
+.md-typeset .mermaid svg {
+  max-width: none;
+}
