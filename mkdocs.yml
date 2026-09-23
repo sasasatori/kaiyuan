@@ -50,11 +50,9 @@ markdown_extensions:
 nav:
   - 总览: README.md
   - 方向任务书:
-    - 方向 A · 环境搭建与验证矩阵: 方向A-环境搭建与验证矩阵.md
-    - 方向 B · 部署与推理复现: 方向B-部署与推理复现.md
-    - 方向 C · 训练管线复现: 方向C-训练管线复现.md
-    - 方向 D · 数据管线与动作空间: 方向D-数据管线与动作空间.md
-    - 方向 E · 仿真评测复现: 方向E-仿真评测复现.md
-    - 方向 F · 架构变体与注意力机制: 方向F-架构变体与注意力机制.md
-    - 方向 G · 视觉表征与骨干研究: 方向G-视觉表征与骨干研究.md
-    - 方向 H · 测试与质量基建: 方向H-测试与质量基建.md
+    - 方向 A · Data-Infra 数据管线: 方向A-Data-Infra数据管线.md
+    - 方向 B · Model-Infra 模型管线: 方向B-Model-Infra模型管线.md
+    - 方向 C · Deployment-Infra 部署管线: 方向C-Deployment-Infra部署管线.md
+    - 方向 D · Evaluation-Infra 评测管线: 方向D-Evaluation-Infra评测管线.md
+    - 方向 E · Study 消融实验实现: 方向E-Study消融实验实现.md
+    - 方向 F · OpenWAM-Alpha 模型实现: 方向F-OpenWAM-Alpha模型实现.md
