@@ -1,0 +1,1206 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="OpenWAM 仓库深度调研：方向分配说明与任务书（基于 OpenWAM-Official/OpenWAM @ 90e94ae）">
+      
+      
+      
+        <link rel="canonical" href="https://sasasatori.github.io/kaiyuan/%E6%96%B9%E5%90%91E-Study%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C%E5%AE%9E%E7%8E%B0/">
+      
+      
+        <link rel="prev" href="../%E6%96%B9%E5%90%91D-Evaluation-Infra%E8%AF%84%E6%B5%8B%E7%AE%A1%E7%BA%BF/">
+      
+      
+        <link rel="next" href="../%E6%96%B9%E5%90%91F-OpenWAM-Alpha%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>方向 E · Study 消融实验实现 - OpenWAM 调研任务书</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#estudy" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="OpenWAM 调研任务书" class="md-header__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenWAM 调研任务书
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              方向 E · Study 消融实验实现
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  总览
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../%E6%96%B9%E5%90%91A-Data-Infra%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF/" class="md-tabs__link">
+          
+  
+  
+  方向任务书
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenWAM 调研任务书" class="md-nav__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OpenWAM 调研任务书
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向任务书
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    方向任务书
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91A-Data-Infra%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 A · Data-Infra 数据管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91B-Model-Infra%E6%A8%A1%E5%9E%8B%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 B · Model-Infra 模型管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91C-Deployment-Infra%E9%83%A8%E7%BD%B2%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 C · Deployment-Infra 部署管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91D-Evaluation-Infra%E8%AF%84%E6%B5%8B%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 D · Evaluation-Infra 评测管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 E · Study 消融实验实现
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 E · Study 消融实验实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. 你的环境与资源路径
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 这个方向做什么、为什么值得做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 最小必要背景
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 任务书
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 任务书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#e-1study-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-1：Study 实验矩阵考古（官方消融矩阵 ↔ config 键对照表）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-2seeding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-2：控制变量的确定性基础（seeding 体系 + 逐位复现验证）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-3：复现一组官方消融（评测侧，省算力路线）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-4：测试不变量作为实验安全网（跑通 + 写"安全网使用手册"）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-5wandb-debug-csv-configyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-5：实验追踪与记录规范（wandb / debug csv / config.yaml + 组内模板）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 建议推进顺序与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 风险与坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 推荐阅读顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91F-OpenWAM-Alpha%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 F · OpenWAM-Alpha 模型实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. 你的环境与资源路径
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 这个方向做什么、为什么值得做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 最小必要背景
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 任务书
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 任务书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#e-1study-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-1：Study 实验矩阵考古（官方消融矩阵 ↔ config 键对照表）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-2seeding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-2：控制变量的确定性基础（seeding 体系 + 逐位复现验证）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-3：复现一组官方消融（评测侧，省算力路线）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-4：测试不变量作为实验安全网（跑通 + 写"安全网使用手册"）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-5wandb-debug-csv-configyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 E-5：实验追踪与记录规范（wandb / debug csv / config.yaml + 组内模板）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 建议推进顺序与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 风险与坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 推荐阅读顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="estudy">方向 E：Study 消融实验实现<a class="headerlink" href="#estudy" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>一句话定位：拆解 OpenWAM-Study 的受控消融<strong>在代码里是怎么实现的</strong>——Hydra 组合即实验矩阵、seeding 保证确定性、tests/ 固化不变量，并亲手复现一组官方对照实验。读者：第一次接触该模块的同学。
+前置：先读 <a href="../">README.md</a> 的总览。<strong>本方向第一阶段（W1–W2）纯阅读+文档化，不需要任何 GPU/环境</strong>。</p>
+</blockquote>
+<p>仓库根记作 <code>OpenWAM/</code>，下文路径均为仓库相对路径。行号以 main @ 90e94ae 为准。注意分工边界：架构机制本身（四种耦合范式、mask 语义）归 <a href="../%E6%96%B9%E5%90%91B-Model-Infra%E6%A8%A1%E5%9E%8B%E7%AE%A1%E7%BA%BF/">方向B-Model-Infra模型管线.md</a>；本方向回答的是"控制变量"的工程实现——怎么保证两次 run 只差一个旋钮、怎么让结论可信。</p>
+<h2 id="0">0. 你的环境与资源路径<a class="headerlink" href="#0" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>第一阶段（W1–W2，任务 E1/E4/E5 的阅读部分）</strong>：纯阅读，零依赖。只需要一份仓库 clone。</li>
+<li><strong>任务 E2（确定性验证）</strong>：仅需 CPU。<code>pip install -e '.[dev]'</code>（CPU torch 即可），用 mock backbone 跑 seeding 单元测试与小脚本，不下载任何权重。</li>
+<li><strong>任务 E4（测试安全网）</strong>：仅需 CPU。<code>make test</code> 全绿即验收，CI 等价命令见 README §5。</li>
+<li><strong>任务 E3（官方消融复现，唯一吃资源任务）</strong>：三样外来物——</li>
+<li><strong>方向 C 的部署能力</strong>：<code>bash scripts/deploy.sh &lt;ckpt_dir&gt;</code> 起 WebSocket server（见 <a href="../%E6%96%B9%E5%90%91C-Deployment-Infra%E9%83%A8%E7%BD%B2%E7%AE%A1%E7%BA%BF/">方向C-Deployment-Infra部署管线.md</a>）；</li>
+<li><strong>方向 D 的 LIBERO 评测 harness</strong>：manifest + labtasker 客户端（见 <a href="../%E6%96%B9%E5%90%91D-Evaluation-Infra%E8%AF%84%E6%B5%8B%E7%AE%A1%E7%BA%BF/">方向D-Evaluation-Infra评测管线.md</a>）；</li>
+<li><strong>2 个 study checkpoint</strong>：各约 24.8 GB（tri 29.3 GB、wan21_i2v_14b 49.7 GB，避开这两个），用 <code>python scripts/download_assets/download_openwam_checkpoints.py</code> 下载到 <code>assets/openwam_ckpt/openwam_study/&lt;group&gt;/</code>。
+  另需 1 张 ≥24GB GPU 跑 server。<strong>不依赖全组统一训练环境，也不需要任何训练数据</strong>——官方 checkpoint 已训好，本方向只复现"评测对比"。</li>
+<li><strong>你明确不依赖别人的</strong>：方向 A 的数据管线（不碰训练数据）、方向 B 的扩展实验、方向 F 的 alpha 微调。重训类对照（小规模重训复现）属可选加分项，需要 4×80GB 时单独申请（README R3）。</li>
+</ul>
+<h2 id="1">1. 这个方向做什么、为什么值得做<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>OpenWAM-Study 是论文的消融体系：官方在 HuggingFace 发布了 <strong>34 个 study checkpoint</strong>（外加 14 个 alpha checkpoint），按 5 个维度分组——架构、预训练配方、视觉编码器、视频骨干、注意力掩码。本方向要回答三个问题：</p>
+<ol>
+<li><strong>实验矩阵在哪</strong>：这些 checkpoint 的命名与分组，如何一一对应到 <code>configs/</code> 里的 Hydra 旋钮？（E1）</li>
+<li><strong>对照为什么可信</strong>：同一 trainer 只切一个 config 键时，是什么机制保证其余一切逐位相同？（E2/E4）</li>
+<li><strong>怎么亲手复现一组</strong>：用官方 checkpoint + 评测 harness 做省算力路线的对比实验，并建立组内实验记录规范。（E3/E5）</li>
+</ol>
+<p>为什么值得做：消融是"结论"的生产方式，而大多数开源项目只发布结论不发布方法论。OpenWAM 难得地把受控旋钮（Hydra 组）、确定性基建（seeding）、不变量测试（tests/）全部开出来了——把这套"怎么做可信对照实验"的工程方法吃透，比记住任何一个消融数字都更有迁移价值。同时，本方向的产出（矩阵对照表、实验记录模板）是方向 F（alpha 是 study 结论的产物）与全组实验复用的公共资产。</p>
+<h2 id="2">2. 最小必要背景<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p><strong>Hydra 组合即实验矩阵</strong> — 训练配置 = defaults 链 + CLI override。入口 <code>configs/train.yaml:1-4</code>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">defaults</span><span class="p">:</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dual_system</span><span class="w">            </span><span class="c1"># single_system | tri_system</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">dataloader</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">robotwin</span><span class="w">          </span><span class="c1"># libero 等 7 选 1</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">_self_</span>
+</code></pre></div>
+<p>每个 Study 维度就是一个 Hydra 组或叶子键：<code>model=single_system|dual_system|tri_system</code>（framework）、<code>model.architecture.variant=joint_self_attn|joint_cross_attn|idm</code>（<code>configs/model/dual_system.yaml:21</code>）、<code>model.architecture.attention_mask_mode</code>（<code>dual_system.yaml:29</code>）、<code>model/video_backbone=wan22_ti2v_5b|wan21_vace_1_3b|...</code>、<code>model.video_backbone.encoder.*</code>（视觉编码器）、<code>dataloader=robotwin|libero|...</code>。一次 CLI override 链 = 矩阵里的一个格子。</p>
+<p><strong>registry 的 (framework, variant) 索引</strong> — yaml 二元组 → 6 个注册名之一：<code>openwam/model/architectures/registry.py:96 resolve_architecture_config</code>，<code>:110-111</code> 查 <code>_FRAMEWORK_VARIANT_INDEX</code>，<code>:130</code> 得 <code>registry_name</code>；<code>variant=None</code> 且 framework 只有一个候选时自动补默认（<code>:112-116</code>）。机制细节归方向 B，这里只需知道：消融的"架构旋钮"最终经这一个函数收口。</p>
+<p><strong>训练确定性（seeding 体系）</strong> — <code>openwam/train/utils/seeding.py</code>：<code>:52 RANK_OFFSET = 1_000_000</code>（每个 rank 一个 1M 宽的种子窗口，per-step 计数不会溢出到隔壁 rank）；<code>:55 seed_process</code>（Python/NumPy/torch 三件套，不碰 cudnn）；<code>:73 seed_everything</code>（额外锁 cudnn deterministic）；<code>:133 per_step_seed</code>（<code>seed + RANK_OFFSET*rank + step</code>，主循环每步 <code>torch.manual_seed</code>，调用点 <code>openwam_trainer.py:316-320</code>）；<code>:176 wire_sampler_seed</code>（把 shuffle 顺序钉到 run_seed，调用点 <code>openwam_trainer.py:249</code>）。种子源头是 <code>project.seed: 42</code>（<code>configs/train.yaml:67</code>），由 <code>scripts/train.py:93 _inject_project_seed</code> 下发给 dataloader、<code>:131 seed_everything</code> 在数据集构造前播种。<strong>设了 seed = 可复现 run；seed=null = 生产随机 run</strong>。</p>
+<p><strong>debug 模式（20 步恒定 LR）</strong> — <code>openwam_trainer.py:190-193</code>：<code>training.debug=true</code> → <code>max_steps=20</code>、step 10 存一次、恒定 LR。这是所有消融冒烟的统一入口。</p>
+<p><strong>checkpoint 自描述（config.yaml）</strong> — <code>openwam/train/utils/checkpointing.py:22 save_config</code> 把完整 Hydra DictConfig 随训练写出（调用点 <code>openwam_trainer.py:484</code>，只写一次），部署/重建时以它为准。这是"实验记录"的权威载体——不靠人记，靠目录自述。</p>
+<h2 id="3">3. 代码地图<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>入口文件：先读 <code>scripts/download_assets/download_openwam_checkpoints.py</code>（看官方矩阵长什么样），再进 <code>configs/</code> 对账。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>configs/
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── train.yaml                     # 【入口】训练旋钮总表；:1-4 defaults 链；:8 debug；:55 keep_last_k_ckpts；:67 project.seed
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├── model/
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│   ├── single_system.yaml         # framework=single_system；variant vanilla|moe
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│   ├── dual_system.yaml           # :21 variant 三选一；:29 attention_mask_mode；:38-40 变体专属旋钮
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│   ├── tri_system.yaml            # framework=tri_system（仅 joint_self_attn）
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│   ├── video_backbone/            # wan22_ti2v_5b / wan21_vace_1_3b / cosmos25_2b ...（骨干维度）
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│   └── action_backbone/           # shared_action_backbone / separate_action_dit
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>└── dataloader/                    # robotwin/libero/... 7 个 benchmark 组（数据维度）
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>scripts/download_assets/
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>└── download_openwam_checkpoints.py  # 【官方矩阵】ALPHA :99-118（14 个）；STUDY_GROUPS :120-185（5 组 34 个）
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>openwam/model/architectures/
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>└── registry.py                    # :96 resolve_architecture_config；(framework,variant) 索引 :110-130
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>openwam/train/utils/
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>├── seeding.py                     # 【确定性核心】RANK_OFFSET :52；seed_process :55；per_step_seed :133；wire_sampler_seed :176
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>├── checkpointing.py               # save_config :22（config.yaml 自描述）；manage_checkpoints :340；finalize_keep_weights_only :368
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>├── training_utils.py              # init_wandb :88；write_debug_loss_row :150（debug_loss_history.csv 落盘 :165）
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>└── ckpt_model_loader.py           # :216 build_architecture_from_ckpt_dir（从 ckpt 目录自包含重建）
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>openwam/train/openwam_trainer.py   # debug 语义 :190-193；seeding 调用点 :83/:249/:316-320；save_config 调用 :484
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>scripts/train.py                   # _inject_project_seed :93；seed_everything 调用 :120-131
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>tests/                             # 【实验安全网】
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>├── test_split_attn_equivalence.py # split-attn 与整 block forward 零 atol 等价（docstring :1-8）
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>├── test_train_deploy_consistency.py  # :50 idm 训练↔部署一致；:105 抗扰动不变量；GPU 门控 :429
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>├── test_mask_modes.py             # 四模式断言 :56/:69/:75/:82/:90
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>├── test_architecture_variants.py  # _FRAMEWORKS×_BACKBONES :767-768；9 格 compose 矩阵 :781-783
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>├── test_seeding.py                # seeding 单元测试（E2 直接素材）
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>└── test_dataloader_seed.py        # dataloader 种子下发测试
+</code></pre></div>
+<h2 id="4">4. 任务书<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h3 id="e-1study-config">任务 E-1：Study 实验矩阵考古（官方消融矩阵 ↔ config 键对照表）<a class="headerlink" href="#e-1study-config" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：枚举全部受控旋钮如何经 Hydra defaults 组合成实验矩阵；对账 <code>download_openwam_checkpoints.py:120-185 STUDY_GROUPS</code>（34 个 checkpoint 分 5 组），产出"官方消融矩阵 ↔ config 键"对照表。
+<strong>前置</strong>：无 GPU、无下载；纯阅读。
+<strong>步骤</strong>：
+1. 通读 <code>configs/train.yaml:1-4</code> 与三份 <code>configs/model/*.yaml</code>，列出每个 Study 维度对应的 Hydra 组/键：<code>architecture.framework</code>、<code>architecture.variant</code>、<code>attention_mask_mode</code>、<code>video_attention_mask_mode</code>、<code>video_backbone</code>、<code>encoder</code>、<code>detach_bridge</code>、<code>dataloader</code>。
+2. 逐组对账 STUDY_GROUPS 的命名规则如何编码旋钮：
+   - <code>OpenWAM_Study_Architecture</code>（:121-133，7 个）：<code>{data}_{framework}_{variant}</code>，<code>_detach</code> 后缀 = <code>detach_bridge=true</code>；
+   - <code>OpenWAM_Study_Pretrain</code>（:134-151，12 个）：<code>pretrain_*</code>/<code>sft_*</code> 前缀 = 训练阶段，<code>_mutual</code>/<code>_action_sees_video</code> 后缀 = mask 旋钮，<code>robot_only</code>/<code>two_stage</code>/<code>from_scratch</code> = 配方；
+   - <code>OpenWAM_Study_Visual_Encoder</code>（:152-163，6 个）：尾部 <code>_dinov3|_vjepa21|_flux2|_wan22_vae</code>（<code>_svae</code> = 叠加 SVAE reducer）→ <code>model.video_backbone.encoder.*</code>；
+   - <code>OpenWAM_Study_Video_Backbone</code>（:164-174，5 个）：尾部 <code>_cosmos25|_cosmos3|_wan21_i2v_14b|_wan21_vace_1_3b</code>，无后缀基座 = <code>wan22_ti2v_5b</code>；
+   - <code>OpenWAM_Study_Attention_Mask</code>（:175-184，4 个）：尾部 <code>_isolated|_mutual|_video_sees_action</code>，无后缀基座 = <code>action_sees_video</code>（对照 <code>dual_system.yaml:28-29</code> 注释）。
+3. 注意一个陷阱：<code>robotwin_dual_system_joint_self_attention</code> 同名 checkpoint 出现在 3 个组里（architecture/video_backbone/attention_mask），是同一基座在三组中当"对照原点"——对照表里标出各组的 baseline。
+4. 对每个格子写出"复现该格的 CLI override 链"，如 attention_mask 组的 mutual 格：<code>model=dual_system model.architecture.variant=joint_self_attn model.architecture.attention_mask_mode=mutual dataloader=robotwin</code>。
+<strong>验收标准</strong>：对照表覆盖全部 34 个 checkpoint，每行 = {组、checkpoint 名、编码的旋钮及取值、对应 config 键、CLI override 链、同组 baseline}；命名→键的映射逐组给出代码锚点。
+<strong>产出</strong>：官方消融矩阵 ↔ config 键对照表（组内公共资产，E3 选对的依据）。
+<strong>难度（估计）</strong>：低。<strong>工作量（估计）</strong>：2-3 天。
+<strong>代码锚点</strong>：<code>scripts/download_assets/download_openwam_checkpoints.py:120-185</code>；<code>configs/train.yaml:1-4</code>；<code>configs/model/dual_system.yaml:21,28-40</code>；<code>registry.py:96-130</code>。</p>
+<h3 id="e-2seeding">任务 E-2：控制变量的确定性基础（seeding 体系 + 逐位复现验证）<a class="headerlink" href="#e-2seeding" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：读懂 seeding 全链路，并在 CPU 上验证"同一 trainer 只切一个 config 键"的对照流程——两次完全相同的 run 产出逐位一致的 loss 序列。
+<strong>前置</strong>：<code>pip install -e '.[dev]'</code>（CPU torch 即可）；无需权重。
+<strong>步骤</strong>：
+1. 跑现成单元测试，读它们各自钉住了哪一层：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd</span><span class="w"> </span>OpenWAM
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_seeding.py<span class="w"> </span>tests/test_dataloader_seed.py<span class="w"> </span>-v
+</code></pre></div>
+2. 梳理调用链并写成一张图：<code>project.seed</code>（<code>configs/train.yaml:67</code>）→ <code>_inject_project_seed</code>（<code>scripts/train.py:93</code>）→ <code>seed_everything</code>（<code>scripts/train.py:131</code>，数据集构造前）→ <code>seed_process</code>（<code>openwam_trainer.py:83</code>，模型 init 前）→ <code>wire_sampler_seed</code>（<code>openwam_trainer.py:249</code>，shuffle 顺序）→ <code>per_step_seed</code>（<code>openwam_trainer.py:316-320</code>，每步 forward 前重播种）。回答三个问题：为什么 rank 之间必须隔离（<code>seeding.py:52 RANK_OFFSET</code>）？为什么每步要重播种而不是只靠全局种子？<code>seed=null</code> 时哪几层自动失效？
+3. 写确定性验证脚本（CPU，mock 小模型即可，参考 <code>tests/test_architecture_variants.py:54-62 _MockVideoBackbone</code> 的思路）：固定 <code>seed=42</code> 跑两轮"构造模型 → 伪 batch → compute_loss"序列，断言 loss 逐位相等（<code>torch.equal</code> 而非 allclose）；再把 seed 改成 43 跑第三轮，断言 loss 不同；最后固定 seed、只切一个无关 config 键（如 <code>project.wandb.run_name</code>），断言 loss 仍逐位相等——这就是"只切一个变量"的操作定义。
+4. 顺带验证 debug 模式语义：<code>openwam_trainer.py:190-193</code> 的 20 步/恒定 LR 是消融冒烟的标准协议，写进结论。
+<strong>验收标准</strong>：确定性脚本三次运行结果如上断言全部成立；seeding 调用链图 + 三问回答成文；明确写出"在 CPU/小规模成立，GPU 多卡逐位一致受 cudnn/SDPA 非确定性影响，结论是'同配置同曲线可复现'而非跨硬件逐位"这一边界。
+<strong>产出</strong>：确定性验证脚本 + seeding 机制说明（E3/重训对照的方法论底座）。
+<strong>难度（估计）</strong>：低-中。<strong>工作量（估计）</strong>：2-3 天。
+<strong>代码锚点</strong>：<code>openwam/train/utils/seeding.py:52,55,73,133,176</code>；<code>openwam_trainer.py:83,190-193,249,316-320</code>；<code>scripts/train.py:93-131</code>。</p>
+<h3 id="e-3">任务 E-3：复现一组官方消融（评测侧，省算力路线）<a class="headerlink" href="#e-3" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：下载同一组内的两个 study checkpoint（对照对），用方向 D 的 LIBERO harness 做对比评测，先小样本验证流程，再扩量出对比数字。
+<strong>前置</strong>：方向 C 的部署 server 可用（<a href="../%E6%96%B9%E5%90%91C-Deployment-Infra%E9%83%A8%E7%BD%B2%E7%AE%A1%E7%BA%BF/">方向C-Deployment-Infra部署管线.md</a>）；方向 D 的 LIBERO 评测 harness 就绪（<a href="../%E6%96%B9%E5%90%91D-Evaluation-Infra%E8%AF%84%E6%B5%8B%E7%AE%A1%E7%BA%BF/">方向D-Evaluation-Infra评测管线.md</a>）；1×≥24GB GPU；E1 完成（据此选对）。
+<strong>步骤</strong>：
+1. 按 E1 对照表选一对"单变量"对照，推荐 attention_mask 组（机制最干净）：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>scripts/download_assets/download_openwam_checkpoints.py<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>--family<span class="w"> </span>study<span class="w"> </span>--study-type<span class="w"> </span>attention_mask<span class="w"> </span>--yes
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># 取 robotwin_dual_system_joint_self_attention{,_mutual} 两个（各 ~24.8GB）</span>
+</code></pre></div>
+   注意：study checkpoint 多数在 robotwin 数据上训练，若 LIBERO 评测分布偏移过大，改用方向 C/D 已支持的对应 benchmark，或改选架构组对照对；选对理由写进报告。
+2. 逐一起 server 并跑小样本评测（每任务 5–10 trials，先验证流程与确定性）：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>bash<span class="w"> </span>scripts/deploy.sh<span class="w"> </span>assets/openwam_ckpt/openwam_study/attention_mask/&lt;ckpt_a&gt;
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># 另一终端按方向D的 LIBERO 流程起 labtasker 客户端，限制 trials 数</span>
+</code></pre></div>
+3. 流程验证通过后扩到方向 D 的标准 trial 数，两个 checkpoint 用<strong>同一 manifest</strong>（同一批 seed/初始状态，方向 D 的 manifest 机制保证）各跑一遍。
+4. 对比成功率，并读两个 checkpoint 目录里的 <code>config.yaml</code>（<code>checkpointing.py:22</code> 写出），逐键 diff 确认它们真的只差一个旋钮——若差得更多，这组对照不成立，回 E1 重选。
+<strong>验收标准</strong>：两个 checkpoint 的 config.yaml diff 只含目标旋钮（及其派生）；同一 manifest 下的小样本与扩量两轮评测记录齐全；对比结论带置信说明（trials 数、方差）。
+<strong>产出</strong>：官方消融复现报告（对照对选择依据 + config diff 证据 + 评测数字）。
+<strong>难度（估计）</strong>：中。<strong>工作量（估计）</strong>：1 周（含下载与排队评测）。
+<strong>代码锚点</strong>：<code>scripts/download_assets/download_openwam_checkpoints.py:175-184</code>（attention_mask 组）；<code>openwam/train/utils/checkpointing.py:22</code>；方向 D 文档的 manifest/评测锚点。</p>
+<h3 id="e-4">任务 E-4：测试不变量作为实验安全网（跑通 + 写"安全网使用手册"）<a class="headerlink" href="#e-4" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：跑通四组把"改一个变量不破坏其他"固化的测试，理解每组钉住的不变量，并写一份"做消融前/后该跑哪些测试"的使用手册。
+<strong>前置</strong>：<code>pip install -e '.[dev]'</code>；无权重（全部 CPU 可跑）。
+<strong>步骤</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cd</span><span class="w"> </span>OpenWAM
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_split_attn_equivalence.py<span class="w"> </span>-v
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_train_deploy_consistency.py<span class="w"> </span>-v
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_mask_modes.py<span class="w"> </span>-v
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span><span class="s2">"tests/test_architecture_variants.py::test_framework_backbone_hydra_compose"</span><span class="w"> </span>-v
+</code></pre></div>
+1. 逐组读断言意图：
+   - <code>test_split_attn_equivalence.py:1-8</code>：split 路径与整 block forward <strong>零 atol</strong> 等价——这是 joint_self_attn 消融的前提（拆层实现不产生数值偏移）；
+   - <code>test_train_deploy_consistency.py:50</code>（idm 训练 action == 部署 Stage2，atol=1e-5）与 <code>:105</code>（noisy_video 扰动下逐位不变，atol=1e-6）——训练/推理两态一致，评测数字才可归因到训练；
+   - <code>test_mask_modes.py:56,69,75,82,90</code>：四模式的 v↔a 可见性真值表——mask 消融（E3 推荐对）的语义基线；
+   - <code>test_architecture_variants.py:767-768,781-783</code>：3 framework × 3 backbone = 9 格 Hydra compose 必须全部干净——E1 矩阵里每个格子的"合法性门禁"。
+2. 做一组"故意破坏"对照：临时改一处实现（如 mask 填充方向），确认对应测试变红，再还原。这验证安全网真的在守。
+3. 写使用手册：按消融维度（切 variant / 切 mask / 切 backbone / 切 encoder / 改训练循环）各列出"动手前必跑"的测试子集与通过标准；注明 GPU 变体需 <code>OPENWAM_RUN_TRAIN_DEPLOY_GPU=1</code>（<code>test_train_deploy_consistency.py:429</code>）否则静默 skip。
+<strong>验收标准</strong>：四组测试全绿（输出存档）+ 一组破坏-变红-还原记录 + 安全网使用手册（按消融维度索引测试）。
+<strong>产出</strong>：安全网使用手册（组内公共资产）。
+<strong>难度（估计）</strong>：低。<strong>工作量（估计）</strong>：2 天。
+<strong>代码锚点</strong>：四个测试文件的上述行号；<code>tests/conftest.py</code>（gpu marker 与 stub）。</p>
+<h3 id="e-5wandb-debug-csv-configyaml">任务 E-5：实验追踪与记录规范（wandb / debug csv / config.yaml + 组内模板）<a class="headerlink" href="#e-5wandb-debug-csv-configyaml" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：摸清三条记录通道——wandb 日志、<code>debug_loss_history.csv</code>、checkpoint 目录的自描述 <code>config.yaml</code>——并产出组内统一的实验记录模板。
+<strong>前置</strong>：E1/E2 完成（知道旋钮与确定性边界）；跑过至少一次 debug 冒烟或读通 <code>openwam_trainer.py</code> 的 log_step/finish 路径。无需 GPU（读代码 + 分析 E2 产物即可）。
+<strong>步骤</strong>：
+1. wandb 通道：<code>openwam/train/utils/training_utils.py:88 init_wandb</code>（吃 <code>cfg.project.wandb</code>，<code>configs/train.yaml:68-71</code>）。官方镜像默认离线：<code>docker/Dockerfile:97 WANDB_MODE=offline</code>，日志落在 <code>wandb/offline-run-*</code>，事后 <code>wandb sync</code> 上传；要在线看板则启动前 <code>export WANDB_MODE=online</code> 并配 API key。验证：<code>project.wandb.run_name=e5_probe</code> 跑一次冒烟，确认 run 名/配置透传。
+2. csv 通道：<code>training_utils.py:150 write_debug_loss_row</code>（<code>:165</code> 落盘 <code>debug_loss_history.csv</code>，首行写 header，列随 labels 走）——debug run 的轻量留痕，不依赖 wandb。
+3. config 通道：<code>checkpointing.py:22 save_config</code>（<code>openwam_trainer.py:484</code> 调用，只写一次）——run 目录 = 自描述实验档案。配合 <code>ckpt_model_loader.py:216 build_architecture_from_ckpt_dir</code>，任何人拿到目录即可重建模型，不需要口述配置。
+4. 产出模板：规定每个对照实验必须记录——CLI override 链全文、<code>project.seed</code>、git commit、checkpoint 目录路径、config.yaml diff（对 baseline）、wandb run 名/csv 路径、（E3 类）manifest hash 与 trials 数。模板里把"记录以 config.yaml 为准、口述/截图无效"写成第一条纪律。
+<strong>验收标准</strong>：模板覆盖上述字段且每项指到产生它的代码通道；用 E2 或一次冒烟 run 实填一份样例。
+<strong>产出</strong>：组内实验记录模板 + 填好的样例一份。
+<strong>难度（估计）</strong>：低。<strong>工作量（估计）</strong>：1-2 天。
+<strong>代码锚点</strong>：<code>training_utils.py:88,150-165</code>；<code>checkpointing.py:22</code>；<code>openwam_trainer.py:484</code>；<code>configs/train.yaml:68-71</code>；<code>docker/Dockerfile:97</code>。</p>
+<h2 id="5">5. 建议推进顺序与里程碑<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>W1–W2（第一阶段，纯阅读）</strong>：E1（矩阵考古）与 E4（安全网）并行启动；E2 读完 seeding 部分。里程碑 M1：消融矩阵对照表 + 安全网手册初稿（对应全局 M1 管线文档）。</li>
+<li><strong>W3–W5</strong>：E2 收尾（CPU 确定性验证）；E5 出模板并用 E2 产物实填样例。里程碑 M2：确定性结论 + 实验记录模板（对应全局 M2 的"E 确定性验证"）。</li>
+<li><strong>W5–W8（等 C/D 就绪后）</strong>：E3 官方消融复现——下载对照对、小样本、扩量。里程碑 M3：首批对照实验数字（对应全局 M3）。</li>
+<li><strong>可选加分（W8+）</strong>：小规模重训对照（如 mask mode 20 步 debug 级曲线对比），需训练算力，单独申请（README R3）。</li>
+</ol>
+<p>依赖提示：E1 是 E3 的选对依据，E2 是"只切一个键"操作定义的来源，E4 是所有结论性断言的背书——前四个任务本质是一套方法论，E3 是它的第一次实战。</p>
+<h2 id="6">6. 风险与坑<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Study 完整训练配方未全部发布</strong>：预训练混合有缺口——egocentric human reader 未注册、<code>configs/dataloader/pretrain_data/</code> 全是 <code>/path/to</code> 占位（证据链见 <a href="../%E6%96%B9%E5%90%91A-Data-Infra%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF/">方向A-Data-Infra数据管线.md</a> A7，README R1）。<strong>结论：本方向只能复现"评测对比"（E3）或"小规模重训对比"，不能复现论文 Study 章节的全量训练数字</strong>。写报告时把这条边界写在开头，避免下游误用。</li>
+<li><strong>yaml <code>mutual</code> vs 代码默认 <code>ACTION_SEES_VIDEO</code></strong>：三份 model yaml 写 <code>attention_mask_mode: mutual</code>（如 <code>configs/model/dual_system.yaml:29</code>），但代码默认是 <code>ACTION_SEES_VIDEO</code>（<code>single_system/vanilla.py:50</code> 等四处）。绕过 yaml 直接 build 会静默换掩码——同一对"对照实验"在不同构建路径下可能根本不在比同一个变量。规避：实验记录一律以 checkpoint 内 <code>config.yaml</code> 为准（E5 第一条纪律）；idm 变体忽略该字段（<code>dual_system/idm.py:443-446</code> 注释），不受此坑影响。</li>
+<li><strong><code>keep_last_k_ckpts=1</code> 会删中间 checkpoint</strong>：<code>configs/train.yaml:55</code> 默认只留最新一个，<code>manage_checkpoints</code>（<code>checkpointing.py:340</code>）滚动清理，训练正常结束还会 <code>finalize_keep_weights_only</code>（<code>:368</code>）删光 resume state。规避：做对照实验需要中间步曲线/多步评测时，提前把要留的 <code>checkpoint_step_*</code> 拷出 run 目录，或显式调大 <code>training.keep_last_k_ckpts</code>。</li>
+<li><strong>同名 checkpoint 跨组复用</strong>：<code>robotwin_dual_system_joint_self_attention</code> 在 architecture/video_backbone/attention_mask 三组同名出现（<code>download_openwam_checkpoints.py:128,168,179</code>），是同一基座当三组 baseline。规避：E1 对照表标清；E3 下载时按组目录区分，别下重（各 ~25GB）。</li>
+<li><strong>GPU 逐位一致 ≠ CPU 结论外推</strong>：E2 的逐位一致在 CPU/小规模成立；GPU 上 cudnn/SDPA 存在非确定性，<code>seed_everything</code>（<code>seeding.py:73</code>）锁 cudnn 后也只能保证同硬件同配置可复现。规避：报告措辞用"同配置同曲线可复现"，不承诺跨硬件逐位。</li>
+<li><strong>GPU 测试静默 skip</strong>：<code>test_train_deploy_consistency.py:429 _GPU_INTEGRATION_FLAG</code> 等门控未设时即使安全网"全绿"也只覆盖了 CPU 部分。规避：E4 手册注明环境变量清单；"测试绿"一律标注实际跑了哪些用例。</li>
+</ol>
+<h2 id="7">7. 推荐阅读顺序<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<ol>
+<li>本目录 <a href="../">README.md</a> §2/§3——本方向在六管线中的位置与仅有的跨方向依赖（E3 ← C+D）。</li>
+<li><code>scripts/download_assets/download_openwam_checkpoints.py:99-185</code>——官方矩阵的"发布形态"，E1 的对账对象。</li>
+<li><code>configs/train.yaml</code> 全文 + <code>configs/model/dual_system.yaml</code>——旋钮总表，E1 的映射目标。</li>
+<li><code>openwam/model/architectures/registry.py:96-130</code>——(framework,variant) 如何收口成注册名（机制深入读 <a href="../%E6%96%B9%E5%90%91B-Model-Infra%E6%A8%A1%E5%9E%8B%E7%AE%A1%E7%BA%BF/">方向B-Model-Infra模型管线.md</a>）。</li>
+<li><code>openwam/train/utils/seeding.py</code> 全文 + <code>openwam_trainer.py:74-85,249,316-320</code>——E2 全部素材。</li>
+<li><code>tests/test_seeding.py</code> → <code>tests/test_mask_modes.py</code> → <code>tests/test_split_attn_equivalence.py</code> → <code>tests/test_train_deploy_consistency.py</code> → <code>tests/test_architecture_variants.py:767-830</code>——E4 按此顺序读，从种子到矩阵门禁。</li>
+<li><code>openwam/train/utils/checkpointing.py:22-40</code> + <code>training_utils.py:88-170</code>——E5 的三条记录通道。</li>
+<li>交叉阅读：<a href="../%E6%96%B9%E5%90%91C-Deployment-Infra%E9%83%A8%E7%BD%B2%E7%AE%A1%E7%BA%BF/">方向C-Deployment-Infra部署管线.md</a> 与 <a href="../%E6%96%B9%E5%90%91D-Evaluation-Infra%E8%AF%84%E6%B5%8B%E7%AE%A1%E7%BA%BF/">方向D-Evaluation-Infra评测管线.md</a>（E3 的两个硬依赖）；<a href="../%E6%96%B9%E5%90%91F-OpenWAM-Alpha%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0/">方向F-OpenWAM-Alpha模型实现.md</a>（alpha 是 study 结论的产物，本方向的对照表是它的前置读物）。</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

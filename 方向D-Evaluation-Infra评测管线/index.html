@@ -1,0 +1,1312 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="OpenWAM 仓库深度调研：方向分配说明与任务书（基于 OpenWAM-Official/OpenWAM @ 90e94ae）">
+      
+      
+      
+        <link rel="canonical" href="https://sasasatori.github.io/kaiyuan/%E6%96%B9%E5%90%91D-Evaluation-Infra%E8%AF%84%E6%B5%8B%E7%AE%A1%E7%BA%BF/">
+      
+      
+        <link rel="prev" href="../%E6%96%B9%E5%90%91C-Deployment-Infra%E9%83%A8%E7%BD%B2%E7%AE%A1%E7%BA%BF/">
+      
+      
+        <link rel="next" href="../%E6%96%B9%E5%90%91E-Study%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C%E5%AE%9E%E7%8E%B0/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>方向 D · Evaluation-Infra 评测管线 - OpenWAM 调研任务书</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#devaluation-infra" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="OpenWAM 调研任务书" class="md-header__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenWAM 调研任务书
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              方向 D · Evaluation-Infra 评测管线
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  总览
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../%E6%96%B9%E5%90%91A-Data-Infra%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF/" class="md-tabs__link">
+          
+  
+  
+  方向任务书
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenWAM 调研任务书" class="md-nav__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OpenWAM 调研任务书
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向任务书
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    方向任务书
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91A-Data-Infra%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 A · Data-Infra 数据管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91B-Model-Infra%E6%A8%A1%E5%9E%8B%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 B · Model-Infra 模型管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91C-Deployment-Infra%E9%83%A8%E7%BD%B2%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 C · Deployment-Infra 部署管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 D · Evaluation-Infra 评测管线
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 D · Evaluation-Infra 评测管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. 你的环境与资源路径
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 这个方向做什么、为什么值得做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 最小必要背景
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 任务书
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 任务书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#d1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 D1：评测管线拓扑文档化（主线，纯阅读）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d2libero-4-suite-libero-plus-robocasa365-e11e12e13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 D2：第一梯队评测复现——LIBERO 全 4 suite + LIBERO-plus 扰动矩阵 + RoboCasa365（旧 E1.1/E1.2/E1.3）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d3robotwin-e21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 D3：RoboTwin 端到端（旧 E2.1）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d4vlabench-6-track-robocasa-gr1-e22e23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 D4：VLABench 6 track + RoboCasa GR1（旧 E2.2/E2.3）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d5ebenchmock-e31e32-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 D5：EBench——mock 离线链路 → 完整评测（旧 E3.1/E3.2；先核对 GPU 代际）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d6labtasker-robocasa365libero-plus-e33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 D6：Labtasker 横向推广——为 robocasa365/libero-plus 补编排（旧 E3.3）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 建议推进顺序与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 风险与坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 推荐阅读顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91E-Study%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C%E5%AE%9E%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 E · Study 消融实验实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91F-OpenWAM-Alpha%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 F · OpenWAM-Alpha 模型实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. 你的环境与资源路径
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 这个方向做什么、为什么值得做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 最小必要背景
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 任务书
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 任务书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#d1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 D1：评测管线拓扑文档化（主线，纯阅读）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d2libero-4-suite-libero-plus-robocasa365-e11e12e13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 D2：第一梯队评测复现——LIBERO 全 4 suite + LIBERO-plus 扰动矩阵 + RoboCasa365（旧 E1.1/E1.2/E1.3）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d3robotwin-e21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 D3：RoboTwin 端到端（旧 E2.1）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d4vlabench-6-track-robocasa-gr1-e22e23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 D4：VLABench 6 track + RoboCasa GR1（旧 E2.2/E2.3）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d5ebenchmock-e31e32-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 D5：EBench——mock 离线链路 → 完整评测（旧 E3.1/E3.2；先核对 GPU 代际）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d6labtasker-robocasa365libero-plus-e33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 D6：Labtasker 横向推广——为 robocasa365/libero-plus 补编排（旧 E3.3）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 建议推进顺序与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 风险与坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 推荐阅读顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="devaluation-infra">方向 D：Evaluation-Infra 评测管线<a class="headerlink" href="#devaluation-infra" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>一句话定位：把 OpenWAM 论文 8 个仿真 benchmark 的成功率，用官方 checkpoint 按官方协议逐条复现出来；更重要的是把"评测管线本身"（薄客户端+厚服务端拓扑、冻结线协议、动作空间转换、Labtasker 可复现编排）做成全组的基础设施与文档。读者：第一次接触该模块的同学。
+前置：先读 <a href="../">README.md</a> 的总览。<strong>本方向第一阶段（W1–W2）纯阅读+文档化，不需要任何 GPU/环境</strong>。</p>
+</blockquote>
+<p>文中所有路径均为 OpenWAM 仓库相对路径（仓库根 = <code>OpenWAM/</code>）。行号以 <code>main @ 90e94ae</code> 为准（已核对）；个别行号漂移时以符号名锚点为准。任务编号按新体系重排：旧 E1.1–E1.3→D2、E2.1→D3、E2.2/E2.3→D4、E3.1/E3.2→D5、E3.3→D6，内容无丢失。</p>
+<hr />
+<h2 id="0">0. 你的环境与资源路径<a class="headerlink" href="#0" title="Permanent link">&para;</a></h2>
+<p><strong>W1–W2（纯阅读+文档化，对应任务 D1）：零依赖。</strong> 只需要一个能读代码的编辑器。你不依赖方向 A/B/C 的任何产出，不装任何环境，不下载任何权重——D1 的产出（评测管线总图）完全从源码蒸馏。</p>
+<p><strong>D2 起（实际跑评测）：对外的唯一硬依赖是方向 C 能提供可用的 policy server</strong>（见 <a href="../%E6%96%B9%E5%90%91C-Deployment-Infra%E9%83%A8%E7%BD%B2%E7%AE%A1%E7%BA%BF/">方向C-Deployment-Infra部署管线.md</a>）。先有 server，再谈评测；server 怎么起、PONG 带什么，不是你的责任范围，但你必须会用。</p>
+<p>本方向专属的环境规则：</p>
+<ul>
+<li><strong>每个 benchmark 一个独立 conda env，互不污染</strong>，也绝不装进 server 的 OpenWAM env。客户端依赖极简（<code>numpy</code>、<code>Pillow</code>、<code>websockets</code>），不需要 torch。</li>
+<li><strong>推荐启动顺序：LIBERO 最先</strong>。它的仿真资产随仓库 clone 自带（约 1.9GB，无单独下载，<code>benchmarks/libero/README.md:36</code>）、有一键 <code>setup_env.sh</code>、有托管 launcher，是全链路最小练兵场。</li>
+<li><strong>EGL × CUDA 冲突一律 <code>--render-gpus</code></strong>：渲染与推理物理 GPU 隔离（<code>GPUS=0,1 ... --render-gpus 2,3</code>），这是官方确认的驱动级冲突，不是配置错误（详见 §6 R-D1）。</li>
+<li>checkpoint 经 <code>python scripts/download_assets/download_openwam_checkpoints.py</code> 下载，每个约 24.8GB，落到 <code>assets/openwam_ckpt/openwam_alpha/</code>。</li>
+<li>大数据量任务（D3 RoboTwin 415GB、D5 EBench 305GB+34GB）的下载要与环境搭建<strong>并行启动</strong>，先确认磁盘。</li>
+</ul>
+<h2 id="1">1. 这个方向做什么、为什么值得做<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>OpenWAM 论文的核心证据是成功率表格：OpenWAM-α 在 LIBERO / LIBERO-plus / RoboCasa365 / RoboCasa GR1 / VLABench / RoboTwin / EBench / RoboDojo 八个 benchmark 上对比 VLA 与其他 WAM。这些数字由一套<strong>独立于训练栈的评测客户端</strong>驱动仿真器、逐步调用 policy server 产生。本方向做两件事：</p>
+<ol>
+<li><strong>把评测管线本身工程化、文档化</strong>（D1）：每个 benchmark 是一个薄客户端——独立 conda env 里只装仿真器和几百行适配代码，通过一条冻结的 WebSocket 线协议连到厚服务端（<code>openwam/deploy/server.py</code>，持模型、做预处理）。客户端永远不需要 import torch 或 openwam 包。你会学到：如何设计一条让"任何机器人/benchmark 都能接入"的最小协议、如何做跨本体动作空间转换、如何用 sealed manifest + RNG 隔离把分布式评测做成可复现的科学实验。</li>
+<li><strong>逐 benchmark 复现论文数字</strong>（D2–D5），并把可复现编排横向推广（D6）。</li>
+</ol>
+<p>产出直接可用：评测管线总图（D1）、各 benchmark 成功率复现报告（与论文逐格对比）、环境 SOP、Labtasker 扩展。此外，<a href="../%E6%96%B9%E5%90%91E-Study%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C%E5%AE%9E%E7%8E%B0/">方向E-Study消融实验实现.md</a> 用官方 study checkpoint 做对比评测时会直接借用你搭好的评测 harness——你的管线是别人的实验底座。</p>
+<h2 id="2">2. 最小必要背景<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p><strong>① 薄客户端 + 厚服务端拓扑。</strong> 评测 = 两个进程、两个 conda env：<code>benchmarks/&lt;bench&gt;/</code> 下的客户端持有仿真器（MuJoCo/SAPIEN/Isaac Sim），server（<code>openwam/deploy/server.py</code>）持有模型；两边只经 WebSocket 通信，环境互不污染。锚点：<code>benchmarks/README.md:1-13</code>（"you don't need to know anything about the server"）、<code>benchmarks/robotwin/README.md:8</code>。客户端依赖极简：<code>numpy</code>、<code>Pillow</code>、<code>websockets</code>。</p>
+<p><strong>② 线协议（冻结契约）。</strong> 消息类型在两端硬编码且镜像一致：客户端侧 <code>benchmarks/utils/transport.py:20-31</code>（<code>OBS/RESET/PING</code> 上行，<code>ACTION/RESET_ACK/PONG/ERROR</code> 下行），服务端真源 <code>openwam/deploy/server.py:56-67</code>（注释明言 "a frozen wire contract and must never change"）。每步控制 = 一次 <code>obs</code>（base64 PNG 相机帧 <code>head_camera</code> 必填 + <code>prompt</code> 逐字转发 + 可选 <code>state</code>）→ 一次 <code>action</code>（物理单位动作 + <code>step</code> + <code>latency_ms</code>）。episode 边界必须 <code>reset()</code>，否则 server 端 action chunk buffer 会跨 episode 泄漏（<code>benchmarks/README.md:73-87</code>）。传输类是 <code>WSPolicyClient</code>（<code>transport.py:43</code>）：obs/reset 丢线自动重连一次，ping 快速失败。</p>
+<p><strong>③ repr_contract 握手校验。</strong> server 加载 checkpoint 时从训练配置提取表示契约：<code>openwam/deploy/model_loader.py:237-255</code> <code>repr_contract_from_cfg</code>（核心字段 <code>representation</code> = 训练时 <code>dataloader.action_mode</code>，可选 <code>binary_action_dims</code>/<code>gripper_convention</code>）。<code>ping</code> 的 PONG 带上这份契约与 <code>readiness_token</code>（<code>server.py:181-187</code> <code>_pong_payload</code>）。客户端启动时硬校验：LIBERO 侧 <code>benchmarks/libero/openwam2libero_interface.py:129-133</code>（不匹配直接 <code>RuntimeError</code>），RoboCasa365 侧 <code>benchmarks/robocasa365/openwam2robocasa365_interface.py:279-282</code>。作用：拿 RoboTwin checkpoint 去评 LIBERO 会在第一步被拒绝，而不是静默产出垃圾成功率。</p>
+<p><strong>④ 动作空间转换中心。</strong> 每个机器人本体的动作/状态维度不同，统一换算集中在 <code>benchmarks/utils/action_conversion.py</code>（762 行，纯 numpy，客户端可独立使用）。关键符号：<code>eef20d_to_ee16d</code>（:103）、<code>eef10_to_robocasa12d</code>（:153）/<code>eef20d_to_robocasa12d</code>（:244）、<code>robotwin_endpose_to_eef20d</code>（:271）、<code>raw23_to_ebench_action</code>（:615，EBench RAW-23）、<code>eef10_to_vlabench_ee</code>（:728）。注意例外：LIBERO 的 EEF10→LIBERO-7D OSC 转换在接口文件里（<code>benchmarks/libero/openwam2libero_interface.py:37</code> <code>native_eef10_to_libero7d</code>）。server 返回的动作已是<strong>反归一化后的物理单位</strong>（eef 用米、joint 用弧度），客户端不要再乘 mean/std（<code>benchmarks/README.md:62</code>）。</p>
+<p><strong>⑤ Labtasker 三件套（可复现分布式评测）。</strong> 目前只有 RoboTwin 和 LIBERO 有原生 Labtasker 工作流（<code>benchmarks/{robotwin,libero}/LABTASKER.md</code>），靠三个公共件支撑：
+- <code>benchmarks/utils/eval_manifest.py</code>：sealed manifest——<code>seal_manifest</code>（:56，canonical JSON + sha256）、<code>publish_manifest</code>（:178，内容寻址、只替换索引指针不改旧文件）、<code>load_cached_manifest</code>（:161）。episode 列表/种子一旦 seal 就不可变，换 checkpoint 重评也复用同一份 manifest。
+- <code>benchmarks/utils/task_policy.py</code>：<code>resolve_policy_model_spec</code>（:22，解析部署参数快照）、<code>WorkerPolicyServer</code>（:71，每个 Worker 独占一个 server，靠 <code>readiness_token</code> 防串台）。
+- <code>benchmarks/utils/rng_domain.py</code>：<code>GlobalRngDomain</code>（:115，把 Python/NumPy/Torch 全局 RNG 状态做成可移动游标，只在 owner 调用窗口内激活），保证并发 Worker 之间随机性隔离。</p>
+<p>配套：<code>labtasker_utils.py</code> 的 <code>submit_tasks</code>（:101，幂等提交）与 <code>validate_submission_coverage</code>（:161，提交前覆盖性检查）。</p>
+<h2 id="3">3. 代码地图<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>benchmarks/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── README.md                     # 客户端接入总指南 + 线协议全文（入口文档）
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── utils/                        # 跨 benchmark 公共库（客户端可独立 import）
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   ├── transport.py              # WSPolicyClient + 协议常量（客户端镜像，:20-31）
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   ├── client.py                 # build_payload/encode_numpy_b64/resize_for_lshape_slot/ServerError
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   ├── action_conversion.py      # 动作空间转换中心（762 行）
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   ├── eval_manifest.py          # sealed manifest（seal:56/publish:178/load_cached:161）
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   ├── labtasker_utils.py        # submit_tasks:101 / validate_submission_coverage:161
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│   ├── task_policy.py            # WorkerPolicyServer:71 / resolve_policy_model_spec:22
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│   ├── rng_domain.py             # GlobalRngDomain:115
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│   └── task_progress.py / eval_sharding.py / owned_processes.py
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>├── libero/                       # D2 —— 入口 openwam2libero_interface.py:OpenWAMLiberoPolicy；配置 policy_config.yml
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│   ├── setup_env.sh              # 一键环境（钉 LIBERO commit 8f1084e，脚本第 12 行）
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│   ├── run_eval.sh / scheduler.py / run_all_suites.py   # 托管式全量评测（自起 server、多 GPU 调度）
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│   ├── single_eval.sh / single_eval.py                  # 单 suite 单任务
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│   ├── run_smoke.sh / smoke_libero.py                   # env/import/task 三级自检
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│   └── LABTASKER.md + labtasker_{submit,worker,summarize,runtime}.py
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>├── libero-plus/                  # D2 —— 入口 openwam2libero_interface.py；policy_config.yml（num_trials:1, seed:10000）
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│   └── setup_env.sh              # 钉 commit 4976dc3（脚本第 11 行）+ assets.zip SHA-256 校验
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>├── robocasa365/                  # D2 —— 入口 openwam2robocasa365_interface.py（state19/action15→action12）
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│   ├── setup_env.sh              # 一键环境（钉 robocasa a07e365 / robosuite 5ce6643）
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│   ├── target_tasks.txt          # 官方 50 target tasks（18 atomic + 32 composite）
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│   └── run_eval.sh / multi_eval.sh / run_smoke.sh
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>├── robotwin/                     # D3 —— 入口 openwam2robotwin_interface.py:ModelClient；policy_config.yml（action_type/state_dim:20）
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>│   ├── eval_policy_wrapper.py    # 按路径加载并 monkeypatch 上游 script/eval_policy.py
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>│   ├── prompt_template.py        # RoboTwin prompt 包装（与训练侧逐字节一致）
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>│   ├── step_limits.yml           # 每任务步数上限（默认全注释）
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>│   └── LABTASKER.md + labtasker_{worker,summarize}.py
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>├── vlabench/                     # D4 —— 入口 openwam2vlabench_interface.py:OpenWAMVLABenchPolicy；policy_config.yml（eval_track/head_camera_index:2）
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>├── robocasa_gr1/                 # D4 —— 入口 openwam2robocasa_gr1_interface.py（GR1Kinematics EEF33 FK/IK；无 setup_env.sh！）
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>├── ebench/                       # D5 —— 入口 openwam2ebench_interface.py:EBenchOpenWAMDriver；policy_config.yml
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>│   └── mock_genmanip_server.py   # 无 Isaac Sim 时的离线契约验证服务器
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>└── robodojo/                     # 仅 README.md：评测完全走外部 XPolicyLab，本方向不覆盖
+</code></pre></div>
+<p>服务侧（方向 C 的地盘，本方向只需会用）：<code>openwam/deploy/server.py</code>、<code>openwam/deploy/model_loader.py</code>、<code>scripts/deploy.sh</code>。</p>
+<h2 id="4">4. 任务书<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h3 id="d1">任务 D1：评测管线拓扑文档化（主线，纯阅读）<a class="headerlink" href="#d1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>目标</strong>：产出一份"评测管线如何搭建"总图文档，覆盖五个机制：薄客户端+厚服务端拓扑、线协议镜像、repr_contract 握手、动作空间转换中心、Labtasker 三件套。每个机制给出：数据流图（谁发给谁、什么格式）、两端锚点对照表、一个"如果改 X 会在哪一步爆掉"的失败分析。</li>
+<li><strong>前置</strong>：无（零环境）。先读 §2 的五个概念。</li>
+<li><strong>步骤</strong>：</li>
+<li>通读 <code>benchmarks/README.md</code> 全文——线协议、相机字段规则、reset 生命周期、错误码表。</li>
+<li>对照画线协议镜像表：<code>benchmarks/utils/transport.py:20-31</code> ↔ <code>openwam/deploy/server.py:56-67</code>，逐字段列 obs/action/reset/ping 消息结构。</li>
+<li>追 repr_contract 链路：<code>model_loader.py:237-255 repr_contract_from_cfg</code> → <code>server.py:181-187 _pong_payload</code> → 两个客户端校验点（<code>openwam2libero_interface.py:129-133</code>、<code>openwam2robocasa365_interface.py:279-282</code>）。</li>
+<li>给 <code>action_conversion.py</code> 画"本体 × 转换函数"矩阵（RoboTwin ee/qpos、LIBERO EEF10、RoboCasa365 12d、VLABench ee、EBench RAW-23、GR1 EEF33），标注每个函数的输入输出维度与单位。</li>
+<li>以 <code>benchmarks/libero/LABTASKER.md</code> 为叙事线，把三件套（seal→submit→worker 独占 server→summarize）画成时序图。</li>
+<li>挑 <code>benchmarks/libero/openwam2libero_interface.py</code>（227 行）做逐行注解样本——它是"一个完整客户端适配器"的最小标本。</li>
+<li><strong>验收标准</strong>：总图文档（建议 <code>评测管线总图.md</code>，放本任务书目录）覆盖五个机制，每个机制含两端锚点对照；找一位没读过代码的同学按图能复述"obs 从相机到 env.step 的完整旅程"。</li>
+<li><strong>产出</strong>：评测管线总图 + LIBERO 接口逐行注解。</li>
+<li><strong>难度（估计）</strong>：低-中。<strong>工作量（估计）</strong>：3–4 天。</li>
+<li><strong>代码锚点</strong>：<code>benchmarks/utils/transport.py:20-31</code>、<code>openwam/deploy/server.py:56-67</code>、<code>openwam/deploy/model_loader.py:237-255</code>、<code>benchmarks/utils/action_conversion.py:103/153/244/271/615/728</code>、<code>benchmarks/utils/eval_manifest.py:56</code>、<code>benchmarks/utils/task_policy.py:71</code>、<code>benchmarks/utils/rng_domain.py:115</code>。</li>
+</ul>
+<h3 id="d2libero-4-suite-libero-plus-robocasa365-e11e12e13">任务 D2：第一梯队评测复现——LIBERO 全 4 suite + LIBERO-plus 扰动矩阵 + RoboCasa365（旧 E1.1/E1.2/E1.3）<a class="headerlink" href="#d2libero-4-suite-libero-plus-robocasa365-e11e12e13" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>目标</strong>：复现三个 MuJoCo 系 benchmark 的论文数字：LIBERO Avg 99.3（<code>benchmarks/libero/README.md:113</code>）、LIBERO-plus Avg 69.2（<code>benchmarks/libero-plus/README.md:103</code>）、RoboCasa365 Avg 38.2（<code>benchmarks/robocasa365/README.md:114</code>）。</li>
+<li><strong>前置</strong>：方向 C 的 server 可用；联网；≥2 张 GPU 最舒服（渲染与推理隔离用）；LIBERO-plus 与 LIBERO <strong>共用同一个 checkpoint</strong>（无 plus 专用 checkpoint，<code>benchmarks/libero-plus/README.md:43</code>）。</li>
+<li><strong>步骤</strong>：</li>
+<li><strong>LIBERO 环境</strong>（钉 commit <code>8f1084e3132a39270c3a13ebe37270a43ece2a01</code>，Python 3.10 + mujoco 3.3.2 + robosuite 1.4.0，脚本自动校验全部版本）：
+     <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">CONDA_BIN</span><span class="o">=</span>/path/to/miniconda3/bin/conda<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nv">LIBERO_ENV_PREFIX</span><span class="o">=</span>/path/to/miniconda3/envs/libero<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nv">LIBERO_PATH</span><span class="o">=</span>/path/to/LIBERO<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>bash<span class="w"> </span>benchmarks/libero/setup_env.sh
+</code></pre></div></li>
+<li>冒烟（无需模型）：<code>LIBERO_PATH=/path/to/LIBERO LIBERO_PYTHON=/path/to/miniconda3/envs/libero/bin/python bash benchmarks/libero/run_smoke.sh env</code></li>
+<li>下载 checkpoint：<code>python scripts/download_assets/download_openwam_checkpoints.py</code>（菜单选 <code>OpenWAM_Alpha → OpenWAM-Alpha-Sim-LIBERO</code>）。</li>
+<li><strong>LIBERO 全量</strong>（托管 launcher 自起 server，启动顺序<strong>先 server 后 client</strong>；先加 <code>--smoke</code> 单任务端到端验证再跑全量）：
+     <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">SERVER_PYTHON</span><span class="o">=</span>/path/to/miniconda3/envs/openwam/bin/python<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nv">LIBERO_PYTHON</span><span class="o">=</span>/path/to/miniconda3/envs/libero/bin/python<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nv">LIBERO_PATH</span><span class="o">=</span>/path/to/LIBERO<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nv">GPUS</span><span class="o">=</span><span class="m">0</span>,1<span class="w"> </span><span class="nv">REPLICAS_PER_GPU</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>bash<span class="w"> </span>benchmarks/libero/run_eval.sh<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span>assets/openwam_ckpt/openwam_alpha/OpenWAM-Alpha-Sim-LIBERO<span class="w"> </span>checkpoint_step_10690.safetensors<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span>--compile-enabled<span class="w"> </span><span class="nb">false</span><span class="w"> </span>--render-gpus<span class="w"> </span><span class="m">2</span>,3
+</code></pre></div>
+     协议由代码钉死：50 trials/task、seed 42、<code>max_steps</code> 600/<code>libero_10</code> 700（<code>benchmarks/libero/README.md:81</code>、<code>benchmarks/libero/policy_config.yml:9-16</code>）。</li>
+<li><strong>LIBERO-plus</strong>（钉 commit <code>4976dc30028e805ff8094b55501d532c48fec182</code>，<code>benchmarks/libero-plus/setup_env.sh:11</code>；额外从 HF <code>Sylvest/LIBERO-plus</code> 下载数 GB assets.zip 并 SHA-256 校验，SHA 钉在 <code>setup_env.sh:13</code>）。注意协议不同：<strong>1 trial/task、seed 10000、<code>rng_mode: official_global</code></strong>，启动时强制校验（<code>benchmarks/libero-plus/README.md:76</code>）。复用步骤 4 的命令模板，把 env/path 变量换成 <code>LIBERO_PLUS_*</code>、脚本换成 <code>benchmarks/libero-plus/run_eval.sh</code>，checkpoint 不变。<code>summary.csv</code> 自带 per-perturbation-category 分解。</li>
+<li><strong>RoboCasa365</strong>（钉 robocasa <code>a07e365c958c4216cd6bbd5f30b47f09a65c6f00</code> v1.0.1 + robosuite <code>5ce6643f3092639d08f7b0f90ed1c6a84f50552c</code>，Python 3.11 + mujoco 3.3.1）：
+     <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">CONDA_BIN</span><span class="o">=</span>/path/to/miniconda3/bin/conda<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">ROBOCASA365_ENV_PREFIX</span><span class="o">=</span>/path/to/miniconda3/envs/robocasa365<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nv">ROBOCASA365_PATH</span><span class="o">=</span>/path/to/robocasa<span class="w"> </span><span class="nv">ROBOSUITE_PATH</span><span class="o">=</span>/path/to/robosuite<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>bash<span class="w"> </span>benchmarks/robocasa365/setup_env.sh
+</code></pre></div>
+     冒烟：<code>ROBOCASA365_PYTHON=... bash benchmarks/robocasa365/run_smoke.sh env OpenDrawer</code>。下载 <code>OpenWAM-Alpha-Sim-RoboCasa365</code> checkpoint。<strong>改 trials</strong>：默认 <code>policy_config.yml</code> 是 smoke 规模（<code>num_trials: 5</code>）；正式评测复制一份改 <code>num_trials: 50</code>，用 <code>ROBOCASA365_POLICY_CONFIG=/path/to/custom.yml</code> 指过去，<code>max_steps_override</code> 保持 <code>null</code>。全量 50 任务：
+     <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">ROBOCASA365_PYTHON</span><span class="o">=</span>/path/to/miniconda3/envs/robocasa365/bin/python<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">ROBOCASA365_POLICY_CONFIG</span><span class="o">=</span>/path/to/custom.yml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>bash<span class="w"> </span>benchmarks/robocasa365/multi_eval.sh<span class="w"> </span>--out<span class="w"> </span>./results_robocasa365<span class="w"> </span>target
+</code></pre></div>
+     （<code>target</code> 是任务列表 token，展开 <code>target_tasks.txt</code>；或用托管式 <code>run_eval.sh</code>。）</li>
+<li><strong>验收标准</strong>：① LIBERO 4 suite ×10 任务 ×50 trials 全部完成，<code>summary.csv</code> 与论文逐格对比 + 偏差分析；② LIBERO-plus 7 类扰动（Camera/Robot/Language/Light/Background/Noise/Layout）成功率矩阵完整，Camera/Robot/Noise 三类弱项偏差单独讨论；③ RoboCasa365 50 任务 <code>summary_pretrain.csv</code>，与论文 Atomic/Comp.-Seen/Comp.-Unseen 三列对照。</li>
+<li><strong>产出</strong>：三份成功率对照表 + 偏差分析 + 环境记录（driver 版本、是否用了 <code>--render-gpus</code>/<code>--compile-enabled false</code>）。</li>
+<li><strong>难度（估计）</strong>：中。<strong>工作量（估计）</strong>：LIBERO 环境 0.5 天 + 评测 1–2 天；LIBERO-plus 环境 0.5 天 + 评测 1 天；RoboCasa365 环境 0.5 天 + 评测 1–2 天（~10GB 仿真资产）。</li>
+<li><strong>代码锚点</strong>：<code>benchmarks/libero/openwam2libero_interface.py:37 native_eef10_to_libero7d</code>、<code>:129-133</code> repr 握手、<code>benchmarks/libero/scheduler.py:1096 --render-gpus</code>、<code>benchmarks/libero-plus/setup_env.sh:11-13</code>、<code>benchmarks/robocasa365/openwam2robocasa365_interface.py:279-282</code>、<code>benchmarks/utils/action_conversion.py:153 eef10_to_robocasa12d</code>、<code>benchmarks/robocasa365/target_tasks.txt</code>。</li>
+</ul>
+<h3 id="d3robotwin-e21">任务 D3：RoboTwin 端到端（旧 E2.1）<a class="headerlink" href="#d3robotwin-e21" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>目标</strong>：复现论文 RoboTwin2.0-Full 数字（OpenWAM-α Clean 93.74 / Randomized 93.46，<code>benchmarks/robotwin/README.md:132</code>）与 Clean2Random OOD 数字，全程留 provenance。</li>
+<li><strong>前置</strong>：方向 C；<strong>415GB</strong> RoboTwin2.0 数据（下载与环境搭建并行启动，见 §6 R-D4）；驱动/CUDA 组合能跑 SAPIEN 3.0.0b1 + cuRobo。</li>
+<li><strong>步骤</strong>：</li>
+<li>按 <code>benchmarks/robotwin/README.md:26-36</code> 的版本表搭独立环境：RoboTwin 钉 commit <code>0aeea2d669c0f8516f4d5785f0aa33ba812c14b4</code>（2026-04-19）、Python 3.10、SAPIEN 3.0.0b1、cuRobo v0.7.8、warp-lang 1.13.0、mplib 0.2.1、torch 2.4.1；再 <code>pip install websockets pyyaml</code>。<strong>不要</strong>把这套装进 OpenWAM env。</li>
+<li>下载 <code>OpenWAM-Alpha-Sim-RoboTwin-Full</code> checkpoint，<code>bash scripts/deploy.sh &lt;ckpt_dir&gt;</code> 起 server（先 server 后 client；客户端健康检查最多等 300s）。</li>
+<li>对齐 <code>benchmarks/robotwin/policy_config.yml</code> 与 checkpoint：<code>action_type: ee</code> + <code>state_dim: 20</code>（ee checkpoint）或 <code>qpos</code> + <code>14</code>。</li>
+<li>Smoke：<code>ROBOTWIN_TEST_NUM=5 ROBOTWIN_PATH=/path/to/RoboTwin ROBOTWIN_PYTHON=... bash benchmarks/robotwin/single_eval.sh adjust_bottle demo_clean openwam 0</code>。确认 wrapper 打印 <code>prewarmed CUDA/Curobo before SAPIEN import</code>、<code>patched warp.torch compatibility namespace</code>、<code>RoboTwin commit=… eval_policy.py sha256=…</code>（都是预期输出，见 §6 R-D2）。</li>
+<li>单任务 100 ep：去掉 <code>ROBOTWIN_TEST_NUM</code> 重跑同一任务，对照论文单任务量级。</li>
+<li>全 50 任务（每模式多 GPU-小时）：<code>bash benchmarks/robotwin/multi_eval.sh -m demo_clean -n run1 -d &lt;ckpt_dir&gt; all</code>，再 <code>-m demo_randomized</code>。</li>
+<li>结果在 RoboTwin checkout 的 <code>eval_result/</code>；<code>multi_eval.sh</code> 另外在 <code>&lt;ckpt_dir&gt;/robotwin_eval_logs/</code> 落 per-task 日志与 <code>run.env</code> provenance。</li>
+<li><strong>验收标准</strong>：成功率日志 + provenance 记录（commit/sha256/版本表/<code>run.env</code>）；Clean 与 Randomized 两模式全 50 任务 ×100 ep。</li>
+<li><strong>产出</strong>：RoboTwin 复现报告（对照论文两张表）+ 环境 SOP。</li>
+<li><strong>难度（估计）</strong>：高。<strong>工作量（估计）</strong>：环境 1–2 天（版本耦合）+ 评测 2–4 天。</li>
+<li><strong>代码锚点</strong>：<code>benchmarks/robotwin/eval_policy_wrapper.py:150 _prewarm_cuda_for_curobo</code>、<code>:176 _patch_warp_torch_namespace</code>、<code>:452 _install_manifest</code>、<code>:532 _install_eval</code>；<code>benchmarks/robotwin/step_limits.yml</code>。</li>
+</ul>
+<h3 id="d4vlabench-6-track-robocasa-gr1-e22e23">任务 D4：VLABench 6 track + RoboCasa GR1（旧 E2.2/E2.3）<a class="headerlink" href="#d4vlabench-6-track-robocasa-gr1-e22e23" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>目标</strong>：① VLABench 分 track 复现 SR/progress score/intention score 三项指标，对照论文 Avg SR 71.6（<code>benchmarks/vlabench/README.md:194</code>）；② RoboCasa GR1 评测 24 个 <code>gr1_unified/*</code> env，对照论文 SR 60.5（<code>benchmarks/robocasa_gr1/README.md:102</code>）。</li>
+<li><strong>前置</strong>：方向 C；VLABench 需 ~17GB 资产 + 13.2GB 数据且<strong>必须钉 commit</strong>（上游 main 若干任务无法实例化，<code>benchmarks/vlabench/README.md:66-70</code>）；GR1 需 EGL 可用（43.9GB 数据仅训练用，评测只需 tabletop assets）。</li>
+<li><strong>步骤</strong>：</li>
+<li><strong>VLABench 手搭环境</strong>（无 setup 脚本；钉 <code>numpy==1.25.0</code>/<code>mujoco==3.2.2</code>/<code>dm_control==1.0.22</code>，精简安装命令见 <code>benchmarks/vlabench/README.md:18-26</code>；headless 机器再装 conda-forge 的 <code>libegl mesalib libglvnd</code> + CPU torch）。</li>
+<li>冒烟：<code>VLABENCH_PATH=/path/to/VLABench VLABENCH_PYTHON=... bash benchmarks/vlabench/run_smoke.sh env select_fruit</code>；<code>run_smoke.sh loop select_fruit</code> 可走进程内 mock 全闭环。</li>
+<li>下载 <code>OpenWAM-Alpha-Sim-VLABench</code>，起 server。逐 track 评测：<code>bash benchmarks/vlabench/single_eval.sh all track_1_in_distribution 50 8848</code>，track 列表 <code>track_1_in_distribution … track_6_unseen_texture</code>（每任务预算 30–60 min）。</li>
+<li><strong>track_5 特殊处理</strong>：<code>track_5_cross_task</code> 上游不发布 episode config（<code>benchmarks/vlabench/README.md:160</code>、<code>benchmarks/vlabench/multi_eval.sh:50-53</code>），只能给 <code>single_eval.sh</code> 显式任务名，或用 <code>multi_eval.sh</code> 的 <code>VLABENCH_TRACK5_TASKS</code>/内置 8 个 held-out 任务默认值（seeded episodes，seed=42+i）。报告中必须注明这一协议差异。</li>
+<li>多 GPU sweep：每端口一个 server（<code>for i in 0 1 2 3; do CUDA_VISIBLE_DEVICES=$i nohup bash scripts/deploy.sh &lt;ckpt&gt; --device cuda:0 --port $((8880+i)) &amp; done</code>），再 <code>bash benchmarks/vlabench/multi_eval.sh all all 50 8880,8881,8882,8883</code>。结果在 <code>benchmarks/vlabench/_eval_out/</code>；注意请求 episode 数 ≠ 有效记录数，引用分数前先查日志。</li>
+<li><strong>GR1 手搭环境</strong>（<code>benchmarks/robocasa_gr1/README.md:9-21</code>；关键是 <code>pip install -e .</code> 后<strong>先 uninstall 再钉版本</strong>）：
+     <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>conda<span class="w"> </span>create<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>-n<span class="w"> </span>robocasa-gr1<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>-y<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>conda<span class="w"> </span>activate<span class="w"> </span>robocasa-gr1
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/robocasa/robocasa-gr1-tabletop-tasks<span class="w"> </span>/path/to/robocasa-gr1-tabletop-tasks
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">cd</span><span class="w"> </span>/path/to/robocasa-gr1-tabletop-tasks<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>pip<span class="w"> </span>uninstall<span class="w"> </span>-y<span class="w"> </span>robosuite<span class="w"> </span>mujoco<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">robosuite</span><span class="o">==</span><span class="m">1</span>.5.1<span class="w"> </span><span class="nv">mujoco</span><span class="o">==</span><span class="m">3</span>.2.6
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>pip<span class="w"> </span>install<span class="w"> </span>pyyaml<span class="w"> </span>numpy<span class="w"> </span>Pillow<span class="w"> </span>websockets
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>python<span class="w"> </span>robocasa/scripts/download_tabletop_assets.py<span class="w"> </span>-y
+</code></pre></div></li>
+<li>GR1 冒烟：<code>ROBOCASA_GR1_PATH=... ROBOCASA_GR1_PYTHON=... ROBOCASA_GR1_ENABLE_RENDER=1 bash benchmarks/robocasa_gr1/run_smoke.sh env</code>（成功打印 <code>env_smoke=ok</code>；EGL 故障签名是 <code>AttributeError: 'NoneType' object has no attribute 'eglQueryString'</code>）。</li>
+<li>下载 <code>OpenWAM-Alpha-Sim-RoboCasa-GR1</code>，起 server，逐 env 评测（一个 server 串行处理 24 个 env）：
+     <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">ROBOCASA_GR1_PATH</span><span class="o">=</span>...<span class="w"> </span><span class="nv">ROBOCASA_GR1_PYTHON</span><span class="o">=</span>...<span class="w"> </span><span class="nv">ROBOCASA_GR1_GPU</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>bash<span class="w"> </span>benchmarks/robocasa_gr1/single_eval.sh<span class="w"> </span>gr1_unified/PnPCupToDrawerClose_GR1ArmsAndWaistFourierHands_Env<span class="w"> </span><span class="m">8848</span><span class="w"> </span><span class="m">127</span>.0.0.1
+</code></pre></div>
+     正式跑时复制 <code>policy_config.yml</code> 调 <code>num_episodes</code>；<code>max_steps</code> 720。</li>
+<li><strong>验收标准</strong>：① VLABench 分 track SR/PS/IS 表 + track_5 协议说明，与论文逐格对比；② GR1 24 env 评测记录（per-episode <code>[RESULT]</code> 行 + <code>Success rate: n/N</code>）与论文 SR 对比。</li>
+<li><strong>产出</strong>：VLABench 分 track 成功率表 + track_5 现状说明；GR1 评测记录 + 手搭环境 SOP。</li>
+<li><strong>难度（估计）</strong>：中-高。<strong>工作量（估计）</strong>：VLABench 环境 1 天 + 评测 2–3 天；GR1 环境 1 天（无脚本）+ 评测 1–2 天。</li>
+<li><strong>代码锚点</strong>：<code>benchmarks/vlabench/openwam2vlabench_interface.py:OpenWAMVLABenchPolicy</code>、<code>benchmarks/vlabench/single_eval.py:37 OPEN_TRACK</code>、<code>benchmarks/vlabench/policy_config.yml</code>（<code>eval_track</code>/<code>head_camera_index: 2</code>）、<code>benchmarks/robocasa_gr1/openwam2robocasa_gr1_interface.py</code>（EEF33：发 33 维 state、要求 33 维 action，否则抛错）。</li>
+</ul>
+<h3 id="d5ebenchmock-e31e32-gpu">任务 D5：EBench——mock 离线链路 → 完整评测（旧 E3.1/E3.2；先核对 GPU 代际）<a class="headerlink" href="#d5ebenchmock-e31e32-gpu" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>目标</strong>：① 不装 Isaac Sim，用 mock 服务器验证 EBench bridge 动作契约；② 硬件允许时复现 EBench generalist <code>test_mini</code> 510 episode（26 tasks ×20 ep，<code>make_sandwich</code>/<code>microwave</code> 各 15 ep），对照论文 Overall SR 49.4 / Score 64.7（<code>benchmarks/ebench/README.md:120</code>）。</li>
+<li><strong>前置</strong>：方向 C 的 server；一个 EBench-Dataset bucket；完整评测需 <strong>先核对 GPU 代际——Isaac Sim 4.1.0（CUDA 12.1）不支持 Blackwell 架构 GPU</strong>（<code>benchmarks/ebench/README.md:9</code>），Blackwell 机器上直接判定不可行并记录硬件结论；305GB 数据 + ~34GB EBench-Assets。</li>
+<li><strong>步骤</strong>：</li>
+<li><strong>mock 链路</strong>：下载单 bucket <code>huggingface-cli download InternRobotics/EBench-Dataset --repo-type dataset --local-dir assets/benchmark_data/ebench --include 'simple_pnp/task1/*'</code>。</li>
+<li>起 mock（训练 env，需 <code>pandas</code>/<code>pyarrow</code>/<code>av</code>）：
+     <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>python<span class="w"> </span>benchmarks/ebench/mock_genmanip_server.py<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span>--dataset-dir<span class="w"> </span>assets/benchmark_data/ebench<span class="w"> </span>--bucket<span class="w"> </span>simple_pnp/task1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span>--episodes<span class="w"> </span><span class="m">2</span><span class="w"> </span>--steps-per-episode<span class="w"> </span><span class="m">8</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8087</span>
+</code></pre></div></li>
+<li>另一 shell 起 policy server（<code>bash scripts/deploy.sh assets/openwam_ckpt/openwam_alpha/OpenWAM-Alpha-Sim-EBench</code>），跑单 worker：<code>EBENCH_PYTHON=... bash benchmarks/ebench/single_eval.sh --url http://127.0.0.1:8087 --ckpt-config assets/openwam_ckpt/openwam_alpha/OpenWAM-Alpha-Sim-EBench/config.yaml</code>（mock 模式省略 <code>--run-id</code>）。</li>
+<li><strong>完整评测</strong>：<code>nvidia-smi --query-gpu=name --format=csv</code> 核对代际；非 Blackwell 才继续。sim 机按 EBench 官方指南装 Isaac Sim 4.1.0 + cuRobo + EBench-Assets（~34GB）。bridge env（无 torch）：<code>git clone --recursive https://github.com/InternRobotics/EBench &amp;&amp; cd EBench &amp;&amp; pip install -e third_party/genmanip-client &amp;&amp; pip install numpy Pillow "websockets&gt;=15" PyYAML opencv-python-headless "PyTurboJPEG&lt;2" filelock</code>。</li>
+<li>sim 机起服务：<code>python ray_eval_server.py --host 0.0.0.0 --port 8087 --no_save_process</code>，提交 <code>gmp submit ebench/generalist/test_mini --run_id &lt;run_id&gt;</code>。</li>
+<li>按论文协议起 server：<code>NUM_GPUS=4 bash scripts/deploy.sh assets/openwam_ckpt/openwam_alpha/OpenWAM-Alpha-Sim-EBench --compile-enabled false optimization.dit_cache.enabled=false</code>（<strong>dit_cache 必须关</strong>，否则数字不可比，<code>benchmarks/ebench/README.md:104</code>）。</li>
+<li>并行 worker：<code>NUM_WORKERS=4 EBENCH_PYTHON=... bash benchmarks/ebench/multi_eval.sh --url http://&lt;sim-host&gt;:8087 --run-id &lt;run_id&gt; --ckpt-config &lt;ckpt&gt;/config.yaml</code>。结果：GenManip 写 <code>saved/eval_results/&lt;task&gt;/&lt;run_id&gt;/</code>；bridge 镜像 <code>episode_result.json</code> 到 <code>client_results/</code>。</li>
+<li><strong>验收标准</strong>：① mock 日志出现 <code>run complete: 2 episodes, 16 steps bridged</code> 与 <code>16 actions, 0 violations</code>，<code>./ebench_mock_actions.jsonl</code> 生成（契约违例会 HTTP 500 且 bridge 非零退出）；② test_mini 510 ep 结果，分 Family（TableTop/PnP/LongHorizon）SR/Score 与论文对照；③ Blackwell 机器上的硬件代际结论记录。</li>
+<li><strong>产出</strong>：<code>ebench_mock_actions.jsonl</code> + 契约校验记录；EBench 复现报告 + 硬件代际结论。</li>
+<li><strong>难度（估计）</strong>：mock 低-中（0.5–1 天）；完整评测高（环境 1–2 天 + 评测 2–3 天，步预算 600–5000/任务）。</li>
+<li><strong>代码锚点</strong>：<code>benchmarks/ebench/mock_genmanip_server.py:1-5</code>（职责说明）、<code>:27-31</code>（GenManip 动作限幅常量）、<code>benchmarks/ebench/openwam2ebench_interface.py:323-343 verify_ckpt_config</code>（硬校验 <code>dataloader.type=ebench</code>/<code>action_mode=eef</code>/<code>unify_action=true</code>，缺失 <code>--ckpt-config</code> 仅告警）、<code>benchmarks/utils/action_conversion.py:615 raw23_to_ebench_action</code>。</li>
+</ul>
+<h3 id="d6labtasker-robocasa365libero-plus-e33">任务 D6：Labtasker 横向推广——为 robocasa365/libero-plus 补编排（旧 E3.3）<a class="headerlink" href="#d6labtasker-robocasa365libero-plus-e33" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>目标</strong>：目前只有 RoboTwin/LIBERO 有原生 Labtasker 编排（sealed manifest + RNG 隔离 + Worker 独占 server）。为 robocasa365 与 libero-plus 各补一套：<code>LABTASKER.md</code> + <code>labtasker_submit.py</code>/<code>labtasker_worker.py</code>/<code>labtasker_summarize.py</code>。</li>
+<li><strong>前置</strong>：D2 的传统 launcher 已跑通（知道协议参数）；通读 <code>benchmarks/libero/LABTASKER.md</code> 与 <code>benchmarks/robotwin/LABTASKER.md</code>。</li>
+<li><strong>步骤</strong>：</li>
+<li>读三件套源码：<code>benchmarks/utils/eval_manifest.py</code>（<code>seal_manifest:56</code>/<code>publish_manifest:178</code>）、<code>benchmarks/utils/task_policy.py</code>（<code>WorkerPolicyServer:71</code>/<code>resolve_policy_model_spec:22</code>）、<code>benchmarks/utils/rng_domain.py</code>（<code>GlobalRngDomain:115</code>），以及 <code>benchmarks/utils/labtasker_utils.py</code>（<code>submit_tasks:101</code>/<code>validate_submission_coverage:161</code>）。</li>
+<li>以 <code>benchmarks/libero/labtasker_{submit,worker,summarize,runtime}.py</code> 为模板，抽象出 benchmark 可变部分（任务枚举、env 构造、每任务 trials、manifest cache_key），为 robocasa365 实现 submit/worker/summarize；libero-plus 注意协议差异（1 trial、seed 10000、<code>rng_mode: official_global</code>——RNG 域语义与 LIBERO 不同，照搬前要确认 <code>GlobalRngDomain</code> 与 official_global 不冲突）。</li>
+<li>写 <code>benchmarks/robocasa365/LABTASKER.md</code>、<code>benchmarks/libero-plus/LABTASKER.md</code>（结构照抄现有两篇：setup → first run 建 manifest cache → run evaluation → summarize）。</li>
+<li>对照实验：同一 checkpoint 分别用传统 launcher 与 Labtasker 工作流跑同一任务集，核对成功率一致。</li>
+<li><strong>验收标准</strong>：两篇新 <code>LABTASKER.md</code> + 可运行的 submit/worker 链路；与传统 launcher 的一致性对照记录。</li>
+<li><strong>产出</strong>：Labtasker 扩展代码与文档（建议提交到组内 fork，勿改动 <code>OpenWAM/</code> 调研仓库）。</li>
+<li><strong>难度（估计）</strong>：中。<strong>工作量（估计）</strong>：2–3 天/benchmark。</li>
+<li><strong>代码锚点</strong>：<code>benchmarks/utils/labtasker_utils.py:101</code>、<code>benchmarks/utils/task_policy.py:71</code>、<code>benchmarks/utils/rng_domain.py:115</code>、<code>benchmarks/libero/labtasker_worker.py</code>。</li>
+</ul>
+<h2 id="5">5. 建议推进顺序与里程碑<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    D1[D1 管线拓扑文档化 W1-W2] --&gt; D2
+    C[方向C policy server 可用] --&gt; D2[D2 LIBERO/LIBERO-plus/RoboCasa365]
+    C --&gt; D5a[D5a EBench mock 离线]
+    D2 --&gt; D3[D3 RoboTwin]
+    D2 --&gt; D4[D4 VLABench + RoboCasa GR1]
+    D2 --&gt; D6[D6 Labtasker 推广]
+    D5a --&gt; D5b[D5b EBench 完整评测]</code></pre>
+<table>
+<thead>
+<tr>
+<th>里程碑</th>
+<th>内容</th>
+<th>达成判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MD1（W1–W2）</td>
+<td>D1</td>
+<td>评测管线总图完成，五机制锚点对照齐全；零环境依赖</td>
+</tr>
+<tr>
+<td>MD2（W3–W4）</td>
+<td>D2（先 LIBERO）+ D5a</td>
+<td>LIBERO summary.csv 对照论文；mock <code>0 violations</code></td>
+</tr>
+<tr>
+<td>MD3（W5–W7）</td>
+<td>D3/D4 并行</td>
+<td>RoboTwin 两模式数字、VLABench 分 track 表、GR1 24 env</td>
+</tr>
+<tr>
+<td>MD4（W7+，选做）</td>
+<td>D5b + D6</td>
+<td>EBench 510 ep（硬件允许时）；Labtasker 扩展</td>
+</tr>
+</tbody>
+</table>
+<p>排期理由：D1 纯阅读即可开工，是全组最早有产出的方向之一；LIBERO 是协议握手、<code>--render-gpus</code>、托管 launcher 的最小练兵场（资产仅约 1.9GB 随 clone 自带），先打穿它后面全是同构问题；D5a mock 无仿真依赖、可与 D2 并行，提前暴露 EBench 动作契约问题；D3 数据体量最大（415GB），下载要与环境搭建并行启动。</p>
+<h2 id="6">6. 风险与坑<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>R-D1 EGL × CUDA 驱动冲突（exit=-6）</strong>：MuJoCo 系 benchmark（LIBERO/LIBERO-plus/RoboCasa365/RoboCasa GR1/VLABench）的 EGL 离屏渲染与 CUDA 推理共享物理 GPU 时，客户端会在 <code>mjr_readPixels</code> 内 abort，日志停在 <code>[OpenWAMLiberoPolicy]</code> 行后，退出码 <code>exit=-6</code>。官方在 driver 570.124.06 上用无关进程的 <code>torch.matmul</code> 循环复现过——是驱动级冲突，不是你的 bug。规避：渲染与推理物理隔离，<code>GPUS=0,1 ... --render-gpus 2,3</code>（<code>--render-gpus</code> 定义见 <code>benchmarks/libero/scheduler.py:1096</code>，按 policy-GPU slot 映射渲染设备并设置 <code>CUDA_VISIBLE_DEVICES</code>+<code>MUJOCO_EGL_DEVICE_ID</code>，<code>scheduler.py:299-300</code>；现象与解法原文见 <code>benchmarks/libero/README.md:82</code>、<code>benchmarks/libero-plus/README.md:78</code>）。单机单卡时可设 <code>MUJOCO_GL=osmesa</code> 走 CPU 渲染兜底（慢）。另有 server 端坑：<code>torch._inductor</code> 触发 <code>none_dealloc</code> 崩溃 → 一律加 <code>--compile-enabled false</code>（<code>benchmarks/libero/README.md:83</code>）。</li>
+<li><strong>R-D2 RoboTwin 版本强耦合 + monkeypatch 上游</strong>：<code>benchmarks/robotwin/eval_policy_wrapper.py</code> 按路径加载并 patch 上游 <code>script/eval_policy.py</code>，与上游布局硬绑定：RoboTwin 必须钉 commit <code>0aeea2d669c0f8516f4d5785f0aa33ba812c14b4</code>，且 SAPIEN 3.0.0b1 / cuRobo v0.7.8 / warp-lang 1.13.0 / mplib 0.2.1 / torch 2.4.1 组合是官方验证栈（<code>benchmarks/robotwin/README.md:26-36</code>）。wrapper 的三处补丁分别绕过三个真实崩溃：<code>:150 _prewarm_cuda_for_curobo</code>（cuRobo 必须先于 SAPIEN 初始化 CUDA，否则首次规划 segfault）、<code>:176 _patch_warp_torch_namespace</code>（cuRobo 0.7.8 仍调用 warp≥1.x 已移除的 <code>warp.torch.*</code>）、<code>:452/:532</code> manifest/eval 注入。commit 不符时 wrapper 只 WARN（<code>ROBOTWIN_SKIP_VERSION_CHECK=1</code> 静默）——<strong>先 checkout 验证过的 commit 再调试任何其他问题</strong>。</li>
+<li><strong>R-D3 prompt 模板双份维护</strong>：RoboTwin 的 prompt 包装存在两份——评测客户端 <code>benchmarks/robotwin/prompt_template.py</code> 与训练侧 <code>openwam/dataloader/transforms/multiview.py:121-125 format_prompt_for_inference</code>，二者必须逐字节一致，靠测试 <code>tests/test_robotwin_interface_proprio.py:207 test_robotwin_prompt_template_matches_training</code> 钉住。单侧改动会造成静默分布偏移（成功率悄悄掉、无报错）。规避：改任一侧必须跑对应测试；本方向若动 prompt 逻辑，先跑 <code>python -m pytest tests/test_robotwin_interface_proprio.py -q</code>。</li>
+<li><strong>R-D4 数据/资产体量</strong>：RoboTwin2.0 数据 ~415GB、EBench 数据 ~305GB + 资产 ~34GB、RoboCasa365 ~10GB assets + 78GB 数据、VLABench ~17GB + 13.2GB。下载与磁盘规划要提前；每个 checkpoint 另需 ~24.8GB。规避：评测只用官方 checkpoint 时不需要下载训练数据（RoboTwin 例外——其评测资产在 RoboTwin 官方安装流程里）；先确认磁盘再启动 D3/D5。</li>
+<li><strong>R-D5 VLABench track_5 现状</strong>：<code>track_5_cross_task</code> 上游不发布 episode config，跑的是 seeded episodes + 自建 held-out 任务列表（<code>benchmarks/vlabench/multi_eval.sh:50-53</code>、<code>:65-68</code> 内置 8 个默认任务，<code>VLABENCH_TRACK5_TASKS</code> 可覆盖），与论文数字严格不可比；上游 main 上还有若干任务无法实例化，必须钉 commit（<code>benchmarks/vlabench/README.md:66-70</code>、<code>:160</code>）。报告中 track_5 要单列说明。</li>
+<li><strong>R-D6 EBench 硬件代际</strong>：Isaac Sim 4.1.0（CUDA 12.1）不支持 Blackwell GPU（<code>benchmarks/ebench/README.md:9</code>）。D5 完整评测启动前 <code>nvidia-smi</code> 核对代际；Blackwell 机器上直接判定不可行，不要试图强行安装。另外在线评测限 16 workers、10 分钟无活动断连（<code>benchmarks/ebench/README.md:86</code>）。</li>
+<li><strong>R-D7 一个并发仿真器配一个 server</strong>：两个仿真器共用一个 policy server 端口会互相污染 action chunk buffer，成功率静默变坏（<code>benchmarks/vlabench/README.md:154</code>）。多 worker 一律 <code>NUM_GPUS=N bash scripts/deploy.sh</code> 起 N 个 server 一一对应。</li>
+<li><strong>R-D8 representation 只校验名字</strong>：握手硬校验只查 <code>representation</code> 字段；<code>state_dim</code>/<code>binary_action_dims</code> 靠手工对齐 <code>policy_config.yml</code> 与 checkpoint 的 <code>config.yaml</code>——EBench 用 <code>--ckpt-config</code> 三字段硬校验（<code>benchmarks/ebench/openwam2ebench_interface.py:323-343</code>），其余 benchmark 不匹配时行为未必报错。换 checkpoint 时逐项核对 config。</li>
+</ul>
+<h2 id="7">7. 推荐阅读顺序<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>benchmarks/README.md</code>（全文）——线协议、相机字段规则、reset 生命周期、错误码表；这是所有任务的共同语言。</li>
+<li><a href="../%E6%96%B9%E5%90%91C-Deployment-Infra%E9%83%A8%E7%BD%B2%E7%AE%A1%E7%BA%BF/">方向C-Deployment-Infra部署管线.md</a> + <code>openwam/deploy/server.py:56-67</code>——搞清楚 server 怎么起、PONG 带什么；评测前必须有一个可用 server。</li>
+<li><code>benchmarks/libero/README.md</code> + <code>benchmarks/libero/policy_config.yml</code>——D2 的操作手册，含 EGL 坑的权威描述。</li>
+<li><code>benchmarks/libero/openwam2libero_interface.py</code>（全文，227 行）——一个完整客户端适配器的最小样本：握手、resize、状态构造、动作转换。</li>
+<li><code>benchmarks/utils/action_conversion.py</code>（挑你用到的函数读 docstring）——理解"server 返回物理单位、客户端只做几何换算"的分工。</li>
+<li>要做的 benchmark 各自的 <code>README.md</code>（环境/协议/论文数字三节）+ <code>policy_config.yml</code>。</li>
+<li>D3 前加读 <code>benchmarks/robotwin/README.md</code> 的 Notes 一节与 <code>eval_policy_wrapper.py</code> 的四个 patch 函数；D6 前加读 <code>benchmarks/libero/LABTASKER.md</code> 与 <code>benchmarks/utils/{eval_manifest,task_policy,rng_domain,labtasker_utils}.py</code>。</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

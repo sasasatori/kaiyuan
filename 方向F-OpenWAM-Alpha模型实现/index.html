@@ -1,0 +1,1221 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="OpenWAM 仓库深度调研：方向分配说明与任务书（基于 OpenWAM-Official/OpenWAM @ 90e94ae）">
+      
+      
+      
+        <link rel="canonical" href="https://sasasatori.github.io/kaiyuan/%E6%96%B9%E5%90%91F-OpenWAM-Alpha%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0/">
+      
+      
+        <link rel="prev" href="../%E6%96%B9%E5%90%91E-Study%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C%E5%AE%9E%E7%8E%B0/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>方向 F · OpenWAM-Alpha 模型实现 - OpenWAM 调研任务书</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fopenwam-" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="OpenWAM 调研任务书" class="md-header__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenWAM 调研任务书
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              方向 F · OpenWAM-Alpha 模型实现
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  总览
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../%E6%96%B9%E5%90%91A-Data-Infra%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF/" class="md-tabs__link">
+          
+  
+  
+  方向任务书
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenWAM 调研任务书" class="md-nav__button md-logo" aria-label="OpenWAM 调研任务书" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OpenWAM 调研任务书
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sasasatori/kaiyuan" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向任务书
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    方向任务书
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91A-Data-Infra%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 A · Data-Infra 数据管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91B-Model-Infra%E6%A8%A1%E5%9E%8B%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 B · Model-Infra 模型管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91C-Deployment-Infra%E9%83%A8%E7%BD%B2%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 C · Deployment-Infra 部署管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91D-Evaluation-Infra%E8%AF%84%E6%B5%8B%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 D · Evaluation-Infra 评测管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%96%B9%E5%90%91E-Study%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C%E5%AE%9E%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 E · Study 消融实验实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 F · OpenWAM-Alpha 模型实现
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方向 F · OpenWAM-Alpha 模型实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. 你的环境与资源路径
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 这个方向做什么、为什么值得做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 最小必要背景
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 任务书
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 任务书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#f1alpha-checkpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F1：alpha checkpoint 考古（主线）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f280-actionstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F2：80 维 action/state 契约与归一化规则速查卡
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f3alpha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F3：alpha 预训练配方审计
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f4alpha-finetune_ckpt_path-libero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F4：alpha 微调复现（finetune_ckpt_path 微调 LIBERO）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f5alpha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F5：alpha 部署与基准冒烟
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f6alpha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F6：alpha 家族谱系整理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 建议推进顺序与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 风险与坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 推荐阅读顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. 你的环境与资源路径
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 这个方向做什么、为什么值得做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 最小必要背景
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 代码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 任务书
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 任务书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#f1alpha-checkpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F1：alpha checkpoint 考古（主线）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f280-actionstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F2：80 维 action/state 契约与归一化规则速查卡
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f3alpha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F3：alpha 预训练配方审计
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f4alpha-finetune_ckpt_path-libero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F4：alpha 微调复现（finetune_ckpt_path 微调 LIBERO）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f5alpha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F5：alpha 部署与基准冒烟
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f6alpha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        任务 F6：alpha 家族谱系整理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 建议推进顺序与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 风险与坑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 推荐阅读顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="fopenwam-">方向 F：OpenWAM-α 模型实现解剖<a class="headerlink" href="#fopenwam-" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>一句话定位：把 OpenWAM-α 当作一个具体的 artifact 解剖——它的 checkpoint 目录里有什么、config.yaml 声明了什么架构、80 维 action/state 契约如何约束上下游、预训练配方实际是什么、如何微调与部署它。读者：第一次接触该模块的同学。
+前置：先读 <a href="../">README.md</a> 的总览。<strong>本方向第一阶段（W1–W2）纯阅读+文档化，不需要任何 GPU/环境</strong>。
+边界：骨干/架构机制调研归 <a href="../%E6%96%B9%E5%90%91B-Model-Infra%E6%A8%A1%E5%9E%8B%E7%AE%A1%E7%BA%BF/">方向B-Model-Infra模型管线.md</a>；reader 与数据管线机制归 <a href="../%E6%96%B9%E5%90%91A-Data-Infra%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF/">方向A-Data-Infra数据管线.md</a>；alpha 是各 study 消融结论的产物，结论本身见 <a href="../%E6%96%B9%E5%90%91E-Study%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C%E5%AE%9E%E7%8E%B0/">方向E-Study消融实验实现.md</a>。本方向只管"alpha 这个具体模型长什么样"。</p>
+</blockquote>
+<p>仓库根 <code>$R = OpenWAM</code>，下文所有路径均为仓库相对路径。行号以 main @ 90e94ae 为准；行号漂移时以符号名为准。</p>
+<h2 id="0">0. 你的环境与资源路径<a class="headerlink" href="#0" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>任务</th>
+<th>资源需求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W1–W2（纯阅读）</td>
+<td>F2、F3、F6</td>
+<td>零依赖：只需仓库源码 + 官方文档，CPU 笔记本即可</td>
+</tr>
+<tr>
+<td>解剖阶段</td>
+<td>F1</td>
+<td>下载 1 个 checkpoint（OpenWAM-Alpha-Pretrain-Foundation-Model，约 24.8 GB，<code>download_openwam_checkpoints.py:103</code>）；<strong>CPU 即可</strong>解剖 config.yaml 与 safetensors 键结构，不需要 GPU</td>
+</tr>
+<tr>
+<td>微调阶段</td>
+<td>F4</td>
+<td>4×80GB 级 GPU（官方实测 2×H100 在首个 Adam step 即 OOM，见 <code>assets/openwam_usage_docs/docker-validation.md:68</code>）；全方向唯一重资源任务，排最后</td>
+</tr>
+<tr>
+<td>冒烟阶段</td>
+<td>F5</td>
+<td>1 张 ≥24GB GPU 起部署 server + LIBERO benchmark client</td>
+</tr>
+</tbody>
+</table>
+<p>你不依赖别人的工作：F1/F2/F3/F6 完全独立；F4 只依赖 checkpoint 下载与 LIBERO 数据（下载器一键）；F5 复用 <a href="../%E6%96%B9%E5%90%91C-Deployment-Infra%E9%83%A8%E7%BD%B2%E7%AE%A1%E7%BA%BF/">方向C-Deployment-Infra部署管线.md</a> 的部署流程，但不依赖其产出物——你可以直接用官方 Sim-LIBERO 微调 checkpoint 冒烟。磁盘规划：每个 checkpoint 约 24.8GB，若做 F6 全谱系下载需预留 ≥350GB。</p>
+<h2 id="1">1. 这个方向做什么、为什么值得做<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>OpenWAM-α 是仓库的实际交付物：一个在 518.5M 帧（约 6400 小时）ego-centric human + robot 数据上预训练的 WAM（<code>README.md:23</code>），外加 13 个下游微调变体。但"alpha"不是代码里的一个类——它是<strong>一组配置选择 + 一组权重 + 一套数据契约</strong>的组合物：dual_system/joint_self_attn 架构 + wan22_ti2v_5b 骨干 + mutual 掩码 + 80 维 unify 动作空间 + min-max 归一化 + 4 源预训练混合。</p>
+<p>为什么值得做：全组所有下游工作（部署、评测、微调）都在消费 alpha checkpoint，但"它到底宣称了什么、实际是什么"需要一份权威解剖。你把 config.yaml 的每个关键键、checkpoint 的权重键结构、80 维契约的文档与代码双侧实现钉死，其他人就不必各自考古。同时 F3 的配方审计回答一个尖锐问题：论文宣称的 518.5M 帧，有多少是代码可验证的？</p>
+<p>你能学到：自包含 checkpoint 的工程范式（config+权重+统计制品+部署资产一个目录打包）、checkpoint 考古方法论（从 safetensors 键反推架构）、以及"文档宣称 vs 代码事实"的对账技术。</p>
+<h2 id="2">2. 最小必要背景<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p><strong>① 自包含 checkpoint 目录</strong>。下载器 docstring 明示：每个 checkpoint 目录自包含 config.yaml + 权重 + tokenizer + 归一化统计（<code>scripts/download_assets/download_openwam_checkpoints.py:7-8</code>）。部署直接 <code>bash scripts/deploy.sh &lt;ckpt_dir_path&gt;</code>，不需要原始训练配置。</p>
+<p><strong>② finetune_ckpt_path 重建机制</strong>。<code>openwam/train/utils/ckpt_model_loader.py</code>：<code>:216 build_architecture_from_ckpt_dir</code> 从 checkpoint 目录的 config.yaml 重建模型（不需原始 <code>model_path</code>）；<code>:149 merge_ckpt_model_cfg</code> 以 ckpt 的 model 配置为基底、本 run 的 <code>cfg.model</code> 覆盖之；<code>:60 _ARCH_IDENTITY_KEYS</code> 只有两个键——<code>video_backbone.name</code> 与 <code>architecture.framework</code>——不一致直接拒绝启动。这就是为什么微调时可以不传 <code>model=...</code>：架构身份从 ckpt 继承。</p>
+<p><strong>③ 80 维 unify 契约的代码侧实现</strong>。<code>openwam/dataloader/utils/unify_action.py:48 UNIFY_DIM = 80</code>；<code>:118 parse_unify_spec</code> 把 <code>["0-9","34-43"]</code> 这类 spec 解析为索引数组；<code>:183 map_to_unify</code>（raw→80 维 scatter，训练侧）；<code>:215 unmap_from_unify</code>（80 维→raw，部署侧）。契约语义（槽位布局、gripper 极性、rot6d 钉住）的权威来源是 <code>assets/openwam_usage_docs/openwam-alpha-finetuning.md:46-89</code>。</p>
+<p><strong>④ alpha 默认架构链</strong>。README Quick Start 表（<code>README.md:287-290</code>）：<code>dual_system / joint_self_attn</code> + <code>wan22_ti2v_5b</code> + <code>attention_mask_mode=mutual</code> + LIBERO。对应配置 <code>configs/model/dual_system.yaml:21 variant: joint_self_attn</code>、<code>:29 attention_mask_mode: mutual</code>、<code>:23 action_dim: 80</code>、<code>:25 state_dim: 80</code>。</p>
+<p><strong>⑤ 采样-时序耦合</strong>。<code>README.md:381-383</code>：<code>num_frames=33</code> + <code>video_stride=4</code> 产生 sampler 期望的 32 步 action horizon；无独立 <code>action_chunk</code> 键（官方文档 <code>openwam-alpha-finetuning.md:44</code> 同样强调）。改采样参数会破坏 sampler 预期，见 §6。</p>
+<h2 id="3">3. 代码地图<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>scripts/download_assets/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  download_openwam_checkpoints.py   # 【入口①】ALPHA 组 14 个 checkpoint 注册表 :99-118；Ckpt dataclass :77
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>configs/
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  model/dual_system.yaml            # alpha 架构身份：:21 variant、:29 attention_mask_mode、:23/:25 action/state_dim
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  dataloader/pretrain_data/
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    mixture.yaml                    # 【F3 主目标】4 源 defaults 链 :9-14；weight_strategy=proportional :22
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    agibotworld.yaml / robocoin.yaml / oxe_droid.yaml / interndata_a1.yaml  # 各源配置（路径全是占位）
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>openwam/train/utils/
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>  ckpt_model_loader.py              # 【F1/F4 核心】:60 _ARCH_IDENTITY_KEYS；:149 merge_ckpt_model_cfg；:216 build_architecture_from_ckpt_dir
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>openwam/dataloader/utils/
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>  unify_action.py                   # 80 维双射：:48/:118/:183/:215
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>  normalization.py                  # apply_normalization :82；rot6d 恒等钉住 :58
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>assets/openwam_usage_docs/
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>  openwam-alpha-finetuning.md       # 【权威文档】80 维契约 :46-89；微调命令 :107-140；部署契约 :142-150
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>README.md                           # alpha 宣称 :23；Quick Start 表 :287-290；采样耦合 :381-383
+</code></pre></div>
+<p>入口文件：F1/F6 从 <code>download_openwam_checkpoints.py</code> 进；F2/F3 从 <code>openwam-alpha-finetuning.md</code> 进；F4 从 <code>ckpt_model_loader.py</code> 进。</p>
+<h2 id="4">4. 任务书<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h3 id="f1alpha-checkpoint">任务 F1：alpha checkpoint 考古（主线）<a class="headerlink" href="#f1alpha-checkpoint" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：下载 OpenWAM-Alpha-Pretrain-Foundation-Model，解剖其 config.yaml 与 safetensors 键结构，产出"alpha 到底长什么样"解剖报告。
+<strong>前置</strong>：约 25GB 磁盘；CPU 即可，无需 GPU。
+<strong>步骤</strong>：
+1. 下载（选 ALPHA → OpenWAM-Alpha-Pretrain-Foundation-Model；非交互模式）：
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span><span class="nv">$R</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python<span class="w"> </span>scripts/download_assets/download_openwam_checkpoints.py<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--family<span class="w"> </span>alpha<span class="w"> </span>--name<span class="w"> </span>OpenWAM-Alpha-Pretrain-Foundation-Model<span class="w"> </span>--yes
+</code></pre></div>
+2. 列出目录结构，对照"自包含"宣称（<code>download_openwam_checkpoints.py:7-8</code>）：config.yaml、<code>checkpoint_step_*.safetensors</code>、tokenizer/组件资产、<code>normalization_stats.npy</code> 是否齐全；注意该条目带 <code>finetune_only=True</code> 标记（<code>:103</code>，<code>:81</code> 注释：预训练 ckpt 供微调、不直接部署）。
+3. 解剖 config.yaml：提取并记录 <code>architecture.framework</code> / <code>architecture.variant</code> / <code>attention_mask_mode</code> / <code>video_backbone.name</code> / <code>action_dim</code> / <code>state_dim</code> / <code>normalize_mode</code> / <code>unify_action</code> 的实际取值，与 §2④ 的 Quick Start 宣称逐项对账。
+4. 解剖 safetensors 键结构（CPU 可读元数据，不加载权重）：
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="s2">from safetensors import safe_open</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="s2">import glob</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="s2">f = sorted(glob.glob('&lt;ckpt_dir&gt;/checkpoint_step_*.safetensors'))[-1]</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="s2">with safe_open(f, framework='pt') as h:</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="s2">    keys = list(h.keys())</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="s2">print(len(keys)); [print(k) for k in keys if not k.startswith(('video_backbone.dit','action_backbone'))][:50]</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="s2">"</span>
+</code></pre></div>
+   按前缀聚类（video_backbone / action_backbone / 有无 understanding_expert），反推架构组成，与 config.yaml 互证。
+<strong>验收标准</strong>：解剖报告含 ① 目录清单与自包含性核对结果；② config.yaml 关键键取值表（含与宣称的对账结论）；③ safetensors 键前缀聚类表与架构反推结论。
+<strong>产出</strong>：alpha 解剖报告 1 份。
+<strong>难度（估计）</strong>：低-中。<strong>工作量（估计）</strong>：1-2 天（主要是下载等待）。
+<strong>代码锚点</strong>：<code>download_openwam_checkpoints.py:99-118</code>、<code>ckpt_model_loader.py:60</code>。</p>
+<h3 id="f280-actionstate">任务 F2：80 维 action/state 契约与归一化规则速查卡<a class="headerlink" href="#f280-actionstate" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：把 <code>openwam-alpha-finetuning.md</code> 全文与代码侧实现对照，产出一张契约速查卡（cheat sheet）。
+<strong>前置</strong>：无（纯阅读）。
+<strong>步骤</strong>：
+1. 精读 <code>assets/openwam_usage_docs/openwam-alpha-finetuning.md</code>：样本字段规范（<code>:9-25</code>）、槽位布局（<code>:50-65</code>：左臂 0:9 + 左手 10:34、右臂 34:43 + 右手 44:68、保留 68:80）、gripper 约定（-1 闭合 / +1 张开，<code>:67-72</code>）、时间契约（num_frames=33 / video_stride=4 / 32 步 action chunk，<code>:38-44</code>）、min-max 归一化公式与 rot6d 恒等规则（<code>:76-87</code>）。
+2. 代码侧逐项对照：<code>unify_action.py:48,118,183,215</code>（80 维双射）、<code>openwam/dataloader/utils/normalization.py:82 apply_normalization</code> 与 <code>:58 pin_rot6d_identity</code>（rot6d 钉住）、训练侧 mask 生成 <code>openwam/dataloader/bases/lerobot_v3_reader.py:912 _finalize_action</code> / <code>:965 _finalize_proprio</code>、部署侧反归一化 <code>openwam/dataloader/transforms/normalize.py:156 unnormalize</code>。
+3. 标注文档与代码的差异/互补点（例如：归一化先于 scatter 时钉 native rot6d 维、后于 scatter 时钉两段 α 槽位——文档 <code>:87</code> 的规则在代码里如何体现）。
+<strong>验收标准</strong>：速查卡一页纸覆盖：槽位表、mask 语义、归一化公式、rot6d 规则、gripper 极性、时间契约、部署侧 gather/反归一化义务（文档 <code>:150</code>）；每条标注文档行号 + 代码锚点双引用。
+<strong>产出</strong>：契约速查卡 1 份（markdown）。
+<strong>难度（估计）</strong>：低。<strong>工作量（估计）</strong>：1 天。
+<strong>代码锚点</strong>：<code>unify_action.py:48-215</code>、<code>normalization.py:58,82</code>、<code>openwam-alpha-finetuning.md:46-89</code>。</p>
+<h3 id="f3alpha">任务 F3：alpha 预训练配方审计<a class="headerlink" href="#f3alpha" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：审计 <code>configs/dataloader/pretrain_data/mixture.yaml</code> 的实际配方，回答"518.5M 帧宣称有多少代码可验证"。与方向A的分工：A 管 reader 机制（MixtureDataset 采样策略、hook 体系），你管 alpha 实际配方的结论。
+<strong>前置</strong>：无（纯阅读+核算）；F2 的契约理解有帮助。
+<strong>步骤</strong>：
+1. 读 <code>configs/dataloader/pretrain_data/mixture.yaml</code>：defaults 链 <code>:9-14</code> 只有 <strong>4 个机器人源</strong>（agibotworld / robocoin / oxe_droid / interndata_a1），<code>:22 weight_strategy: proportional</code>（按窗口数比例采样，weight 字段惰性）。
+2. 对照 README 宣称 <code>README.md:23</code>（518.5M 帧含 egocentric human + robot）：human 部分（EgoDex/Ego4D）不在 mixture.yaml 里。
+3. EgoDex 缺口证据链复核（照用旧 D6 已核验证据）：<code>openwam/dataloader/bases/lerobot_v3_reader.py:4-7</code> docstring 提及 EgoDex 为同等子类；<code>openwam/dataloader/utils/lerobotv3.py:3</code> docstring 提及 EgoDexDataset；但 <code>openwam/dataloader/registry.py:91-106</code> 的 13 个注册名中无 egodex/ego4d；全仓 grep 无 <code>class EgoDex*</code> 定义；<code>tests/dataloader/test_oxe_mixture_integration.py:68-69</code> 显式断言这 5 个名字 deprecated 未注册。
+4. 核算 4 源各自的 <code>total_hours</code> 旋钮与体量（读各源 yaml 注释与 reader 的窗口统计逻辑），估算与 518.5M 帧的差距量级。
+<strong>验收标准</strong>：配方审计报告含 ① mixture.yaml 实际 4 源与配比策略；② 518.5M 帧宣称 vs 代码可验证部分的逐项对账（哪些帧来自未发布的 EgoDex/human 源）；③ EgoDex 缺口证据链 5 条复核记录；④ 明确结论："alpha 预训练配方不可完整复现"的边界表述。
+<strong>产出</strong>：配方审计报告 1 份。
+<strong>难度（估计）</strong>：中。<strong>工作量（估计）</strong>：2-3 天。
+<strong>代码锚点</strong>：<code>mixture.yaml:9-22</code>、<code>README.md:23</code>、<code>registry.py:91-106</code>、<code>test_oxe_mixture_integration.py:68-69</code>。</p>
+<h3 id="f4alpha-finetune_ckpt_path-libero">任务 F4：alpha 微调复现（finetune_ckpt_path 微调 LIBERO）<a class="headerlink" href="#f4alpha-finetune_ckpt_path-libero" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：按官方文档路径用 foundation checkpoint 热启动微调 LIBERO，产出可部署 checkpoint。
+<strong>前置</strong>：F1 的 checkpoint 已下载；LIBERO 数据已下载（<code>python scripts/download_assets/download_benchmark_data.py</code>）；<strong>4×80GB 级 GPU</strong>（2×H100 在首个 Adam step OOM，<code>docker-validation.md:68</code>）。
+<strong>步骤</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span><span class="nv">$R</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">NPROC_PER_NODE</span><span class="o">=</span><span class="m">8</span><span class="w"> </span>bash<span class="w"> </span>scripts/train.sh<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nv">dataloader</span><span class="o">=</span>libero<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>training.finetune_ckpt_path<span class="o">=</span>&lt;foundation_ckpt_dir_path&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span>training.num_epochs<span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span>training.output_path<span class="o">=</span>&lt;output_dir_path&gt;
+</code></pre></div>
+注意：官方文档 <code>openwam-alpha-finetuning.md:117</code> 写的是 <code>project.output_dir</code>，但 trainer 实际读 <code>training.output_path</code>（<code>openwam/train/openwam_trainer.py:448</code>；<code>configs/train.yaml:51</code>），命令里必须用后者（见 §6）。卡数不足 8 时用 <code>NPROC_PER_NODE=4</code> 并视 OOM 叠加 <code>training.batch_size=8 training.offload_optimizer_device=cpu</code>。不需要传 <code>model=...</code>——架构身份由 ckpt 的 config.yaml 继承，<code>_ARCH_IDENTITY_KEYS</code>（<code>ckpt_model_loader.py:60</code>）会拒绝不一致的覆盖。
+<strong>验收标准</strong>：微调 run 从 step 0 起步、写入新输出目录（不覆盖 foundation ckpt）；完成后目录含最终 <code>checkpoint_step_*.safetensors</code>、config.yaml、<code>normalization_stats.npy</code>，可直接 <code>bash scripts/deploy.sh &lt;dir&gt;</code> 部署。
+<strong>产出</strong>：微调 run 记录 + 可部署 checkpoint（供 F5 或方向D 评测使用）。
+<strong>难度（估计）</strong>：中。<strong>工作量（估计）</strong>：2-3 天（主要是训练时长）。
+<strong>代码锚点</strong>：<code>ckpt_model_loader.py:149,216</code>、<code>configs/train.yaml:58</code>、<code>openwam-alpha-finetuning.md:107-140</code>。</p>
+<h3 id="f5alpha">任务 F5：alpha 部署与基准冒烟<a class="headerlink" href="#f5alpha" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：用方向C 的部署流程起 server，跑 LIBERO benchmark 冒烟，验证 alpha 能力下限。
+<strong>前置</strong>：1 张 ≥24GB GPU；一个可部署 checkpoint（F4 产物，或直接下载 <code>OpenWAM-Alpha-Sim-LIBERO</code>）；LIBERO client 环境（<code>benchmarks/libero/README.md</code>）。<strong>依赖声明</strong>：部署流程（deploy.sh/server 语义）归 <a href="../%E6%96%B9%E5%90%91C-Deployment-Infra%E9%83%A8%E7%BD%B2%E7%AE%A1%E7%BA%BF/">方向C-Deployment-Infra部署管线.md</a>，本任务只消费其结论；benchmark 评测口径归方向D，本任务只做"能不能跑起来、成功率是否非零"的冒烟。
+<strong>步骤</strong>：
+1. 起服务：<code>bash scripts/deploy.sh &lt;ckpt_dir_path&gt;</code>（部署资产要求见 <code>openwam-alpha-finetuning.md:142-150</code>：client 须把 80 维输出 gather 回 native 维度、应用保存的反归一化、保持槽位映射与 gripper 约定）。
+2. 按 <code>benchmarks/libero/README.md</code> 起 LIBERO client，跑一个 task suite 的少量 episode（如 10 个）。
+3. 记录：server 启动日志、显存占用、episode 成功率（非精确评测，只看量级）。
+<strong>验收标准</strong>：server 正常加载 checkpoint；client 完成 ≥10 个 episode 且成功率非零（官方微调 ckpt 应有显著成功率；F4 自微调产物允许较低但须非零）；冒烟记录含显存与吞吐数字。
+<strong>产出</strong>：冒烟报告 1 份。
+<strong>难度（估计）</strong>：中。<strong>工作量（估计）</strong>：1-2 天。
+<strong>代码锚点</strong>：<code>openwam-alpha-finetuning.md:142-150</code>、<code>README.md:386-391</code>（部署+LIBERO client 指引段）。</p>
+<h3 id="f6alpha">任务 F6：alpha 家族谱系整理<a class="headerlink" href="#f6alpha" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：把 <code>download_openwam_checkpoints.py</code> ALPHA 组（<code>:99-118</code>）的 14 个 checkpoint 整理成谱系表。
+<strong>前置</strong>：无（纯阅读）；不必真的下载全部 14 个（各 24.8GB）。
+<strong>步骤</strong>：
+1. 从 <code>:103-116</code> 提取全部条目：1 个 foundation（<code>finetune_only=True</code>）+ 13 个微调变体（Real 系 5 个：Dexterous-Hand-Wuji / RoboDojo-ARX-X5 / RoboDojo-Piper / RoboDojo-Piper-X / Single-Arm-Franka；Sim 系 8 个：EBench / LIBERO / RoboCasa-GR1 / RoboCasa365 / RoboDojo / RoboTwin-Clean2Random / RoboTwin-Full / VLABench）。
+2. 每个条目填表：名称 / 训练数据来源（从命名与 §3 各 reader 契约推断，标注推断依据）/ 本体与动作维度契约差异（对照方向A 的 80 维映射总表，如 Franka 单臂 vs Wuji 灵巧手）/ 适用场景（部署目标本体 or 仿真评测）。
+3. 标注 <code>finetune_only</code> 语义（<code>:81</code>：foundation 供微调不供直接部署）。
+<strong>验收标准</strong>：谱系表 14 行，每行含上述 4 列；契约差异列与 reader 代码锚点互链；全表可指导"我该下载哪个 checkpoint"的决策。
+<strong>产出</strong>：alpha 家族谱系表 1 份。
+<strong>难度（估计）</strong>：低。<strong>工作量（估计）</strong>：1 天。
+<strong>代码锚点</strong>：<code>download_openwam_checkpoints.py:77-81,99-118</code>。</p>
+<h2 id="5">5. 建议推进顺序与里程碑<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>W1</strong>：F2（契约速查卡）+ F6（谱系表）→ F3（配方审计）。全部纯阅读，零环境依赖。里程碑：契约速查卡 + 谱系表 + 配方审计报告入库。</li>
+<li><strong>W2</strong>：F1（checkpoint 考古，下载可与 W1 并行发起）。里程碑：alpha 解剖报告——本方向核心交付。</li>
+<li><strong>W3 起（有卡后）</strong>：F4（微调，训练时长最长，拿到 4 卡资源即启动）→ F5（冒烟，可直接用官方 Sim-LIBERO ckpt 先行，不等 F4）。
+里程碑汇总：W1 三份文档 → W2 解剖报告 → F4 可部署 ckpt → F5 能力下限验证。</li>
+</ol>
+<h2 id="6">6. 风险与坑<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>预训练混合不可完整复现</strong>：mixture.yaml 只有 4 个机器人源（<code>mixture.yaml:9-14</code>），EgoDex/human 源 reader 未随仓库发布（<code>registry.py:91-106</code> 无注册；<code>test_oxe_mixture_integration.py:68-69</code> 断言 deprecated）；各源 yaml 路径全是 <code>/path/to/pretrain_dataset/...</code> 占位，无下载脚本。规避：F3 定位为准入审计而非复现承诺；以官方 checkpoint 微调为主路径。</li>
+<li><strong>num_frames=33 / video_stride=4 与 32 步 action horizon 耦合</strong>：<code>README.md:381-383</code> 与 <code>openwam-alpha-finetuning.md:44</code> 均明示该组合产生 sampler 期望的 32 步 action chunk，且无独立 <code>action_chunk</code> 键。规避：微调/部署时绝不动这两个采样参数；<code>inference_horizon</code> 只控制每次生成消费多少步，不改 chunk 长度。</li>
+<li><strong>project.output_dir 文档/代码不一致</strong>：官方微调文档 <code>openwam-alpha-finetuning.md:117</code> 让用户设 <code>project.output_dir</code>，但 trainer 实际只读 <code>training.output_path</code>（<code>openwam/train/openwam_trainer.py:448</code>；<code>configs/train.yaml:51</code> vs <code>:66</code> 疑似遗留键）。规避：所有命令一律用 <code>training.output_path=...</code>；F4 报告中记录该勘误。</li>
+<li><strong>每个 checkpoint ~24.8GB 的磁盘规划</strong>：<code>download_openwam_checkpoints.py:103-116</code> 每条 24.8GB；F4 微调还会产生自己的输出 checkpoint（每个 safetensors 约 23GB，<code>save_steps</code> 默认 2000）。规避：磁盘预留 ≥150GB（单 ckpt + 微调产物）；做 F6 全谱系下载另需 ≥350GB；微调 run 靠 <code>training.keep_last_k_ckpts</code> 滚动清理。</li>
+<li><strong>foundation checkpoint 不可直接部署</strong>：<code>finetune_only=True</code> 标记（<code>download_openwam_checkpoints.py:81,103</code>）——foundation 缺少针对具体本体的归一化/部署语境，应微调后部署。规避：F5 冒烟若要直接部署，用 <code>OpenWAM-Alpha-Sim-LIBERO</code> 而非 foundation。</li>
+<li><strong>架构身份键不可覆盖</strong>：微调时若误传 <code>model=single_system</code> 或换 video_backbone 名，<code>_ARCH_IDENTITY_KEYS</code>（<code>ckpt_model_loader.py:60-63</code>）会直接拒绝启动。规避：微调命令不传 model 组参数，让 ckpt config 继承身份；报错时按 CLI 提示对齐。</li>
+</ol>
+<h2 id="7">7. 推荐阅读顺序<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<ol>
+<li>本目录 <a href="../">README.md</a> —— 全局定位与方向间分工。</li>
+<li><code>assets/openwam_usage_docs/openwam-alpha-finetuning.md</code> 全文 —— alpha 契约的权威来源，F2/F4 的蓝本。</li>
+<li><code>README.md:277-300</code>（Quick Start 表）+ <code>:370-391</code>（微调与部署段）—— alpha 默认架构链与官方推荐路径。</li>
+<li><code>scripts/download_assets/download_openwam_checkpoints.py:76-118</code> —— ALPHA 组注册表，F1/F6 直接依据。</li>
+<li><code>openwam/train/utils/ckpt_model_loader.py</code> —— finetune 重建语义（<code>:60</code>/<code>:149</code>/<code>:216</code>），理解"为什么微调不用传 model 参数"。</li>
+<li><code>openwam/dataloader/utils/unify_action.py</code> + <code>normalization.py:42-114</code> —— 80 维双射与归一化的代码侧实现（约 230 行，可全读）。</li>
+<li><code>configs/dataloader/pretrain_data/mixture.yaml</code> + <code>openwam/dataloader/registry.py:91-106</code> —— F3 配方审计的直接材料；reader 机制细节去 <a href="../%E6%96%B9%E5%90%91A-Data-Infra%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%BA%BF/">方向A-Data-Infra数据管线.md</a>。</li>
+<li><a href="../%E6%96%B9%E5%90%91E-Study%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C%E5%AE%9E%E7%8E%B0/">方向E-Study消融实验实现.md</a> —— 理解 alpha 的每个配置选择（joint_self_attn/mutual/双系统）分别是哪组消融的结论。</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
