@@ -1,0 +1,60 @@
+site_name: OpenWAM 调研任务书
+site_description: OpenWAM 仓库深度调研：方向分配说明与任务书（基于 OpenWAM-Official/OpenWAM @ 90e94ae）
+site_url: https://sasasatori.github.io/kaiyuan/
+repo_url: https://github.com/sasasatori/kaiyuan
+edit_uri: edit/main/OpenWAM任务书/
+docs_dir: OpenWAM任务书
+
+theme:
+  name: material
+  language: zh
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - scheme: default
+      primary: indigo
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+    - scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/brightness-4
+        name: 切换到浅色模式
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+    - toc.follow
+
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"/。，；：、（）【】]+'
+
+markdown_extensions:
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+
+nav:
+  - 总览: README.md
+  - 方向任务书:
+    - 方向 A · 环境搭建与验证矩阵: 方向A-环境搭建与验证矩阵.md
+    - 方向 B · 部署与推理复现: 方向B-部署与推理复现.md
+    - 方向 C · 训练管线复现: 方向C-训练管线复现.md
+    - 方向 D · 数据管线与动作空间: 方向D-数据管线与动作空间.md
+    - 方向 E · 仿真评测复现: 方向E-仿真评测复现.md
+    - 方向 F · 架构变体与注意力机制: 方向F-架构变体与注意力机制.md
+    - 方向 G · 视觉表征与骨干研究: 方向G-视觉表征与骨干研究.md
+    - 方向 H · 测试与质量基建: 方向H-测试与质量基建.md

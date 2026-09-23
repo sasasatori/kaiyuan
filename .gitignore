@@ -32,3 +32,4 @@ wandb/
 .DS_Store
 .idea/
 .vscode/
+site/
