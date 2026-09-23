@@ -1,6 +1,6 @@
 # OpenWAM 调研方向分配说明与任务书（母文档）
 
-> 版本：v2.0（2026-09-23，六管线重组版）
+> 日期：2026-09-23
 > 分析对象：`OpenWAM-Official/OpenWAM` @ `main` `90e94ae`
 > 分析方法：8 路并行只读调研（架构/骨干/训练/数据/部署/评测/基建/测试），关键结论已经交叉核验（含源码 grep 复核）。
 > 使用方式：§1–§2 为全组共享背景；§3 为方向总表；§4 为各方向任务书摘要（**完整任务书在 `OpenWAM任务书/` 分方向文档与在线站点 https://sasasatori.github.io/kaiyuan/**）；§5 排期与依赖；§6 风险登记；§7 命令速查。
@@ -49,13 +49,48 @@ flowchart LR
 
 依赖方向严格单向：`architecture → backbones`；评测层为「薄客户端 + 厚服务端」。
 
-### 1.3 组织理念（v2.0 核心变化）
+### 1.3 端到端复现主干与工作方式
 
-v1.0 把环境搭建设为全组公共前置，形成单点阻塞。v2.0 按**六条各自独立的管线**重组：
+一次完整复现的六个阶段及各阶段归属方向：
 
-1. **第一阶段（W1–W2）全员纯阅读 + 文档化**，零 GPU、零环境依赖，随时开工；
-2. **每个方向自带"最小环境路径"**（各文档 §0），需要什么资源、什么时候需要，精确到下载命令；
-3. 跨方向硬依赖只剩三处（D 评测需 C 的 server、F5 需 C 的 server、E3 需 C+D），全部在第二阶段才出现。
+```mermaid
+flowchart LR
+    subgraph S1["① 资产准备"]
+        DL["scripts/download_assets/<br/>下载权重 · 数据 · checkpoint"]
+    end
+    subgraph S2["② 数据管线 — 方向 A"]
+        DS["openwam/dataloader/<br/>13 种 reader → 统一样本格式<br/>80 维动作空间 · 归一化"]
+    end
+    subgraph S3["③ 模型组装 — 方向 B"]
+        CFG["configs/model/*.yaml<br/>Hydra 配置组合"]
+        REG["registry 注册表<br/>6 种架构 × 5 种骨干"]
+        CFG --> REG
+    end
+    subgraph S4["④ 训练"]
+        TR["scripts/train.sh<br/>torchrun + DeepSpeed ZeRO-2<br/>视频+动作双流 flow-matching"]
+        CKPT["自包含 checkpoint<br/>config.yaml + safetensors<br/>+ normalization_stats.npy"]
+        TR --> CKPT
+    end
+    subgraph S5["⑤ 部署 — 方向 C"]
+        SRV["scripts/deploy.sh<br/>WebSocket PolicyServer<br/>ws://0.0.0.0:8848"]
+    end
+    subgraph S6["⑥ 评测 — 方向 D"]
+        EV["benchmarks/ 客户端<br/>仿真器闭环 → 成功率"]
+    end
+    DL --> DS --> TR
+    REG --> TR
+    CKPT --> SRV --> EV
+    SE["方向 E · study<br/>控制变量矩阵"] -. 设计对照实验 .-> S4
+    AL["方向 F · openwam-alpha<br/>解剖 + 微调官方 checkpoint"] -. 产物进部署 .-> S5
+```
+
+方向 E、F 是横切方向：E 的对照实验作用于训练阶段，F 的 checkpoint 直接进入部署。训练不单独设方向——模型组装归 B，对照实验归 E，alpha 微调归 F。
+
+工作方式：
+
+1. **前两周（W1–W2）全员纯阅读 + 写文档**，零 GPU、零环境依赖，今天就能开工；
+2. **环境各管各的**：每个方向文档的 §0 写清它自己需要什么资源、哪个阶段需要、怎么获取，没有"全组统一搭环境"环节；
+3. 跨方向硬依赖只有三处（D 评测需 C 的 server、F5 需 C 的 server、E3 需 C+D），全部在第二阶段才出现。
 
 ---
 
@@ -129,7 +164,7 @@ v1.0 把环境搭建设为全组公共前置，形成单点阻塞。v2.0 按**�
 
 ---
 
-## 3. 方向分配总表（v2.0 六管线）
+## 3. 方向分配总表
 
 | 方向 | 文档（`OpenWAM任务书/` 下） | 研究问题 | 动手起点 | 外部依赖 |
 |---|---|---|---|---|

@@ -3,7 +3,7 @@
 > 一句话定位：把 OpenWAM 论文 8 个仿真 benchmark 的成功率，用官方 checkpoint 按官方协议逐条复现出来；更重要的是把"评测管线本身"（薄客户端+厚服务端拓扑、冻结线协议、动作空间转换、Labtasker 可复现编排）做成全组的基础设施与文档。读者：第一次接触该模块的同学。
 > 前置：先读 [README.md](README.md) 的总览。**本方向第一阶段（W1–W2）纯阅读+文档化，不需要任何 GPU/环境**。
 
-文中所有路径均为 OpenWAM 仓库相对路径（仓库根 = `OpenWAM/`）。行号以 `main @ 90e94ae` 为准（已核对）；个别行号漂移时以符号名锚点为准。任务编号按新体系重排：旧 E1.1–E1.3→D2、E2.1→D3、E2.2/E2.3→D4、E3.1/E3.2→D5、E3.3→D6，内容无丢失。
+文中所有路径均为 OpenWAM 仓库相对路径（仓库根 = `OpenWAM/`）。行号以 `main @ 90e94ae` 为准（已核对）；个别行号漂移时以符号名锚点为准。
 
 ---
 
@@ -105,7 +105,7 @@ benchmarks/
 - **难度（估计）**：低-中。**工作量（估计）**：3–4 天。
 - **代码锚点**：`benchmarks/utils/transport.py:20-31`、`openwam/deploy/server.py:56-67`、`openwam/deploy/model_loader.py:237-255`、`benchmarks/utils/action_conversion.py:103/153/244/271/615/728`、`benchmarks/utils/eval_manifest.py:56`、`benchmarks/utils/task_policy.py:71`、`benchmarks/utils/rng_domain.py:115`。
 
-### 任务 D2：第一梯队评测复现——LIBERO 全 4 suite + LIBERO-plus 扰动矩阵 + RoboCasa365（旧 E1.1/E1.2/E1.3）
+### 任务 D2：第一梯队评测复现——LIBERO 全 4 suite + LIBERO-plus 扰动矩阵 + RoboCasa365
 
 - **目标**：复现三个 MuJoCo 系 benchmark 的论文数字：LIBERO Avg 99.3（`benchmarks/libero/README.md:113`）、LIBERO-plus Avg 69.2（`benchmarks/libero-plus/README.md:103`）、RoboCasa365 Avg 38.2（`benchmarks/robocasa365/README.md:114`）。
 - **前置**：方向 C 的 server 可用；联网；≥2 张 GPU 最舒服（渲染与推理隔离用）；LIBERO-plus 与 LIBERO **共用同一个 checkpoint**（无 plus 专用 checkpoint，`benchmarks/libero-plus/README.md:43`）。
@@ -150,7 +150,7 @@ benchmarks/
 - **难度（估计）**：中。**工作量（估计）**：LIBERO 环境 0.5 天 + 评测 1–2 天；LIBERO-plus 环境 0.5 天 + 评测 1 天；RoboCasa365 环境 0.5 天 + 评测 1–2 天（~10GB 仿真资产）。
 - **代码锚点**：`benchmarks/libero/openwam2libero_interface.py:37 native_eef10_to_libero7d`、`:129-133` repr 握手、`benchmarks/libero/scheduler.py:1096 --render-gpus`、`benchmarks/libero-plus/setup_env.sh:11-13`、`benchmarks/robocasa365/openwam2robocasa365_interface.py:279-282`、`benchmarks/utils/action_conversion.py:153 eef10_to_robocasa12d`、`benchmarks/robocasa365/target_tasks.txt`。
 
-### 任务 D3：RoboTwin 端到端（旧 E2.1）
+### 任务 D3：RoboTwin 端到端
 
 - **目标**：复现论文 RoboTwin2.0-Full 数字（OpenWAM-α Clean 93.74 / Randomized 93.46，`benchmarks/robotwin/README.md:132`）与 Clean2Random OOD 数字，全程留 provenance。
 - **前置**：方向 C；**415GB** RoboTwin2.0 数据（下载与环境搭建并行启动，见 §6 R-D4）；驱动/CUDA 组合能跑 SAPIEN 3.0.0b1 + cuRobo。
@@ -167,7 +167,7 @@ benchmarks/
 - **难度（估计）**：高。**工作量（估计）**：环境 1–2 天（版本耦合）+ 评测 2–4 天。
 - **代码锚点**：`benchmarks/robotwin/eval_policy_wrapper.py:150 _prewarm_cuda_for_curobo`、`:176 _patch_warp_torch_namespace`、`:452 _install_manifest`、`:532 _install_eval`；`benchmarks/robotwin/step_limits.yml`。
 
-### 任务 D4：VLABench 6 track + RoboCasa GR1（旧 E2.2/E2.3）
+### 任务 D4：VLABench 6 track + RoboCasa GR1
 
 - **目标**：① VLABench 分 track 复现 SR/progress score/intention score 三项指标，对照论文 Avg SR 71.6（`benchmarks/vlabench/README.md:194`）；② RoboCasa GR1 评测 24 个 `gr1_unified/*` env，对照论文 SR 60.5（`benchmarks/robocasa_gr1/README.md:102`）。
 - **前置**：方向 C；VLABench 需 ~17GB 资产 + 13.2GB 数据且**必须钉 commit**（上游 main 若干任务无法实例化，`benchmarks/vlabench/README.md:66-70`）；GR1 需 EGL 可用（43.9GB 数据仅训练用，评测只需 tabletop assets）。
@@ -198,7 +198,7 @@ benchmarks/
 - **难度（估计）**：中-高。**工作量（估计）**：VLABench 环境 1 天 + 评测 2–3 天；GR1 环境 1 天（无脚本）+ 评测 1–2 天。
 - **代码锚点**：`benchmarks/vlabench/openwam2vlabench_interface.py:OpenWAMVLABenchPolicy`、`benchmarks/vlabench/single_eval.py:37 OPEN_TRACK`、`benchmarks/vlabench/policy_config.yml`（`eval_track`/`head_camera_index: 2`）、`benchmarks/robocasa_gr1/openwam2robocasa_gr1_interface.py`（EEF33：发 33 维 state、要求 33 维 action，否则抛错）。
 
-### 任务 D5：EBench——mock 离线链路 → 完整评测（旧 E3.1/E3.2；先核对 GPU 代际）
+### 任务 D5：EBench——mock 离线链路 → 完整评测（先核对 GPU 代际）
 
 - **目标**：① 不装 Isaac Sim，用 mock 服务器验证 EBench bridge 动作契约；② 硬件允许时复现 EBench generalist `test_mini` 510 episode（26 tasks ×20 ep，`make_sandwich`/`microwave` 各 15 ep），对照论文 Overall SR 49.4 / Score 64.7（`benchmarks/ebench/README.md:120`）。
 - **前置**：方向 C 的 server；一个 EBench-Dataset bucket；完整评测需 **先核对 GPU 代际——Isaac Sim 4.1.0（CUDA 12.1）不支持 Blackwell 架构 GPU**（`benchmarks/ebench/README.md:9`），Blackwell 机器上直接判定不可行并记录硬件结论；305GB 数据 + ~34GB EBench-Assets。
@@ -220,7 +220,7 @@ benchmarks/
 - **难度（估计）**：mock 低-中（0.5–1 天）；完整评测高（环境 1–2 天 + 评测 2–3 天，步预算 600–5000/任务）。
 - **代码锚点**：`benchmarks/ebench/mock_genmanip_server.py:1-5`（职责说明）、`:27-31`（GenManip 动作限幅常量）、`benchmarks/ebench/openwam2ebench_interface.py:323-343 verify_ckpt_config`（硬校验 `dataloader.type=ebench`/`action_mode=eef`/`unify_action=true`，缺失 `--ckpt-config` 仅告警）、`benchmarks/utils/action_conversion.py:615 raw23_to_ebench_action`。
 
-### 任务 D6：Labtasker 横向推广——为 robocasa365/libero-plus 补编排（旧 E3.3）
+### 任务 D6：Labtasker 横向推广——为 robocasa365/libero-plus 补编排
 
 - **目标**：目前只有 RoboTwin/LIBERO 有原生 Labtasker 编排（sealed manifest + RNG 隔离 + Worker 独占 server）。为 robocasa365 与 libero-plus 各补一套：`LABTASKER.md` + `labtasker_submit.py`/`labtasker_worker.py`/`labtasker_summarize.py`。
 - **前置**：D2 的传统 launcher 已跑通（知道协议参数）；通读 `benchmarks/libero/LABTASKER.md` 与 `benchmarks/robotwin/LABTASKER.md`。

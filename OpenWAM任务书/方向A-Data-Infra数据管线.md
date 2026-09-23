@@ -98,7 +98,7 @@ openwam/dataloader/
 
 ### 任务 A1：数据管线搭建全景指南（registry → reader → canonical sample → transforms → train 入口）
 
-- **目标**：写一份「数据如何流进训练」的主线文档，把整条装配链讲清楚：`scripts/train.py` → Hydra 组合 `configs/train.yaml` + `configs/dataloader/<name>.yaml` → `build_dataset(cfg.dataloader, split)`（`registry.py:38`）→ `from_config` 逐 key 消费 `CONFIG_KEYS` → reader `__init__`（读 `meta/info.json`、episode 拼接、`_filter_episodes`、`_load_stats`、`_resolve_cameras`）→ `__getitem__`（parquet 窗口 → `_action_20d` 归一化 → `_finalize_action` unify+mask → `_decode_window_video` L 形拼图）→ `collate_fn=list` 进 batch。同时涵盖 canonical sample + 2D mask 契约（旧 D1 内容：mask 的 per-dim 有效性语义、2D 掩码迁移的历史原因）。
+- **目标**：写一份「数据如何流进训练」的主线文档，把整条装配链讲清楚：`scripts/train.py` → Hydra 组合 `configs/train.yaml` + `configs/dataloader/<name>.yaml` → `build_dataset(cfg.dataloader, split)`（`registry.py:38`）→ `from_config` 逐 key 消费 `CONFIG_KEYS` → reader `__init__`（读 `meta/info.json`、episode 拼接、`_filter_episodes`、`_load_stats`、`_resolve_cameras`）→ `__getitem__`（parquet 窗口 → `_action_20d` 归一化 → `_finalize_action` unify+mask → `_decode_window_video` L 形拼图）→ `collate_fn=list` 进 batch。同时涵盖 canonical sample + 2D mask 契约（mask 的 per-dim 有效性语义、2D 掩码在 loss 侧的消费方式，锚点 `bases/lerobot_v3_reader.py:912/:965`、`openwam/model/architectures/base.py:1044 compute_loss`）。
 - **前置**：读完 §2 全部 7 条背景；`assets/openwam_usage_docs/benchmark-integration.md` 与 `assets/openwam_usage_docs/train-and-deploy.md`。
 - **步骤**：
   1. 沿 §3 代码地图把装配链每一环的符号+行号抄进笔记，画出调用链图；

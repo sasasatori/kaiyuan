@@ -111,7 +111,7 @@ README.md                           # alpha 宣称 :23；Quick Start 表 :287-29
 **步骤**：
 1. 读 `configs/dataloader/pretrain_data/mixture.yaml`：defaults 链 `:9-14` 只有 **4 个机器人源**（agibotworld / robocoin / oxe_droid / interndata_a1），`:22 weight_strategy: proportional`（按窗口数比例采样，weight 字段惰性）。
 2. 对照 README 宣称 `README.md:23`（518.5M 帧含 egocentric human + robot）：human 部分（EgoDex/Ego4D）不在 mixture.yaml 里。
-3. EgoDex 缺口证据链复核（照用旧 D6 已核验证据）：`openwam/dataloader/bases/lerobot_v3_reader.py:4-7` docstring 提及 EgoDex 为同等子类；`openwam/dataloader/utils/lerobotv3.py:3` docstring 提及 EgoDexDataset；但 `openwam/dataloader/registry.py:91-106` 的 13 个注册名中无 egodex/ego4d；全仓 grep 无 `class EgoDex*` 定义；`tests/dataloader/test_oxe_mixture_integration.py:68-69` 显式断言这 5 个名字 deprecated 未注册。
+3. EgoDex 缺口证据链复核（证据已核验）：`openwam/dataloader/bases/lerobot_v3_reader.py:4-7` docstring 提及 EgoDex 为同等子类；`openwam/dataloader/utils/lerobotv3.py:3` docstring 提及 EgoDexDataset；但 `openwam/dataloader/registry.py:91-106` 的 13 个注册名中无 egodex/ego4d；全仓 grep 无 `class EgoDex*` 定义；`tests/dataloader/test_oxe_mixture_integration.py:68-69` 显式断言这 5 个名字 deprecated 未注册。
 4. 核算 4 源各自的 `total_hours` 旋钮与体量（读各源 yaml 注释与 reader 的窗口统计逻辑），估算与 518.5M 帧的差距量级。
 **验收标准**：配方审计报告含 ① mixture.yaml 实际 4 源与配比策略；② 518.5M 帧宣称 vs 代码可验证部分的逐项对账（哪些帧来自未发布的 EgoDex/human 源）；③ EgoDex 缺口证据链 5 条复核记录；④ 明确结论："alpha 预训练配方不可完整复现"的边界表述。
 **产出**：配方审计报告 1 份。
