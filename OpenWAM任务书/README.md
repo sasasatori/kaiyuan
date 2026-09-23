@@ -1,161 +1,161 @@
-# OpenWAM 调研任务书（总索引）
+# OpenWAM 调研任务书
 
-> 分析对象：`OpenWAM-Official/OpenWAM` @ `main` `90e94ae`（行号以此为准）
-> 本文档是入口：读 §1 了解仓库，看 §2 的端到端全景图，按 §3 选方向，然后进入对应方向文档。
-> 文中所有路径均为 OpenWAM 仓库（`OpenWAM/`）下的相对路径。
-
----
-
-## 1. 仓库速览
-
-**OpenWAM** 是一个 World–Action Model（WAM）系统预训练研究栈（论文 arXiv:2609.07398，Apache-2.0），由三部分组成：
-
-- **OpenWAM-Infra**：模块化基础设施。模型（架构 × 骨干）、训练、部署、评测全部可组合替换。
-- **OpenWAM-Study**：受控消融实验体系。官方发布了 34 个 study checkpoint。
-- **OpenWAM-α**：预训练基础模型。518.5M 帧（约 6400 小时）egocentric human + robot 数据，14 个 alpha checkpoint 发布在 HuggingFace。
+> 这份文档带大家拆解 OpenWAM 仓库：它是干什么的、怎么跑起来、每个人负责看懂哪一块。
+> 分析对象：OpenWAM-Official/OpenWAM 的 main 分支（提交 `90e94ae`，文中行号以此为准）。
 
 ---
 
-## 2. 端到端复现主干
+## 这个仓库是干什么的
 
-一次完整复现要走的六个阶段，以及每个阶段的归属方向：
+OpenWAM 是一个训练"机器人世界模型"的开源项目。它想让模型做两件事：先看懂世界怎么变化（输入视频），再决定机器人该怎么动（输出动作）。仓库里有三样东西：
+
+- **一套积木式框架**：模型、训练、部署、评测都做成了可替换的模块。想换模型结构、换数据集、换评测环境，改配置就行，不用改代码。
+- **一批官方消融实验**：官方通过"每次只改一个变量"的对比实验，总结了一套设计经验，并发布了 34 个实验模型文件（叫 study checkpoint）。
+- **一个官方训练好的大模型 OpenWAM-α**：用了 518.5M 帧视频（约 6400 小时，包含人拍的第一视角视频和机器人数据）训练，14 个模型文件挂在 HuggingFace 上，可以直接下载来用或继续微调。
+
+论文在 arXiv:2609.07398，代码是 Apache-2.0 协议。
+
+---
+
+## 整个复现流程长什么样
+
+把 OpenWAM 跑起来一共六步，每一步对应一个方向（图里标了归属）：
 
 ```mermaid
 flowchart TD
-    subgraph S1["① 资产准备"]
-        DL["scripts/download_assets/<br/>下载权重 · 数据 · checkpoint"]
+    subgraph S1["① 下载东西"]
+        DL["模型权重、数据集、官方训练存档<br/>（用 scripts/download_assets/ 里的下载脚本）"]
     end
-    subgraph S2["② 数据管线 — 方向 A"]
-        DS["openwam/dataloader/<br/>13 种 reader → 统一样本格式<br/>80 维动作空间 · 归一化"]
+    subgraph S2["② 读懂数据 —— 方向 A"]
+        DS["13 种不同的数据集<br/>统一读成一种格式"]
     end
-    subgraph S3["③ 模型组装 — 方向 B"]
-        CFG["configs/model/*.yaml<br/>Hydra 配置组合"]
-        REG["registry 注册表<br/>6 种架构 × 5 种骨干"]
+    subgraph S3["③ 拼模型 —— 方向 B"]
+        CFG["写配置文件：选模型结构、选骨干网络"]
+        REG["代码按配置把模型组装出来"]
         CFG --> REG
     end
     subgraph S4["④ 训练"]
-        TR["scripts/train.sh<br/>torchrun + DeepSpeed ZeRO-2<br/>视频+动作双流 flow-matching"]
-        CKPT["自包含 checkpoint<br/>config.yaml + safetensors<br/>+ normalization_stats.npy"]
+        TR["多卡训练<br/>同时学'世界怎么变'和'动作怎么做'"]
+        CKPT["产出训练存档<br/>（模型权重 + 它的配置说明书）"]
         TR --> CKPT
     end
-    subgraph S5["⑤ 部署 — 方向 C"]
-        SRV["scripts/deploy.sh<br/>WebSocket PolicyServer<br/>ws://0.0.0.0:8848"]
+    subgraph S5["⑤ 做成服务 —— 方向 C"]
+        SRV["把训练存档启动成网络服务<br/>机器人连上来就能要动作指令"]
     end
-    subgraph S6["⑥ 评测 — 方向 D"]
-        EV["benchmarks/ 客户端<br/>仿真器闭环 → 成功率"]
+    subgraph S6["⑥ 仿真考试 —— 方向 D"]
+        EV["在 8 个仿真 benchmark 里跑任务<br/>统计成功率，和论文数字对比"]
     end
     DL --> DS --> TR
     REG --> TR
     CKPT --> SRV --> EV
-    SE["方向 E · study<br/>控制变量矩阵<br/>↔ 34 个 study checkpoint"] -. 设计对照实验 .-> S4
-    AL["方向 F · openwam-alpha<br/>解剖 + 微调官方 checkpoint"] -. 产物进部署 .-> S5
+    SE["方向 E · 消融实验<br/>研究'怎么设计对照实验'"] -. 作用于 .-> S4
+    AL["方向 F · 解剖官方模型<br/>OpenWAM-α 训练存档"] -. 直接进 .-> S5
 ```
 
-两点说明：
+两个方向的定位比较特殊：
 
-- **方向 E 和 F 不在主链上，而是横切**：E 管"怎么设计受控对照实验"（作用于训练阶段），F 管"alpha 这个具体模型是什么"（它的 checkpoint 直接进入部署）。
-- **训练没有单独设方向**：模型怎么组装归 B，对照实验怎么跑归 E，alpha 微调归 F。
+- **方向 E（消融实验）不在这条链上**。它研究的是方法论：官方那 34 个对比实验是怎么设计的，我们怎么照做。
+- **方向 F（解剖 α）可以跳过训练**。官方模型文件直接下载就能进第⑤步部署，不用自己训。
 
----
-
-## 3. 六个方向
-
-| 方向 | 文档 | 研究问题 | 何时需要什么资源 | 跨方向依赖 |
-|---|---|---|---|---|
-| **A** | [方向A-Data-Infra数据管线.md](方向A-Data-Infra数据管线.md) | 数据管线如何搭建：13 种异构数据统一成一种训练样本 | 前两周零依赖；之后 CPU + LIBERO（1.9GB） | 无 |
-| **B** | [方向B-Model-Infra模型管线.md](方向B-Model-Infra模型管线.md) | 模型模块化管线如何搭建：yaml 经 registry 组装出架构 × 骨干 | 前两周零依赖；之后仅 CPU（mock backbone） | 无 |
-| **C** | [方向C-Deployment-Infra部署管线.md](方向C-Deployment-Infra部署管线.md) | 部署管线如何搭建：自包含 checkpoint 变成 WebSocket 服务 | 前两周零依赖；之后 1 张 ≥24GB GPU + 1 个 checkpoint | 无 |
-| **D** | [方向D-Evaluation-Infra评测管线.md](方向D-Evaluation-Infra评测管线.md) | 评测管线如何搭建：薄客户端 + 厚服务端，8 个 benchmark | 前两周零依赖；评测阶段需方向 C 的 server + 各仿真器环境 | C |
-| **E** | [方向E-Study消融实验实现.md](方向E-Study消融实验实现.md) | 受控消融如何实现：实验矩阵、训练确定性、对照方法论 | 前两周零依赖；E3 对比评测时借方向 C/D 的设施 | C/D（仅 E3） |
-| **F** | [方向F-OpenWAM-Alpha模型实现.md](方向F-OpenWAM-Alpha模型实现.md) | α 模型如何实现：配置链、80 维契约、预训练配方、微调路径 | 前两周零依赖；checkpoint 考古只需 CPU；微调需 4×80GB | C（仅 F5） |
-
-**工作方式**：
-
-1. **前两周（W1–W2）全员纯阅读 + 写文档**。每个方向的第一批任务只要求读代码、画调用链、写管线搭建文档，不需要 GPU，不需要装环境，今天就能开工。
-2. **环境各管各的**。每个方向文档的 §0 写清了它自己需要什么资源、哪个阶段需要、怎么获取。没有"全组统一搭环境"这个环节，谁也不会被别人卡住。
-3. 建议一人一个方向（人少可合并 A+F、B+E）。W2 结束各自讲一遍自己的管线，拼出全图。
+训练没有单独设方向：模型怎么拼装归 B，对照实验怎么跑归 E，α 微调归 F。
 
 ---
 
-## 4. 排期建议（估计）
+## 六个方向，一人一个
+
+| 方向 | 文档 | 一句话说明 | 什么时候开始需要资源 |
+|---|---|---|---|
+| **A** | [方向A-数据管线.md](方向A-数据管线.md) | 搞懂 13 种机器人数据集是怎么被读进来、统一成训练样本的 | 前两周零依赖；之后一台普通电脑 + 下载 LIBERO 数据（1.9GB） |
+| **B** | [方向B-模型管线.md](方向B-模型管线.md) | 搞懂模型是怎么"拼"出来的：一份配置文件如何变成一个可训练的模型 | 前两周零依赖；之后普通电脑就能做实验（代码里有假模型可以替代真权重） |
+| **C** | [方向C-部署管线.md](方向C-部署管线.md) | 搞懂训练存档怎么变成一个网络服务，让机器人来问"下一步怎么动" | 前两周零依赖；之后要 1 张 24GB 以上的显卡 + 下载一个官方存档（约 25GB） |
+| **D** | [方向D-评测管线.md](方向D-评测管线.md) | 搞懂 8 个仿真考试是怎么跑的，把论文里的成功率复现出来 | 前两周零依赖；正式评测需要方向 C 先把服务搭好 |
+| **E** | [方向E-消融实验.md](方向E-消融实验.md) | 搞懂官方的对照实验是怎么设计的，学会照规矩做对比 | 前两周零依赖；做对比评测时借用方向 C/D 的设施 |
+| **F** | [方向F-模型解剖.md](方向F-模型解剖.md) | 把官方大模型 α 拆开看清楚：里面装了什么、按什么规矩训练的、怎么微调 | 前两周零依赖；解剖存档用普通电脑就行；微调要 4 张 80GB 显卡 |
+
+人少可以合并：A+F 一组，B+E 一组。
+
+---
+
+## 怎么开展
+
+1. **前两周：读代码 + 写讲解**。每人读自己方向的代码，写一份"这条管线是怎么回事"的文档。不需要 GPU，不需要装环境，今天就能开始。
+2. **环境各管各的**。每个方向的文档开头有一张资源清单：需要什么、什么时候需要、怎么下载。没有"全组统一搭环境"这个环节，谁也不会被别人卡住。
+3. **两周后组内互讲**。每人 20 分钟，把自己的管线讲给全组听，拼出完整图景。
+
+## 排期建议
 
 ```mermaid
 flowchart TD
-    M1["M1 · W1–W2<br/>六方向并行阅读<br/>产出 6 份管线文档"] --> M2["M2 · W3–W5<br/>各自动手<br/>A 数据链路 · B 组装矩阵<br/>C 起 server · D 备 LIBERO 环境<br/>E 确定性验证 · F checkpoint 考古"]
-    M2 --> M3["M3 · W5–W8<br/>汇合产出<br/>D 跑 LIBERO 评测<br/>E 做 checkpoint 对比 · F 微调 alpha"]
-    M3 --> M4["M4 · W8+<br/>高阶项<br/>RoboTwin/EBench · encoder/SVAE<br/>预训练混合攻坚"]
+    M1["第一阶段（第 1–2 周）<br/>六人并行读代码<br/>产出：6 份管线讲解文档"]
+    M2["第二阶段（第 3–5 周）<br/>各自动手<br/>A 跑通数据链路 · B 拼模型做实验<br/>C 把服务搭起来 · D 装好 LIBERO 考试环境<br/>E 验证实验可复现 · F 解剖官方存档"]
+    M3["第三阶段（第 5–8 周）<br/>汇合出成果<br/>D 跑出 LIBERO 成功率 · E 做模型对比 · F 微调 α"]
+    M4["第四阶段（第 8 周以后）<br/>啃硬骨头<br/>RoboTwin/EBench 大评测 · 预训练数据攻坚"]
+    M1 --> M2 --> M3 --> M4
 ```
 
-跨方向硬依赖只有三处，且全部出现在 M2 之后：D 评测需要 C 的 server；F5 冒烟需要 C 的 server；E3 对比评测需要 C+D。
+方向之间只有三处需要等待别人，而且都在第二阶段以后：D 正式评测要等 C 的服务；F 的第 5 个任务要等 C 的服务；E 的第 3 个任务要借 C 和 D 的设施。
 
 ---
 
-## 5. 风险登记册
+## 容易踩的坑（全组共用）
 
-| # | 风险/缺口 | 影响 | 归属方向 |
+| # | 坑 | 后果 | 怎么办 |
 |---|---|---|---|
-| R1 | **预训练数据混合不完整**：egocentric human（EgoDex/Ego4D）reader 未发布（`openwam/dataloader/registry.py:91-106` 无注册，仅 docstring 残留）；`configs/dataloader/pretrain_data/` 全是 `/path/to` 占位 | OpenWAM-α 从头预训练**不可完整复现** | A（A7）/ F（F3） |
-| R2 | LAPA/latent-action 工具链缺席（README 提及，代码零命中，已核验） | latent action 方向无仓库支撑 | B |
-| R3 | 算力门槛：训练最低 4×80GB（2 卡 OOM 有官方记录） | 重训类任务需专项申请 | F / E |
-| R4 | CI 无 GPU/模型覆盖（`.github/workflows/ci.yml` 仅 CPU torch） | "CI 绿" ≠ "复现可行" | 全员 |
-| R5 | 文档/代码不一致多处：`project.output_dir`、`--state-dim`、`attention_mask_mode` 默认值 | 按文档操作会踩坑；以代码与 checkpoint 内 `config.yaml` 为准 | B / C / F |
-| R6 | EBench 的 Isaac Sim 4.1.0 不支持 Blackwell GPU | D5 完整评测需先核对 GPU 代际 | D |
-| R7 | RoboTwin prompt 模板双份维护（`benchmarks/robotwin/prompt_template.py` ↔ `openwam/dataloader/transforms/multiview.py`，靠测试钉住逐字节一致） | 单侧改动 → 静默分布偏移 | D / A |
-| R8 | EGL×CUDA 驱动冲突（MuJoCo 系 benchmark，exit=-6） | 评测进程随机崩溃；用 `--render-gpus` 隔离 | D |
-| R9 | Cosmos 路线需 submodule（当前为空）+ 编译 transformer-engine；DINOv3/FLUX.2 为 HF gated | 相关任务启动前一周发起授权/下载 | B |
-| R10 | `Wan21` 一个类注册两个名字，加载由 `model_path` 决定，失配仅 WARN | 静默加载错骨干 | B / F |
+| 1 | **官方没发布"人视角视频"那部分数据的读取代码**（代码里只剩注释痕迹）。α 预训练用了 518.5M 帧，但仓库里的配方只能覆盖机器人那部分 | α 从头预训练**无法完整复现** | 以"下载官方存档再微调"为主路线；方向 A/F 会把这个缺口调查清楚 |
+| 2 | 训练很吃显卡：官方记录 2 张 80GB 卡在第一步就爆显存 | 低于 4 张 80GB 跑不动正式训练 | 重训类任务提前申请算力；平时用"微调"和"小模型"路线 |
+| 3 | 文档和代码有几处对不上（输出目录参数名、state 维度、注意力掩码默认值） | 照文档操作会报错 | 一律以代码和训练存档里的配置为准，各方向文档里已标出具体位置 |
+| 4 | 仿真器（MuJoCo）和 CUDA 驱动会打架，考试进程会莫名崩溃 | 评测跑到一半挂掉 | 用 `--render-gpus` 把渲染和推理分到不同显卡上（方向 D 文档有具体操作） |
+| 5 | EBench 用的 Isaac Sim 4.1.0 不支持最新的 Blackwell 显卡 | 新卡机器上这个考试跑不了 | 做 EBench 之前先查显卡型号（方向 D 文档有说明） |
+| 6 | Cosmos 系列骨干网络需要额外编译组件；DINOv3/FLUX.2 的权重需要先申请授权 | 相关任务会卡住 | 提前一周发起下载和授权申请（方向 B 文档有清单） |
 
-各方向文档的 §6 有展开说明和代码锚点。
+每个方向文档的最后一节还有该方向专属的踩坑清单。
 
 ---
 
-## 6. 命令速查
+## 常用命令
 
 ```bash
-# ---- 环境（Native 路线；Docker 路线见方向C §0）----
+# 装环境（普通 Python 路线）
 conda create -n openwam python=3.10 && conda activate openwam
 pip install torch==2.7.1 torchvision==0.22.1 torchaudio==2.7.1 \
   --index-url https://download.pytorch.org/whl/cu128
-pip install -e '.[dev]'               # deepspeed 现场编译需 gcc
+pip install -e '.[dev]'
 
-# ---- 测试门禁（各方向共用的最低验证）----
-make test                             # CPU 核心集（CI 等价）
+# 跑测试（不需要 GPU，装完环境先跑这个确认没问题）
+make test
 
-# ---- 资产下载（均有 --name/--yes 非交互模式）----
-python scripts/download_assets/download_video_backbone.py       # Wan2.2-TI2V-5B 等
-python scripts/download_assets/download_benchmark_data.py       # LIBERO 等（自动建 stats+回写 yaml）
-python scripts/download_assets/download_openwam_checkpoints.py  # alpha 14 + study 34
-python scripts/download_assets/download_vlm_backbone.py         # tri_system 专用
-python scripts/download_assets/download_visual_encoder.py       # DINOv3/V-JEPA/VAE
+# 下载东西（每个脚本都有交互菜单，跟着选就行）
+python scripts/download_assets/download_video_backbone.py       # 模型骨干权重
+python scripts/download_assets/download_benchmark_data.py       # 各 benchmark 数据集
+python scripts/download_assets/download_openwam_checkpoints.py  # 官方训练存档
+python scripts/download_assets/download_vlm_backbone.py         # 三系统架构才需要的语言模型
+python scripts/download_assets/download_visual_encoder.py       # 外部视觉编码器
 
-# ---- 训练 ----
+# 训练（先跑 20 步的调试模式，确认能跑通再正式训）
 bash scripts/train.sh dataloader=libero model=dual_system \
   model/video_backbone=wan22_ti2v_5b model.architecture.variant=joint_self_attn \
-  model.architecture.attention_mask_mode=mutual training.debug=true   # 20 步冒烟
+  model.architecture.attention_mask_mode=mutual training.debug=true
+
+# 微调官方模型
 bash scripts/train.sh dataloader=libero \
-  training.finetune_ckpt_path=<foundation_ckpt_dir>                   # α 微调
+  training.finetune_ckpt_path=<官方存档目录>
 
-# ---- 部署与推理 ----
-bash scripts/deploy.sh <ckpt_dir>     # ws://0.0.0.0:8848
-python scripts/inference_test/inference_single_test.py --server ws://127.0.0.1:8848 --test --state-dim <N>
-
-# ---- Cosmos 可选依赖（方向B 相关任务才需要）----
-git submodule update --init third_party/cosmos-predict2.5
-bash scripts/install_cosmos_predict25.sh   # 需 nvcc + cuDNN
+# 把训练存档做成服务，然后发一个测试请求
+bash scripts/deploy.sh <存档目录>
+python scripts/inference_test/inference_single_test.py --server ws://127.0.0.1:8848 --test --state-dim <维度>
 ```
 
-**仓库内权威文档**：
+**仓库自带的官方文档**（在 `assets/openwam_usage_docs/` 和 `benchmarks/` 下）：
 
-- `assets/openwam_usage_docs/train-and-deploy.md` — 训练与部署
-- `assets/openwam_usage_docs/architecture-extension.md` — 架构/骨干扩展约定（方向B B-4 的依据）
-- `assets/openwam_usage_docs/benchmark-integration.md` — benchmark/dataloader 接入（方向A A5 的依据）
-- `assets/openwam_usage_docs/openwam-alpha-finetuning.md` — α 微调（方向F F2 的权威来源）
-- `assets/openwam_usage_docs/docker.md` — Docker/离线部署（方向C C7）
-- `benchmarks/README.md` — 客户端接入总指南（方向D D1）
-- `benchmarks/{robotwin,libero}/LABTASKER.md` — Labtasker 分布式评测
+- `train-and-deploy.md`：怎么训练、怎么部署
+- `architecture-extension.md`：怎么给框架加新的模型组件（方向 B 要用）
+- `benchmark-integration.md`：怎么接入新的数据集和 benchmark（方向 A 要用）
+- `openwam-alpha-finetuning.md`：α 微调的官方说明（方向 F 的必读）
+- `docker.md`：Docker 安装和离线部署（方向 C 要用）
+- `benchmarks/README.md`：评测客户端总指南（方向 D 的必读）
 
 ---
 
-## 7. 附：调研方法
+## 这份任务书是怎么来的
 
-本任务书基于对仓库的 8 路并行只读调研（架构/骨干/训练/数据/部署/评测/基建/测试），关键结论经源码交叉核验（LAPA 缺席、EgoDex reader 缺席、mask 默认值不一致等均经 grep 复核）。完整版单文档见 main 分支 `OpenWAM调研方向分配与任务书.md`（含速查表全集）。
+对仓库做了 8 路并行代码调研（模型结构、骨干网络、训练、数据、部署、评测、基础设施、测试），关键结论都经过源码核对（比如"官方没发布人视角数据读取代码"这条，是全局搜索验证过的）。单文件完整版见 main 分支 `OpenWAM调研方向分配与任务书.md`。

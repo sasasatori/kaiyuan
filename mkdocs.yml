@@ -53,9 +53,9 @@ markdown_extensions:
 nav:
   - 总览: README.md
   - 方向任务书:
-    - 方向 A · Data-Infra 数据管线: 方向A-Data-Infra数据管线.md
-    - 方向 B · Model-Infra 模型管线: 方向B-Model-Infra模型管线.md
-    - 方向 C · Deployment-Infra 部署管线: 方向C-Deployment-Infra部署管线.md
-    - 方向 D · Evaluation-Infra 评测管线: 方向D-Evaluation-Infra评测管线.md
-    - 方向 E · Study 消融实验实现: 方向E-Study消融实验实现.md
-    - 方向 F · OpenWAM-Alpha 模型实现: 方向F-OpenWAM-Alpha模型实现.md
+    - 方向 A · 数据管线: 方向A-数据管线.md
+    - 方向 B · 模型管线: 方向B-模型管线.md
+    - 方向 C · 部署管线: 方向C-部署管线.md
+    - 方向 D · 评测管线: 方向D-评测管线.md
+    - 方向 E · 消融实验: 方向E-消融实验.md
+    - 方向 F · 模型解剖: 方向F-模型解剖.md
